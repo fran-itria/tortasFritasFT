@@ -1,4 +1,4 @@
-import { User } from "../../../../../sequelize/db"
+import { User } from "../../../../sequelize/db"
 import { createUserParams } from "./types"
 
 export default async function createUser(params: createUserParams) {
