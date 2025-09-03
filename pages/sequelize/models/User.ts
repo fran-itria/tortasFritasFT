@@ -33,6 +33,10 @@ export default function (sequelize: Sequelize) {
             admin: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
+            },
+            active: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
             }
         },
         {
