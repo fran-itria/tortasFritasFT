@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import createUser from "./services/create/createUser"
-import findAllUsers from "./services/find/getAllUsers"
+import getAllUsers from "./services/find/getAllUsers"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -9,7 +9,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             res.status(200).json(newUser)
         }
         if (req.method == 'GET') {
-            const users = await findAllUsers()
+            const users = await getAllUsers()
             res.status(200).json(users)
         }
     }
