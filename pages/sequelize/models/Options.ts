@@ -26,7 +26,7 @@ export default function (sequelize: Sequelize) {
             }
         },
         {
-            timestamps: false
+            timestamps: true
         }
     )
 }
