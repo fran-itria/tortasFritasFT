@@ -20,7 +20,10 @@ export default function (sequelize: Sequelize) {
             email: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true
+                unique: true,
+                validate: {
+                    isEmail: true
+                }
             },
             phone: {
                 type: DataTypes.STRING,
@@ -32,6 +35,7 @@ export default function (sequelize: Sequelize) {
             },
             admin: {
                 type: DataTypes.BOOLEAN,
+                allowNull: false,
                 defaultValue: false
             },
             active: {

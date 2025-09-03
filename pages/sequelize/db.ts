@@ -1,5 +1,10 @@
 import { Sequelize } from "sequelize";
 import user from "./models/User";
+import product from "./models/Product";
+import order from "./models/Order";
+import options from "./models/Options";
+import income from "./models/Income";
+import bills from "./models/Bills";
 
 const { PG_DATABASE_URL } = process.env
 const sequelize =
@@ -31,6 +36,11 @@ const sequelize =
         });
 
 user(sequelize);
+product(sequelize);
+order(sequelize);
+options(sequelize);
+income(sequelize);
+bills(sequelize);
 
 sequelize.sync({ alter: true }).then(() => {
     console.log('Base de datos sincronizada correctamente');
@@ -38,7 +48,7 @@ sequelize.sync({ alter: true }).then(() => {
     console.error('Error al sincronizar la base de datos:', error);
 });
 
-const { User } = sequelize.models
+const { User, Product, Order, Options, Income, Bills } = sequelize.models
 
-export { User }
+export { User, Product, Order, Options, Income, Bills }
 export default sequelize;
