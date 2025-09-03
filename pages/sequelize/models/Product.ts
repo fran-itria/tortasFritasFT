@@ -30,6 +30,9 @@ export default function (sequelize: Sequelize) {
                 allowNull: false,
                 defaultValue: false
             }
+        },
+        {
+            timestamps: false
         }
     )
 }

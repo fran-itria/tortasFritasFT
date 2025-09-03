@@ -24,6 +24,9 @@ export default function (sequelize: Sequelize) {
                 defaultValue: 'Rosario del Tala 543',
                 allowNull: true
             }
+        },
+        {
+            timestamps: false
         }
     )
 }

@@ -22,6 +22,9 @@ export default function (sequelize: Sequelize) {
                 type: DataTypes.DATE,
                 allowNull: false
             }
+        },
+        {
+            timestamps: false
         }
     )
 }
