@@ -11,8 +11,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         }
     }
     catch (error: any) {
-        console.log(error)
-        if (error.message) res.status(400).json({ error: error.message })
+        console.log(error.message.includes('jwt expired'))
+        if (error.message && error.message.includes('jwt expired')) res.status(400).json({ error: 'Token invalido' })
+        else if (error.message) res.status(400).json({ error: error.message })
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
