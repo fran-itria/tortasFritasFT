@@ -42,13 +42,22 @@ options(sequelize);
 income(sequelize);
 bills(sequelize);
 
+
+const { User, Product, Order, Options, Income, Bills } = sequelize.models
+
+// User - Order 
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
+
+// Order - Product
+Order.hasMany(Product, { foreignKey: 'orderID' })
+Product.belongsTo(Order, { foreignKey: 'orderID' });
+
 sequelize.sync({ alter: true }).then(() => {
     console.log('Base de datos sincronizada correctamente');
 }).catch((error) => {
     console.error('Error al sincronizar la base de datos:', error);
 });
-
-const { User, Product, Order, Options, Income, Bills } = sequelize.models
 
 export { User, Product, Order, Options, Income, Bills }
 export default sequelize;
