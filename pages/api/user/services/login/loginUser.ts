@@ -11,7 +11,7 @@ export default async function loginUser(email?: string, password?: string, token
         if (!user) throw new Error('Usuario no encontrado');
         if (!bcrypt.compareSync(password, user.password)) throw new Error('Contraseña incorrecta');
         if (SECRET_KEY) {
-            const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' })
+            const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '7d' })
             jwt.verify(token, SECRET_KEY)
             return { user, token };
         }
