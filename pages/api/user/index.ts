@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import getAllUsers from "./services/find/getAllUsers"
+import updateUser from "./services/update/updateUser"
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -7,6 +8,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         if (method == 'GET') {
             const users = await getAllUsers()
             res.status(200).json(users)
+        }
+        if (method == 'PUT') {
+            const user = await updateUser(req.body)
+            res.status(200).json({ Message: "Usuario actualizado con exito", user })
         }
     }
     catch (error: any) {

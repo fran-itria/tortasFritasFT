@@ -9,7 +9,9 @@ export default async function updateUser({
     surname,
     email,
     phone,
-    password
+    admin,
+    password,
+    active
 }: UpdateUserProps) {
     if (!id) throw new Error('ID de usuario es obligatorio');
     if (password) {
@@ -22,7 +24,9 @@ export default async function updateUser({
             surname,
             email,
             phone,
-            password
+            password,
+            active,
+            admin
         },
         {
             where: {
