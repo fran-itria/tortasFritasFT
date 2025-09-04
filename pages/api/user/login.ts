@@ -7,13 +7,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         if (method == 'PUT') {
             const { email, password } = req.body
-            const login = await loginUser(email, password, authorization)
-            return res.status(200).json({ Message: "Has iniciado sesión", user: login })
+            const { user, token } = await loginUser(email, password, authorization)
+            return res.status(200).json({ message: "Has iniciado sesión", user, token })
         }
     }
     catch (error: any) {
-        if (error.message && error.message.includes('jwt expired')) res.status(400).json({ error: 'Token invalido' })
-        else if (error.message) res.status(400).json({ error: error.message })
+        if (error.message) res.status(400).json({ error: error.message })
         else res.status(500).json({ error: 'Internal server error' })
     }
 }

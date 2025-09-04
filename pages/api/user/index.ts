@@ -11,12 +11,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         }
         if (method == 'PUT') {
             const user = await updateUser(req.body)
-            res.status(200).json({ Message: "Usuario actualizado con exito", user })
+            res.status(200).json({ message: "Usuario actualizado con exito", user })
         }
     }
     catch (error: any) {
-        if (error.message && error.message.includes('jwt expired')) res.status(400).json({ error: 'Token invalido' })
-        else if (error.message) res.status(400).json({ error: error.message })
+        if (error.message) res.status(400).json({ error: error.message })
         else res.status(500).json({ error: 'Internal server error' })
     }
 }

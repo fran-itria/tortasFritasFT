@@ -10,9 +10,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             const { adminId, userId } = req.body
             const user = await getOneUser(adminId)
             if (user.getDataValue('admin')) {
-                const confirmDelete = await deleteUser(userId)
-                console.log(confirmDelete)
-                if (confirmDelete) res.status(200).json({ Message: 'Usuario eliminado correctamente' })
+                await deleteUser(userId)
+                res.status(200).json({ message: 'Usuario eliminado correctamente' })
             } else throw new Error('No tienes permisos para eliminar usuarios')
         }
     } catch (error: any) {
