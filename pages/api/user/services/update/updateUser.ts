@@ -25,8 +25,8 @@ export default async function updateUser({
             email,
             phone,
             password,
-            active,
-            admin
+            admin,
+            active
         },
         {
             where: {
