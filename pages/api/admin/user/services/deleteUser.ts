@@ -1,5 +1,4 @@
-import { User } from "../../../../sequelize/db";
-import updateUser from "../update/updateUser";
+import updateUser from "../../../user/services/update/updateUser";
 
 
 export default async function deleteUser(id: string) {
