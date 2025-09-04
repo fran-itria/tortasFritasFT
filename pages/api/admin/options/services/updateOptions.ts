@@ -1,4 +1,4 @@
-import { Options } from "../../../sequelize/db"
+import { Options } from "../../../../sequelize/db"
 
 interface Body {
     ordersActive?: boolean

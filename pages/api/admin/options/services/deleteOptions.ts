@@ -1,4 +1,4 @@
-import { Options } from "../../../sequelize/db"
+import { Options } from "../../../../sequelize/db"
 
 export default async function deleteOptions(id: string) {
     if (!id) throw new Error("Falta el id")
