@@ -9,6 +9,8 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
             res.status(200).json(newUser)
         }
     } catch (error: any) {
+        if (error.original.routine.includes('_bt_check_unique'))
+            res.status(400).json({ error: 'Email ya registrado' })
         if (error.message) res.status(400).json({ error: error.message })
         else res.status(500).json({ error: 'Internal server error' })
     }
