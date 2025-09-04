@@ -7,7 +7,6 @@ export const runtime = 'nodejs'
 export default function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl
     const { method } = req
-    console.log(method)
 
     const publicRoutes = [
         '/api/user/login',
