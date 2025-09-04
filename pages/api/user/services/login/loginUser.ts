@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { User } from "../../../../sequelize/db";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import validateToken from "../../../../validateToken";
 
 export default async function loginUser(email?: string, password?: string, token?: string) {
     const { SECRET_KEY } = process.env
@@ -12,12 +13,12 @@ export default async function loginUser(email?: string, password?: string, token
         await user.update({ active: true })
         if (SECRET_KEY) {
             const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' })
-            const data: JwtPayload | string = jwt.verify(token, SECRET_KEY)
+            jwt.verify(token, SECRET_KEY)
             return { user, token };
         }
     } else {
-        const data: JwtPayload | string = jwt.verify(token, SECRET_KEY!)
         let emailFromToken: string | undefined;
+        const data = validateToken(token)
         if (typeof data === "string") {
             throw new Error('Token inválido');
         } else {
