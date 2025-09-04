@@ -17,7 +17,6 @@ export default async function updateOptions(body: Body) {
             id
         }
     })
-    console.log(options)
     if (options) return
     else throw new Error("No se pudo actualizar la configuración")
 }
