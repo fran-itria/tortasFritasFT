@@ -1,4 +1,4 @@
-import { Order, Product, User } from "../../../../sequelize/db";
+import { Order, User } from "../../../../sequelize/db";
 
 export default async function getOneUser(id: string) {
     const user = await User.findByPk(id, { include: [Order] })

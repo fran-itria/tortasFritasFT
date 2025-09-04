@@ -10,8 +10,7 @@ export default function middleware(req: NextRequest) {
 
     const publicRoutes = [
         '/api/user/login',
-        '/api/user/register',
-        '/api/user/forgot-password',
+        '/api/user/register'
     ]
     if (publicRoutes.includes(pathname) || method == 'GET') {
         return NextResponse.next()
