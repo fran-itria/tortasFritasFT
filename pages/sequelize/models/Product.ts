@@ -29,6 +29,10 @@ export default function (sequelize: Sequelize) {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: false
+            },
+            image: {
+                type: DataTypes.STRING,
+                allowNull: true
             }
         },
         {
