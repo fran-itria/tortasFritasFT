@@ -1,15 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import updateOptions from "./services/updateOptions";
-import validateAdminUser from "../validateAdminUser";
+import withAdminAuth from "../validateAdminUser";
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
-        const { id, ordersActive, openingHours } = req.body
-        const { authorization } = req.headers;
         if (method == 'PUT') {
-            await validateAdminUser(authorization as string, 'modificar la configuración')
-            await updateOptions({ ordersActive, openingHours, id })
+            await updateOptions(req.body)
             res.status(200).json({ message: "Configuración actualizada correctamente" })
         } else {
             res.status(405).json({ message: "Método HTTP no permitido" })
@@ -19,3 +16,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
+
+export default withAdminAuth(handler, 'actualizar la configuración');
