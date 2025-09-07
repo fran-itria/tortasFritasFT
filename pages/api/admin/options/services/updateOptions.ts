@@ -23,5 +23,5 @@ export default async function updateOptions(body: Body) {
     if (affectedRows === 0) {
         throw new Error("No se pudo actualizar la configuración")
     }
-    return { message: "Configuración actualizada correctamente", affectedRows }
+    return
 }
