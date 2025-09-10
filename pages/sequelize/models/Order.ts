@@ -17,7 +17,8 @@ export default function (sequelize: Sequelize) {
             },
             amount: {
                 type: DataTypes.FLOAT,
-                allowNull: false
+                allowNull: false,
+                defaultValue: 0
             }
             // time: {
             //     type: DataTypes.DATEONLY,

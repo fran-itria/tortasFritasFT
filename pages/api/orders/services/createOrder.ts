@@ -7,9 +7,7 @@ export default async function createOrder({ userId, products }: CreateOrdersProp
     const user: any = await User.findByPk(userId);
     if (!user) throw new Error("Usuario no encontrado");
 
-    let order: any = await Order.create({
-        amount: 0
-    })
+    let order: any = await Order.create()
 
     let totalAmount = 0;
 
