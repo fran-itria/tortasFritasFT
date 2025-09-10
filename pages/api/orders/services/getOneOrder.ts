@@ -1,35 +1,30 @@
 import { Order, Product, User, OrderProduct } from "../../../sequelize/db";
 
-export default async function getOneOrder(orderId: string) {
-    try {
-        const order = await Order.findByPk(orderId, {
-            include: [
-                {
-                    model: User,
-                    attributes: ['name', 'email']
-                }
-            ]
-        });
+export default async function getOneOrder(id: string) {
+    if (!id) throw new Error("Falta el id")
 
-        if (!order) {
-            throw new Error("Orden no encontrada");
-        }
+    const order = await Order.findByPk(id, {
+        include: [
+            {
+                model: User,
+                attributes: ['name', 'email']
+            },
+            {
+                model: OrderProduct,
+                as: "Products",
+                include: [
+                    {
+                        model: Product,
+                        attributes: ['name']
+                    }
+                ]
+            }
+        ]
+    });
 
-        const orderProducts = await OrderProduct.findAll({
-            where: { orderId },
-            include: [
-                {
-                    model: Product,
-                    attributes: ['name']
-                }
-            ]
-        });
-
-        return {
-            order,
-            products: orderProducts
-        };
-    } catch (error) {
-        throw error;
+    if (!order) {
+        throw new Error("Orden no encontrada");
     }
+
+    return order;
 }

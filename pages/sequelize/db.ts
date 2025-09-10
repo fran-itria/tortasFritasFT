@@ -51,7 +51,7 @@ User.hasMany(Order, { foreignKey: 'userId' });
 Order.belongsTo(User, { foreignKey: 'userId' });
 
 // Asociaciones directas para la tabla intermedia OrderProduct
-Order.hasMany(OrderProduct, { foreignKey: 'orderId' });
+Order.hasMany(OrderProduct, { foreignKey: 'orderId', as: 'Products' });
 OrderProduct.belongsTo(Order, { foreignKey: 'orderId' });
 
 Product.hasMany(OrderProduct, { foreignKey: 'productId' });
