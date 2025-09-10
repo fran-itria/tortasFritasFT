@@ -15,4 +15,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-export default withAdminAuth(handler, 'No tienes permisos para modificar el ingreso');
+export default withAdminAuth(handler, 'eliminar el ingreso');

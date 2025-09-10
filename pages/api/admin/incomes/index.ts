@@ -15,4 +15,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-export default withAdminAuth(handler, 'No tienes permisos para ver los ingresos');
+export default withAdminAuth(handler, 'ver los ingresos');

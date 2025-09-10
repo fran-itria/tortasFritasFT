@@ -7,6 +7,14 @@ export interface ProductData {
     soldOut?: boolean
     image?: string
 }
+export interface BulkCreateData {
+    name: string
+    amount: number
+    description?: string
+    varity?: { name: string, stock: boolean }[]
+    soldOut?: boolean
+    image?: string
+}[]
 
 export interface UpdateData {
     id: string

@@ -16,4 +16,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-export default withAdminAuth(handler, 'actualizar un producto');
+export default withAdminAuth(handler, 'eliminar un producto');

@@ -1,19 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withAdminAuth from "../validateAdminUser";
-import getOneIncome from "./services/getOneIncome";
+import updateBills from "./services/updateBills";
 
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
-        const { id } = req.query
-        if (method !== 'GET') throw new Error('Método HTTP no permitido')
-        const income = await getOneIncome(id as string)
-        res.status(200).json(income)
+        if (method !== 'PUT') throw new Error('Método HTTP no permitido')
+        await updateBills(req.body)
+        res.status(200).json({ message: 'Gasto actualizado correctamente' })
     } catch (error: any) {
         if (error.message) res.status(400).json({ error: error.message })
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
 
-export default withAdminAuth(handler, 'ver el ingreso');
+export default withAdminAuth(handler, 'No tienes permisos para modificar el gasto');
