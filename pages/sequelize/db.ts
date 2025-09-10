@@ -5,6 +5,7 @@ import order from "./models/Order";
 import options from "./models/Options";
 import income from "./models/Income";
 import bills from "./models/Bills";
+import orderProduct from "./models/OrderProduct";
 
 const { PG_DATABASE_URL } = process.env
 const sequelize =
@@ -41,17 +42,20 @@ order(sequelize);
 options(sequelize);
 income(sequelize);
 bills(sequelize);
+orderProduct(sequelize);
 
-
-const { User, Product, Order, Options, Income, Bills } = sequelize.models
+const { User, Product, Order, Options, Income, Bills, OrderProduct } = sequelize.models
 
 // User - Order 
 User.hasMany(Order, { foreignKey: 'userId' });
 Order.belongsTo(User, { foreignKey: 'userId' });
 
-// Order - Product
-Order.hasMany(Product, { foreignKey: 'orderID' })
-Product.belongsTo(Order, { foreignKey: 'orderID' });
+// Asociaciones directas para la tabla intermedia OrderProduct
+Order.hasMany(OrderProduct, { foreignKey: 'orderId' });
+OrderProduct.belongsTo(Order, { foreignKey: 'orderId' });
+
+Product.hasMany(OrderProduct, { foreignKey: 'productId' });
+OrderProduct.belongsTo(Product, { foreignKey: 'productId' });
 
 sequelize.sync({ alter: true }).then(() => {
     console.log('Base de datos sincronizada correctamente');
@@ -59,5 +63,5 @@ sequelize.sync({ alter: true }).then(() => {
     console.error('Error al sincronizar la base de datos:', error);
 });
 
-export { User, Product, Order, Options, Income, Bills }
+export { User, Product, Order, Options, Income, Bills, OrderProduct }
 export default sequelize;

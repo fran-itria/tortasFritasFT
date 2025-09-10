@@ -18,11 +18,11 @@ export default function (sequelize: Sequelize) {
             amount: {
                 type: DataTypes.FLOAT,
                 allowNull: false
-            },
-            time: {
-                type: DataTypes.TIME,
-                allowNull: false
             }
+            // time: {
+            //     type: DataTypes.DATEONLY,
+            //     allowNull: false
+            // }
         },
         {
             timestamps: false
