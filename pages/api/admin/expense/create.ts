@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import withAdminAuth from "../validateAdminUser";
-import createBills from "./services/createBill";
+import createExpense from "./services/createExpense";
 
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
         if (method !== 'POST') throw new Error('Método HTTP no permitido')
-        const bill = await createBills(req.body)
-        res.status(201).json(bill)
+        const expense = await createExpense(req.body)
+        res.status(201).json(expense)
     } catch (error: any) {
         if (error.message.includes('invalid input value for enum')) {
             res.status(400).json({ message: "Categoria del gasto inválida" })
@@ -17,4 +17,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-export default withAdminAuth(handler, 'No tienes permisos para crear gastos');
+export default withAdminAuth(handler, 'crear gastos');
