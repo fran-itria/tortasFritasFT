@@ -14,12 +14,11 @@ export default function (sequelize: Sequelize) {
                 allowNull: false
             },
             category: {
-                type: DataTypes.ENUM,
-                values: ['cash', 'transfer'],
+                type: DataTypes.STRING,
                 allowNull: false
             },
             date: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: false
             }
         },
