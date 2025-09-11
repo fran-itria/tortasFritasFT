@@ -1,22 +1,35 @@
-import { Order, User, OrderProduct } from "../../../sequelize/db";
+import { Order, User, OrderProduct, Product } from "../../../sequelize/db";
 import getProducgtById from "../../product/services/getProductById";
-import { CreateOrdersProps } from "./types";
+import { CreateOrdersProps, Method } from "./types";
 
-
-export default async function createOrder({ userId, products }: CreateOrdersProps) {
+const chipaText = "Chipa";
+export default async function createOrder({ userId, paymentMethod, cash, products }: CreateOrdersProps) {
     const user: any = await User.findByPk(userId);
     if (!user) throw new Error("Usuario no encontrado");
 
-    let order: any = await Order.create()
+    if (!paymentMethod) throw new Error("Debe especificar un metodo de pago")
+    if (paymentMethod == Method.CASH && !cash) throw new Error("Debe especificar el monto en efectivo")
+    let order: any = await Order.create({
+        paymentMethod,
+        cash
+    });
 
     let totalAmount = 0;
-
+    const chipaId: any = await Product.findOne(
+        {
+            where: { name: "Chipa" },
+            attributes: ['id']
+        },
+    )
+    const chipas = products.filter(p => p.productId == chipaId.dataValues.id)
+        .reduce((quantity, c) => quantity + c.quantity, 0)
     for (let i = 0; i < products.length; i++) {
         const product = await getProducgtById(products[i].productId)
 
         if (product) {
+            const name = product.dataValues.name;
             const quantity = products[i].quantity;
-            const unitPrice = product.dataValues.amount;
+            const unitPrice = (name == chipaText && chipas >= 6) ? 800 : product.dataValues.amount;
             const totalPrice = unitPrice * quantity;
             const varity = products[i].varity || null;
 
