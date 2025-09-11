@@ -19,6 +19,15 @@ export default function (sequelize: Sequelize) {
                 type: DataTypes.FLOAT,
                 allowNull: false,
                 defaultValue: 0
+            },
+            paymentMethod: {
+                type: DataTypes.ENUM,
+                values: ['cash', 'transfer'],
+                allowNull: false
+            },
+            cash: {
+                type: DataTypes.INTEGER,
+                allowNull: true
             }
             // time: {
             //     type: DataTypes.DATEONLY,
