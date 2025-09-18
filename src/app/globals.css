@@ -39,6 +39,21 @@
   padding-bottom: 3px;
 }
 
+.buttonFormDark {
+  background-color: var(--color-dark-background-button);
+  color: var(--color-dark-text);
+}
+
+.buttonFormLight {
+  background-color: var(--color-light-background-button);
+  color: white;
+}
+
+.buttonForm:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

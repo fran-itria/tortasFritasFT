@@ -1,24 +1,20 @@
 'use client'
 
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import logoDark from "../../assets/logoDark.png";
 import logoLight from "../../assets/logoLight.png";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { GoogleIcon } from "@/components/Icons";
+import useThemeState from "@/zustand/theme";
+import { changeInputs, submit } from "./services";
 
 export default function Login() {
-    const [mounted, setMounted] = useState(false)
-    const { theme } = useTheme();
-
-    useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    if (!mounted) {
-        return null
-    }
-
+    const theme = useThemeState((state: { theme: string }) => state.theme)
+    const [inputValues, setInputValues] = useState<{ email: string, password: string }>({
+        email: '',
+        password: ''
+    })
+    useEffect(() => console.log(inputValues), [inputValues])
     return (
         <div className="flex flex-col justify-center items-center h-screen relative">
             <ThemeToggle />
@@ -38,25 +34,32 @@ export default function Login() {
                     gap-6
                     shadow-[5px_5px_4px]
                 `}>
-                <form className={`
-                    rounded-lg 
-                    flex 
-                    flex-col
-                    items-center 
-                    gap-6
-                `}>
+                <form
+                    className={`
+                        rounded-lg 
+                        flex 
+                        flex-col
+                        items-center 
+                        gap-6
+                    `}
+                    onSubmit={(e) => submit({ e, inputValues, theme })}
+                >
                     <p className="font-bold text-xl">Inicio de sesión</p>
                     <div className="w-full flex flex-col">
                         <label className={`
                             font-bold
                             ${theme === 'dark' ? 'text-dark-text' : 'text-light-text'}
                         `}>
-                            Usuario:
+                            Email:
                         </label>
-                        <input className={`
-                            ${theme === 'dark' ? 'bg-dark-input' : 'bg-light-input'} 
+                        <input
+                            className={`
+                            ${theme === 'dark' ? 'font-bold bg-dark-input text-black' : 'bg-light-input text-white'} 
                             rounded-lg`
-                        }>
+                            }
+                            name="email"
+                            onChange={(e) => changeInputs({ e, setInputValues })}
+                        >
                         </input>
                     </div>
                     <div className="w-full flex flex-col">
@@ -66,24 +69,30 @@ export default function Login() {
                         `}>
                             Contraseña:
                         </label>
-                        <input className={`
-                            ${theme === 'dark' ? 'bg-dark-input' : 'bg-light-input'} 
+                        <input
+                            className={`
+                            ${theme === 'dark' ? 'font-bold bg-dark-input text-black' : 'bg-light-input text-white'} 
                             rounded-lg`
-                        }>
+                            }
+                            name="password"
+                            onChange={(e) => changeInputs({ e, setInputValues })}
+                        >
                         </input>
                     </div>
-                    <div className="flex flex-col items-center">
-                        <button className={`
+                    <div className="w-full flex flex-col items-center">
+                        <button
+                            className={`
                             buttonForm 
                             ${theme === 'dark' ?
-                                'bg-dark-background-button text-dark-text'
-                                :
-                                'bg-light-background-button text-light-primary'
-                            }
-                        `}>
+                                    'buttonFormDark'
+                                    :
+                                    'buttonFormLight'
+                                }
+                        `}
+                        >
                             Iniciar sesión
                         </button>
-                        <button className="mt-3">
+                        <button className="w-full mt-3">
                             <div className={`
                                 flex 
                                 items-center 
@@ -101,7 +110,6 @@ export default function Login() {
                         </button>
                     </div>
                 </form>
-                {/* <div className="flex flex-col items-center justify-between h-20 w-full"> */}
                 <p className={`font-bold ${theme == 'dark' ? 'text-dark-text' : 'text-light-text'}`}>¿Ha olvidado su contraseña?</p>
                 <div className="border w-full"></div>
                 <button className={`
@@ -114,7 +122,6 @@ export default function Login() {
                             `}>
                     Registrarse
                 </button>
-                {/* </div> */}
             </div>
         </div>
     )

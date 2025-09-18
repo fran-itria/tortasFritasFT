@@ -8,5 +8,5 @@ export function MoonIcon() {
 }
 
 export function GoogleIcon({ theme }: { theme: string | undefined }) {
-    return <FaGoogle color={`${theme == 'dark' ? '#333333' : 'white'}`} />
+    return <FaGoogle color={`${theme == 'dark' ? '#333333' : '#E2E2E2'}`} />
 }
