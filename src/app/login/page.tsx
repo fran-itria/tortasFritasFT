@@ -1,23 +1,28 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import logoDark from "../../assets/logoDark.png";
 import logoLight from "../../assets/logoLight.png";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { GoogleIcon } from "@/components/Icons";
 import useThemeState from "@/zustand/theme";
 import { changeInputs, submit } from "./services";
+import { useUserState } from "@/zustand/userState";
 
 export default function Login() {
+    const router = useRouter()
     const theme = useThemeState((state: { theme: string }) => state.theme)
     const [inputValues, setInputValues] = useState<{ email: string, password: string }>({
         email: '',
         password: ''
     })
+    const setUser = useUserState(state => state.setUser)
+
     useEffect(() => {
         const token = localStorage.getItem('token')
         if (token) {
-            submit({ theme, token })
+            submit({ theme, token, setUser, router })
         }
     }, [])
     return (
@@ -47,7 +52,7 @@ export default function Login() {
                         items-center 
                         gap-6
                     `}
-                    onSubmit={(e) => submit({ e, inputValues, theme })}
+                    onSubmit={(e) => submit({ e, inputValues, theme, setUser, router })}
                 >
                     <p className="font-bold text-xl">Inicio de sesión</p>
                     <div className="w-full flex flex-col">

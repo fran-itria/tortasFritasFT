@@ -1,4 +1,5 @@
 import { alerts } from "@/alerts/alerts";
+import { User } from "@/zustand/userState";
 import axios from "axios";
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 
@@ -18,6 +19,8 @@ interface Submit {
     }
     theme: string
     token?: string
+    setUser: (user: User) => void
+    router?: any
 }
 
 export const changeInputs = ({ e, setInputValues }: InputValues) => {
@@ -26,7 +29,7 @@ export const changeInputs = ({ e, setInputValues }: InputValues) => {
     setInputValues((prev) => { return { ...prev, [name]: value } })
 }
 
-export const submit = async ({ e, inputValues, theme, token }: Submit) => {
+export const submit = async ({ e, inputValues, theme, token, setUser, router }: Submit) => {
     try {
         let user
         if (!token && inputValues && e) {
@@ -41,7 +44,12 @@ export const submit = async ({ e, inputValues, theme, token }: Submit) => {
                 }
             })
         }
-        console.log(user)
+        if (user) {
+            setUser(user.data.user)
+            if (router) {
+                router.push('/')
+            }
+        }
     } catch (error: any) {
         if (error.response) alerts('error', theme, error.response.data.error)
     }
