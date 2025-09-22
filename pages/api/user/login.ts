@@ -7,7 +7,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         if (method == 'PUT') {
             const { email, password } = req.body
-            const { user, token } = await loginUser(email, password, authorization)
+            const result = await loginUser(email, password, authorization)
+            if (!result) {
+                return res.status(401).json({ error: "Invalid credentials" })
+            }
+            const { user, token } = result
             return res.status(200).json({ message: "Has iniciado sesión", user, token })
         }
     }

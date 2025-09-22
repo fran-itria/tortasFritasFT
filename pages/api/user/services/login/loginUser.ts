@@ -5,7 +5,6 @@ import validateToken from "../../../../validateToken";
 
 export default async function loginUser(email?: string, password?: string, token?: string) {
     const { SECRET_KEY } = process.env
-    console.log(token)
     if (!token) {
         if (!email || !password) throw new Error('Email y contraseña son obligatorios');
         const user: any = await User.findOne({ where: { email } });
@@ -26,6 +25,6 @@ export default async function loginUser(email?: string, password?: string, token
         }
         const user: any = await User.findOne({ where: { email: emailFromToken } });
         if (!user) throw new Error('Usuario no encontrado');
-        return user
+        return { user, token };
     }
 }

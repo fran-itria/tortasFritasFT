@@ -11,12 +11,13 @@ interface InputValues {
 }
 
 interface Submit {
-    e: FormEvent<HTMLFormElement>,
-    inputValues: {
+    e?: FormEvent<HTMLFormElement>,
+    inputValues?: {
         email: string,
         password: string
     }
     theme: string
+    token?: string
 }
 
 export const changeInputs = ({ e, setInputValues }: InputValues) => {
@@ -25,16 +26,22 @@ export const changeInputs = ({ e, setInputValues }: InputValues) => {
     setInputValues((prev) => { return { ...prev, [name]: value } })
 }
 
-export const submit = async ({ e, inputValues, theme }: Submit) => {
-    e.preventDefault();
-    const { email, password } = inputValues;
+export const submit = async ({ e, inputValues, theme, token }: Submit) => {
     try {
-        const token = localStorage.getItem('token')
-        const user = await axios.put('/api/user/login',
-            { email, password },
-            { headers: { Authorization: token } }
-        )
-        localStorage.setItem('token', user.data.token)
+        let user
+        if (!token && inputValues && e) {
+            e.preventDefault();
+            const { email, password } = inputValues;
+            user = await axios.put('/api/user/login', { email, password })
+            localStorage.setItem('token', user.data.token)
+        } else if (token) {
+            user = await axios.put('/api/user/login', {}, {
+                headers: {
+                    Authorization: token
+                }
+            })
+        }
+        console.log(user)
     } catch (error: any) {
         if (error.response) alerts('error', theme, error.response.data.error)
     }

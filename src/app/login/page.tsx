@@ -14,7 +14,12 @@ export default function Login() {
         email: '',
         password: ''
     })
-    useEffect(() => console.log(inputValues), [inputValues])
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            submit({ theme, token })
+        }
+    }, [])
     return (
         <div className="flex flex-col justify-center items-center h-screen relative">
             <ThemeToggle />
