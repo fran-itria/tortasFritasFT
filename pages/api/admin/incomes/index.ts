@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import withAdminAuth from "../validateAdminUser";
 import getAllIncomes from "./services/getAllIncomes";
 
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
         if (method !== 'GET') throw new Error('Método HTTP no permitido')
@@ -14,5 +13,3 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
-
-export default withAdminAuth(handler, 'ver los ingresos');

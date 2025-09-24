@@ -12,6 +12,7 @@ export default function middleware(req: NextRequest) {
         '/api/user/login',
         '/api/user/register'
     ]
+
     if (publicRoutes.includes(pathname) || method == 'GET') {
         return NextResponse.next()
     }
@@ -19,8 +20,12 @@ export default function middleware(req: NextRequest) {
     const authorization = req.headers.get('authorization')
 
     try {
-        validateToken(authorization as string)
-        return NextResponse.next()
+        const result: any = validateToken(authorization as string)
+        if (pathname.startsWith('/api/admin') && result.admin) {
+            return NextResponse.next()
+        } else if (pathname.startsWith('/api/admin') && !result.admin) {
+            throw new Error('No autorizado, se requiere permiso de administrador')
+        } else return NextResponse.next()
     }
     catch (error: any) {
         if (error.message && error.message.includes('jwt expired')) {

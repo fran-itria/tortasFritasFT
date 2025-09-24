@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import updateOptions from "./services/updateOptions";
-import withAdminAuth from "../validateAdminUser";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
         if (method == 'PUT') {
@@ -16,5 +15,3 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
-
-export default withAdminAuth(handler, 'actualizar la configuración');

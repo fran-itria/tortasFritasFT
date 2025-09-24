@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import deleteOptions from "./services/deleteOptions";
-import withAdminAuth from "../validateAdminUser";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
         const { id } = req.body
@@ -17,5 +16,3 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
-
-export default withAdminAuth(handler, 'eliminar la configuración');

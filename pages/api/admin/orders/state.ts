@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import withAdminAuth from "../validateAdminUser";
 import updateState from "./services/updateState";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         const { method } = req
         if (method !== "PUT") throw new Error("Método HTTP no permitido")
@@ -15,5 +14,3 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         else res.status(500).json({ error: 'Internal server error' })
     }
 }
-
-export default withAdminAuth(handler, 'cambiar el estado de una orden');

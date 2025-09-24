@@ -5,8 +5,7 @@ export default function (sequelize: Sequelize) {
         "User",
         {
             id: {
-                type: DataTypes.UUID,
-                defaultValue: DataTypes.UUIDV4,
+                type: DataTypes.STRING,
                 primaryKey: true
             },
             name: {
@@ -27,11 +26,7 @@ export default function (sequelize: Sequelize) {
             },
             phone: {
                 type: DataTypes.STRING,
-                allowNull: false
-            },
-            password: {
-                type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             },
             admin: {
                 type: DataTypes.BOOLEAN,
