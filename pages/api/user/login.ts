@@ -3,11 +3,10 @@ import loginUser from "./services/login/loginUser";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
     const { method } = req
-    const { authorization } = req.headers
     try {
         if (method == 'PUT') {
-            const { email, password } = req.body
-            const result = await loginUser(email, password, authorization)
+            const { id } = req.body
+            const result = await loginUser(id)
             if (!result) {
                 return res.status(401).json({ error: "Invalid credentials" })
             }

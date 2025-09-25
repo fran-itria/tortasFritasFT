@@ -36,6 +36,22 @@ const sequelize =
             }
         });
 
+// const sequelize = new Sequelize({
+//     dialect: "postgres",
+//     host: 'localhost',
+//     port: 5432,
+//     username: 'postgres',
+//     password: '8284',
+//     database: 'TortasFritasFT',
+//     logging: false,
+//     native: false,
+//     dialectOptions: {
+//         ssl: {
+//             require: true,
+//         }
+//     }
+// })
+
 user(sequelize);
 product(sequelize);
 order(sequelize);

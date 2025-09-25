@@ -1,56 +1,36 @@
-import { alerts } from "@/alerts/alerts";
+import { signInWithGoogle } from "@/firebase/firebase";
 import { User } from "@/zustand/userState";
 import axios from "axios";
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 
-interface InputValues {
-    e: ChangeEvent<HTMLInputElement>,
-    setInputValues: Dispatch<SetStateAction<{
-        email: string;
-        password: string;
-    }>>
-}
-
-interface Submit {
-    e?: FormEvent<HTMLFormElement>,
-    inputValues?: {
-        email: string,
-        password: string
-    }
+interface LoginWithGoogle {
     theme: string
-    token?: string
     setUser: (user: User) => void
     router?: any
 }
 
-export const changeInputs = ({ e, setInputValues }: InputValues) => {
-    const name = e.target.name
-    const value = e.target.value
-    setInputValues((prev) => { return { ...prev, [name]: value } })
-}
-
-export const submit = async ({ e, inputValues, theme, token, setUser, router }: Submit) => {
+export const continueWithGoogle = async ({ setUser, router }: LoginWithGoogle) => {
+    const result = await signInWithGoogle()
+    const name = result.user.displayName?.split(' ')[0]
+    const surname = result.user.displayName?.split(' ')[1] || ''
     try {
-        let user
-        if (!token && inputValues && e) {
-            e.preventDefault();
-            const { email, password } = inputValues;
-            user = await axios.put('/api/user/login', { email, password })
-            localStorage.setItem('token', user.data.token)
-        } else if (token) {
-            user = await axios.put('/api/user/login', {}, {
-                headers: {
-                    Authorization: token
-                }
-            })
-        }
+        const user = await axios.put('/api/user/login', { id: result.user.uid })
         if (user) {
             setUser(user.data.user)
-            if (router) {
-                router.push('/')
-            }
+            localStorage.setItem('token', user.data.token)
+            router.push('/')
         }
     } catch (error: any) {
-        if (error.response) alerts('error', theme, error.response.data.error)
+        const createUser = await axios.post('api/user/register', {
+            id: result.user.uid,
+            email: result.user.email,
+            name,
+            surname,
+            active: true
+        })
+        if (createUser) {
+            localStorage.setItem('token', createUser.data.token)
+            setUser(createUser.data)
+            router.push('/')
+        }
     }
 }
