@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import logoDark from "../../assets/logoDark.png";
 import logoLight from "../../assets/logoLight.png";
-import { ThemeToggle } from "../../components/ThemeToggle";
-import { GoogleIcon, LoadingIcon } from "@/components/Icons";
+import { GoogleIcon } from "@/components/Icons";
 import useThemeState from "@/zustand/theme";
 import { continueWithGoogle } from "./services";
 import { useUserState } from "@/zustand/userState";
@@ -35,9 +34,14 @@ export default function Login() {
                         router.push('/')
                     }
                 } catch (error) {
+                    setLoading(false)
+                    localStorage.removeItem('token')
                     alerts('error', theme, 'Sesión expirada, por favor inicia sesión nuevamente')
                 }
             })()
+        } else {
+            setLoading(false)
+            alerts('error', theme, 'Sesión expirada, por favor inicia sesión nuevamente')
         }
     }, [])
     return (
