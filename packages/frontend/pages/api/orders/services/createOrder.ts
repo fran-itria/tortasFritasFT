@@ -9,7 +9,7 @@ export default async function createOrder({ userId, paymentMethod, cash, product
 
     if (!paymentMethod) throw new Error("Debe especificar un metodo de pago")
     if (paymentMethod == Method.CASH && !cash) throw new Error("Debe especificar el monto en efectivo")
-    let order: any = await Order.create({
+    const order: any = await Order.create({
         paymentMethod,
         cash
     });

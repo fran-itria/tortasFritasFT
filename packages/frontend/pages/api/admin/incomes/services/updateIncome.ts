@@ -1,4 +1,4 @@
-import { Bills, Income } from "../../../../sequelize/db";
+import { Income } from "../../../../sequelize/db";
 import { UpdateIncomeParams } from "./types";
 
 export default async function updateIncome({ id, amount, category, date }: UpdateIncomeParams) {

@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tortas Fritas FT - Monorepo
 
-## Getting Started
+Este proyecto está organizado como un monorepo usando pnpm workspaces.
 
-First, run the development server:
+## Estructura del Proyecto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+tortasFritasFT/
+├── packages/
+│   └── frontend/          # Aplicación Next.js
+├── package.json          # Configuración raíz del monorepo
+├── pnpm-workspace.yaml   # Configuración de workspaces
+├── tsconfig.json         # Configuración TypeScript base
+└── eslint.config.mjs     # Configuración ESLint compartida
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Requisitos Previos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js >= 18.0.0
+- pnpm >= 8.0.0
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Instalación
 
-## Learn More
+```bash
+# Instalar todas las dependencias
+pnpm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts Disponibles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Desarrollo
+```bash
+# Ejecutar el frontend en modo desarrollo
+pnpm dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Ejecutar un workspace específico
+pnpm --filter frontend dev
+```
 
-## Deploy on Vercel
+### Build
+```bash
+# Construir todos los packages
+pnpm build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Construir un package específico
+pnpm --filter frontend build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Linting y Type Checking
+```bash
+# Ejecutar ESLint en todos los packages
+pnpm lint
+
+# Ejecutar type checking en todos los packages
+pnpm type-check
+```
+
+### Limpieza
+```bash
+# Limpiar todos los node_modules y builds
+pnpm clean
+```
+
+## Gestión de Dependencias
+
+### Instalar dependencias en la raíz (herramientas compartidas)
+```bash
+pnpm add -w <package-name>
+pnpm add -Dw <package-name>  # para dev dependencies
+```
+
+### Instalar dependencias en un workspace específico
+```bash
+pnpm --filter frontend add <package-name>
+pnpm --filter frontend add -D <package-name>  # para dev dependencies
+```
+
+## Workspaces
+
+- **frontend**: Aplicación Next.js con TypeScript, Tailwind CSS y autenticación
+
+## Configuración ESLint
+
+La configuración de ESLint está centralizada en la raíz del proyecto y se aplica a todos los packages. Incluye reglas para Next.js y TypeScript.
+
+## Configuración TypeScript
+
+Hay un `tsconfig.json` base en la raíz que contiene la configuración compartida. Cada package puede extender esta configuración según sus necesidades específicas.
