@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Options } from "src/options/options.model";
 
@@ -20,7 +20,7 @@ export class AdminService {
     }
 
     async deleteOptions(id: number): Promise<void> {
-        if (!id) throw new NotFoundException("Falta el id")
+        if (!id) throw new BadRequestException("Falta el id")
         const options = await this.optionsModel.destroy({
             where: { id }
         })
@@ -30,7 +30,7 @@ export class AdminService {
 
     async updateOptions(body: updateOptionsProps): Promise<void> {
         const { ordersActive, openingHours, id } = body
-        if (!id) throw new NotFoundException("Falta el id")
+        if (!id) throw new BadRequestException("Falta el id")
         const [affectedRows] = await Options.update(
             {
                 ordersActive,
