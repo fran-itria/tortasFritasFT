@@ -1,9 +1,21 @@
 import { Module } from '@nestjs/common';
-import { DbProvider } from './db.service';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
-  imports: [],
-  providers: [DbProvider],
-  exports: [DbProvider],
+  imports: [
+    SequelizeModule.forRoot({
+      dialect: 'postgres',
+      host: 'localhost',
+      port: 5433,
+      username: 'postgres',
+      password: '8284',
+      database: 'tortasFritasFt',
+      logging: false,
+      native: false,
+      autoLoadModels: true,
+    })
+  ],
+  providers: [],
+  exports: [],
 })
-export class DbModule {}
+export class DbModule { }

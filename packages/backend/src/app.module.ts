@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { OptionsController } from './controllers/options.controller';
 import { DbModule } from './sequelize/db.module';
-import { OptionsService } from './controllers/options.service';
+import { OptionsModule } from './options/options.module';
 
 @Module({
-  imports: [DbModule],
-  controllers: [OptionsController],
-  providers: [OptionsService],
+  imports: [
+    DbModule,
+    OptionsModule
+  ],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }
