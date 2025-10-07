@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "frontend": "pnpm --filter frontend",
+    "backend": "pnpm --filter backend",
     "dev": "pnpm --filter frontend dev",
     "build": "pnpm -r build",
     "start": "pnpm --filter frontend start",
