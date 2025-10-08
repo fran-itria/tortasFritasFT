@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Options } from "src/options/options.model";
+import { Orders } from "src/orders/orders.model";
 import { Users } from "src/users/users.model";
 
 interface updateOptionsProps {
@@ -73,5 +74,26 @@ export class AdminUsersService {
             throw new NotFoundException("No se pudo eliminar el usuario")
         }
         return
+    }
+}
+
+@Injectable()
+export class AdminOrdersService {
+    constructor(
+        @InjectModel(Orders)
+        private readonly ordersModel: typeof Orders
+    ) { }
+    async updateState(
+        id: number,
+        state: "pending" | "cancel" | "accept" | "completed" | "delivered"
+    ) {
+        if (!id) throw new BadRequestException("Falta el id")
+        if (!state) throw new BadRequestException("Falta el estado")
+        const [order] = await this.ordersModel.update(
+            { state },
+            { where: { id } }
+        )
+        if (!order) throw new NotFoundException("No se pudo actualizar el estado del pedido")
+        return order
     }
 }

@@ -1,6 +1,10 @@
 import { Controller, Delete, NotFoundException, Post, Put, Req, Res } from "@nestjs/common";
 import express from "express";
-import { AdminOptionsService, AdminUsersService } from "./admin.service";
+import {
+    AdminOptionsService,
+    AdminOrdersService,
+    AdminUsersService
+} from "./admin.service";
 
 
 @Controller('admin/options')
@@ -40,5 +44,16 @@ export class AdminUsersController {
         const { id } = req.body
         await this.adminService.inactiveUser(id)
         res.status(200).json({ message: "Usuario eliminado correctamente" })
+    }
+}
+
+@Controller('admin/orders')
+export class AdminOrdersController {
+    constructor(private readonly adminService: AdminOrdersService) { }
+
+    @Put()
+    async updateState(@Req() req: express.Request, @Res() res: express.Response) {
+        const order = await this.adminService.updateState(req.body.id, req.body.state)
+        res.status(200).json(order)
     }
 }

@@ -3,6 +3,7 @@ import { DbModule } from './sequelize/db.module';
 import { OptionsModule } from './options/options.module';
 import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -10,8 +11,8 @@ import { UsersModule } from './users/users.module';
     AdminModule,
     OptionsModule,
     UsersModule,
+    OrdersModule,
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule { }
