@@ -1,4 +1,5 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { OrderProduct } from "src/order_product/order_product.model";
 import { Users } from "src/users/users.model";
 
 export interface OrderCreationAttributes {
@@ -54,4 +55,7 @@ export class Orders extends Model<Orders, OrderCreationAttributes> {
 
     @BelongsTo(() => Users)
     user: Users
+
+    @HasMany(() => OrderProduct)
+    orderProducts: OrderProduct[]
 }

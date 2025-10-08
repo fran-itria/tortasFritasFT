@@ -5,6 +5,7 @@ import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
+import { OrderProductModule } from './order_product/order_product.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ProductsModule } from './products/products.module';
     UsersModule,
     OrdersModule,
     ProductsModule,
+    OrderProductModule
   ],
   controllers: [],
 })

@@ -1,4 +1,5 @@
-import { Column, DataType, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { OrderProduct } from "src/order_product/order_product.model";
 
 interface ProductCreate {
     name: string
@@ -57,4 +58,7 @@ export class Products extends Model<Products, ProductCreate> {
         allowNull: true,
     })
     image: string;
+
+    @HasMany(() => OrderProduct)
+    orderProducts: OrderProduct[];
 }

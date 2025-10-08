@@ -21,7 +21,7 @@ export class OrdersController {
         res.status(200).json(order);
     }
 
-    @Post()
+    @Post('/create')
     async create(@Req() req: express.Request, @Res() res: express.Response) {
         const body = req.body
         const order = await this.ordersService.create(body)
