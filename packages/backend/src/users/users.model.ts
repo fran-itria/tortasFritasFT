@@ -1,4 +1,5 @@
-import { Column, DataType, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Orders } from "src/orders/orders.model";
 
 // Interfaz para los atributos de creación
 export interface UserCreationAttributes {
@@ -54,4 +55,7 @@ export class Users extends Model<Users, UserCreationAttributes> {
         defaultValue: true
     })
     active: boolean
+
+    @HasMany(() => Orders, { foreignKey: 'userId' })
+    orders: Orders[]
 }

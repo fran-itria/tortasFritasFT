@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/sequelize';
 import { Users, UserCreationAttributes } from './users.model';
 import jwt from "jsonwebtoken";
+import { Orders } from 'src/orders/orders.model';
 
 export interface UpdateUserProps {
     id: string
@@ -21,13 +22,15 @@ export class UsersService {
     ) { }
 
     async findAll(): Promise<Users[]> {
-        const users = await this.usersModel.findAll()
+        const users = await this.usersModel.findAll({
+            include: [Orders]
+        })
         if (users.length > 0) return users
         else throw new NotFoundException('No hay usuarios registrados')
     }
 
     async findById(id: string): Promise<Users> {
-        const user = await this.usersModel.findByPk(id)
+        const user = await this.usersModel.findByPk(id, { include: [Orders] })
         if (user) return user
         else throw new NotFoundException('Usuario no encontrado')
     }
