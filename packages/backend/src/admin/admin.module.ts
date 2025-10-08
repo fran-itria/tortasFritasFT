@@ -8,9 +8,14 @@ import { Products } from "src/products/product.model";
 import { AdminOptionsService, AdminOrdersService, AdminProductsService, AdminUsersService } from "./admin.service";
 import { AdminOptionsController, AdminOrdersController, AdminProductsController, AdminUsersController } from "./admin.controller";
 import { IncomesModule } from './incomes/incomes.module';
+import { ExpensesModule } from './expenses/expenses.module';
 
 @Module({
-    imports: [SequelizeModule.forFeature([Options, Users, Orders, Products]), IncomesModule],
+    imports: [
+        SequelizeModule.forFeature([Options, Users, Orders, Products]),
+        IncomesModule,
+        ExpensesModule
+    ],
     controllers: [
         AdminOptionsController,
         AdminUsersController,
