@@ -1,14 +1,15 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { AdminService } from "./admin.service";
-import { AdminOptionsController } from "./admin.controller";
+import { AdminOptionsService, AdminUsersService } from "./admin.service";
+import { AdminOptionsController, AdminUsersController } from "./admin.controller";
 import { AdminMiddleware } from "./admin.middleware";
 import { Options } from "src/options/options.model";
+import { Users } from "src/users/users.model";
 
 @Module({
-    imports: [SequelizeModule.forFeature([Options])],
-    controllers: [AdminOptionsController],
-    providers: [AdminService]
+    imports: [SequelizeModule.forFeature([Options, Users])],
+    controllers: [AdminOptionsController, AdminUsersController],
+    providers: [AdminOptionsService, AdminUsersService]
 })
 
 export class AdminModule {

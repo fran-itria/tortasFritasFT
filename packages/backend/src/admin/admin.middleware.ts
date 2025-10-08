@@ -8,7 +8,8 @@ export class AdminMiddleware implements NestMiddleware {
         process.loadEnvFile()
         const { authorization } = req.headers
         if (!authorization) throw new UnauthorizedException('No autorizado, se requiere token')
-        jwt.verify(authorization, process.env.SECRET_KEY)
+        const decoded = jwt.verify(authorization, process.env.SECRET_KEY)
+        if (!decoded.admin) throw new UnauthorizedException('No autorizado, se requiere ser administrador')
         next()
     }
 }

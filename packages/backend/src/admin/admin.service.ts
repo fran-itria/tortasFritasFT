@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Options } from "src/options/options.model";
+import { Users } from "src/users/users.model";
 
 interface updateOptionsProps {
     ordersActive: boolean;
@@ -9,7 +10,7 @@ interface updateOptionsProps {
 }
 
 @Injectable()
-export class AdminService {
+export class AdminOptionsService {
     constructor(
         @InjectModel(Options)
         private optionsModel: typeof Options
@@ -44,6 +45,32 @@ export class AdminService {
         )
         if (affectedRows === 0) {
             throw new NotFoundException("No se pudo actualizar la configuración")
+        }
+        return
+    }
+}
+
+@Injectable()
+export class AdminUsersService {
+    constructor(
+        @InjectModel(Users)
+        private usersModel: typeof Users
+    ) { }
+
+    async inactiveUser(id: string): Promise<void> {
+        if (!id) throw new BadRequestException("Falta el id")
+        const [affectedRows] = await this.usersModel.update(
+            {
+                active: false
+            },
+            {
+                where: {
+                    id: id
+                }
+            }
+        )
+        if (affectedRows === 0) {
+            throw new NotFoundException("No se pudo eliminar el usuario")
         }
         return
     }

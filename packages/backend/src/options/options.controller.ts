@@ -8,7 +8,7 @@ export class OptionsController {
     constructor(private readonly optionsService: OptionsService) { }
 
     @Get()
-    async getOptions(@Req() req: express.Request, @Res() res: express.Response) {
+    async getOptions(@Req() _req: express.Request, @Res() res: express.Response) {
         const options = await this.optionsService.findAll();
         if (options.length > 0) {
             res.status(200).json(options);
