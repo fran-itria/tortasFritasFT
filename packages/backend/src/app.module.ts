@@ -1,21 +1,13 @@
 import { Module } from '@nestjs/common';
 import { DbModule } from './sequelize/db.module';
-import { OptionsModule } from './options/options.module';
 import { AdminModule } from './admin/admin.module';
-import { UsersModule } from './users/users.module';
-import { OrdersModule } from './orders/orders.module';
-import { ProductsModule } from './products/products.module';
-import { OrderProductModule } from './order_product/order_product.module';
+import { PublicModule } from './public/public.module';
 
 @Module({
   imports: [
     DbModule,
     AdminModule,
-    OptionsModule,
-    UsersModule,
-    OrdersModule,
-    ProductsModule,
-    OrderProductModule
+    PublicModule
   ],
   controllers: [],
 })

@@ -8,7 +8,6 @@ import { Options } from "src/options/options.model";
 @Module({
     imports: [SequelizeModule.forFeature([Options])],
     controllers: [OptionsController],
-    providers: [OptionsService],
-    exports: [SequelizeModule]
+    providers: [OptionsService]
 })
 export class OptionsModule { }
