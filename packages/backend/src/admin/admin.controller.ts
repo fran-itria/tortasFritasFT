@@ -3,6 +3,7 @@ import express from "express";
 import {
     AdminOptionsService,
     AdminOrdersService,
+    AdminProductsService,
     AdminUsersService
 } from "./admin.service";
 
@@ -55,5 +56,35 @@ export class AdminOrdersController {
     async updateState(@Req() req: express.Request, @Res() res: express.Response) {
         const order = await this.adminService.updateState(req.body.id, req.body.state)
         res.status(200).json(order)
+    }
+}
+
+@Controller('/admin/products')
+export class AdminProductsController {
+    constructor(private readonly adminService: AdminProductsService) { }
+
+    @Post('/bulkCreate')
+    async bulkCreateProducts(@Req() req: express.Request, @Res() res: express.Response) {
+        const products = await this.adminService.bulkCreate(req.body)
+        res.status(201).json(products)
+    }
+
+    @Post()
+    async createProduct(@Req() req: express.Request, @Res() res: express.Response) {
+        const product = await this.adminService.create(req.body)
+        res.status(201).json(product)
+    }
+
+    @Put('/soldOut')
+    async soldOutProduct(@Req() req: express.Request, @Res() res: express.Response) {
+        const { id } = req.body
+        await this.adminService.soldOut(id)
+        res.status(200).json({ message: "Producto marcado como agotado" })
+    }
+
+    @Put()
+    async updateProduct(@Req() req: express.Request, @Res() res: express.Response) {
+        const product = await this.adminService.update(req.body)
+        res.status(200).json(product)
     }
 }

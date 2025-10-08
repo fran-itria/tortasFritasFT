@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/sequelize';
 import { Orders, OrderCreationAttributes } from './orders.model';
 import { Users } from 'src/users/users.model';
+import { Products } from 'src/products/product.model';
 
 export enum Method {
     CASH = 'cash',
@@ -18,7 +19,9 @@ export class OrdersService {
         @InjectModel(Orders)
         private readonly ordersModel: typeof Orders,
         @InjectModel(Users)
-        private readonly usersModel: typeof Users
+        private readonly usersModel: typeof Users,
+        @InjectModel(Products)
+        private readonly productModel: typeof Products
     ) { }
 
     async findAll(): Promise<Orders[]> {
@@ -50,14 +53,12 @@ export class OrdersService {
         });
         if (!order) throw new Error("No se pudo crear la orden");
 
-        // TODO: Implementar la lógica de productos cuando tengas el modelo OrderProduct
-        // for (let i = 0; i < products.length; i++) {
-        //     const product = await this.productService.findById(products[i].productId)
-        //     if (product) {
-        //         // Lógica para crear OrderProduct
-        //         totalAmount += product.amount * products[i].quantity;
-        //     }
-        // }
+        for (let i = 0; i < products.length; i++) {
+            const product = await this.productModel.findByPk(products[i].productId)
+            if (product) {
+                totalAmount += product.amount * products[i].quantity;
+            }
+        }
 
         await order.update({ amount: totalAmount });
         return order;
