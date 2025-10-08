@@ -6,9 +6,10 @@ import { Products } from "src/products/product.model";
 import { Users } from "src/users/users.model";
 
 interface updateOptionsProps {
-    ordersActive: boolean;
-    openingHours: string;
-    id: number;
+    id: string
+    ordersActive?: boolean;
+    openingHours?: string[];
+    address?: string
 }
 interface productCreateProps {
     name: string
@@ -37,7 +38,7 @@ export class AdminOptionsService {
     ) { }
 
     async createOptions(): Promise<Options> {
-        return this.optionsModel.create({})
+        return this.optionsModel.create()
     }
 
     async deleteOptions(id: number): Promise<void> {
@@ -50,12 +51,13 @@ export class AdminOptionsService {
     }
 
     async updateOptions(body: updateOptionsProps): Promise<void> {
-        const { ordersActive, openingHours, id } = body
+        const { id, ordersActive, openingHours, address } = body
         if (!id) throw new BadRequestException("Falta el id")
         const [affectedRows] = await Options.update(
             {
                 ordersActive,
-                openingHours
+                open: openingHours,
+                address
             },
             {
                 where: {

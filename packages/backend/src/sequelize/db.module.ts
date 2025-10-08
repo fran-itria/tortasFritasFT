@@ -9,7 +9,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
       port: 5433,
       username: 'postgres',
       password: '8284',
-      database: 'tortasFritasFt',
+      database: 'tortas_fritas_ft',
       logging: false,
       native: false,
       autoLoadModels: true,

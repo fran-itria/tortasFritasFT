@@ -1,8 +1,21 @@
 
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
+
+interface updateOptionsProps {
+    ordersActive?: boolean;
+    open?: string[];
+    address?: string;
+}
 
 @Table({ tableName: 'options' })
-export class Options extends Model {
+export class Options extends Model<Options, updateOptionsProps> {
+    @PrimaryKey
+    @Column({
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4
+    })
+    declare id: string
+
     @Column({
         type: DataType.BOOLEAN,
         defaultValue: true,
