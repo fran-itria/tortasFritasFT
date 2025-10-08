@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Options } from "src/options/options.model";
-import { Orders } from "src/orders/orders.model";
+import { Options } from "src/options/option.model";
+import { Orders } from "src/orders/order.model";
 import { Products } from "src/products/product.model";
-import { Users } from "src/users/users.model";
+import { Users } from "src/users/user.model";
 
 interface updateOptionsProps {
     id: string

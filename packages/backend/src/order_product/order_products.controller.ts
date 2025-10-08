@@ -1,5 +1,5 @@
 import { Controller, Get, NotFoundException } from '@nestjs/common';
-import { OrderProductService } from './order_product.service';
+import { OrderProductService } from './order_products.service';
 
 @Controller('order-product')
 export class OrderProductController {

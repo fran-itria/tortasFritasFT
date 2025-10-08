@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { OptionsController } from "./options.controller";
 import { OptionsService } from "./options.service";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { Options } from "src/options/options.model";
+import { Options } from "src/options/option.model";
 
 
 @Module({

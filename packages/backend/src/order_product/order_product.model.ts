@@ -1,5 +1,5 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { Orders } from "src/orders/orders.model";
+import { Orders } from "src/orders/order.model";
 import { Products } from "src/products/product.model";
 
 export interface OrderProductCreationAttributes {

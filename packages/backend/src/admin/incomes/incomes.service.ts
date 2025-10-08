@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Incomes } from './incomes.model';
+import { Incomes } from './income.model';
 
 interface CreateIncomeProps {
     amount: number,

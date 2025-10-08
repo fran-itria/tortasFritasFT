@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Orders, OrderCreationAttributes } from './orders.model';
-import { Users } from 'src/users/users.model';
+import { Orders, OrderCreationAttributes } from './order.model';
+import { Users } from 'src/users/user.model';
 import { Products } from 'src/products/product.model';
 import { OrderProduct } from 'src/order_product/order_product.model';
 

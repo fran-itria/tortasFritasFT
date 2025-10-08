@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Res } from '@nestjs/common';
 import express from 'express';
 import * as incomesService from './incomes.service';
-import * as incomesModel from './incomes.model';
+import * as incomesModel from './income.model';
 
 @Controller('admin/incomes')
 export class IncomesController {

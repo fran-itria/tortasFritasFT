@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Users, UserCreationAttributes } from './users.model';
+import { Users, UserCreationAttributes } from './user.model';
 import jwt from "jsonwebtoken";
-import { Orders } from 'src/orders/orders.model';
+import { Orders } from 'src/orders/order.model';
 
 export interface UpdateUserProps {
     id: string

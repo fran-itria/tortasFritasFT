@@ -1,5 +1,5 @@
 import { Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { Orders } from "src/orders/orders.model";
+import { Orders } from "src/orders/order.model";
 
 // Interfaz para los atributos de creación
 export interface UserCreationAttributes {

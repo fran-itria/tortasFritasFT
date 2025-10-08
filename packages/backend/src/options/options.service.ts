@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Options } from "src/options/options.model";
+import { Options } from "src/options/option.model";
 
 interface updateOptionsProps {
     ordersActive: boolean;

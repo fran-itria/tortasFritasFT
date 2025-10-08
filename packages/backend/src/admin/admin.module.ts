@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { AdminMiddleware } from "./admin.middleware";
-import { Options } from "src/options/options.model";
-import { Users } from "src/users/users.model";
-import { Orders } from "src/orders/orders.model";
+import { Options } from "src/options/option.model";
+import { Users } from "src/users/user.model";
+import { Orders } from "src/orders/order.model";
 import { Products } from "src/products/product.model";
 import { AdminOptionsService, AdminOrdersService, AdminProductsService, AdminUsersService } from "./admin.service";
 import { AdminOptionsController, AdminOrdersController, AdminProductsController, AdminUsersController } from "./admin.controller";
