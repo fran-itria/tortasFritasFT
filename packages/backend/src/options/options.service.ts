@@ -9,9 +9,9 @@ export class OptionsService {
         private optionsModel: typeof Options
     ) { }
 
-    async findAll(): Promise<Options[]> {
+    async findAll(): Promise<Options> {
         const options = await this.optionsModel.findAll();
         if (options.length == 0) throw new NotFoundException('No hay configuraciones registradas');
-        return options
+        return options[0]
     }
 }

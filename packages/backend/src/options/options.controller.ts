@@ -10,7 +10,7 @@ export class OptionsController {
     @Get()
     async getOptions(@Req() _req: express.Request, @Res() res: express.Response) {
         const options = await this.optionsService.findAll();
-        if (options.length > 0) {
+        if (options) {
             res.status(200).json(options);
         } else {
             throw new NotFoundException('No se encontraron opciones');
