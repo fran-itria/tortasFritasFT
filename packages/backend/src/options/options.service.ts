@@ -1,12 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Options } from "src/options/option.model";
-
-interface updateOptionsProps {
-    ordersActive: boolean;
-    openingHours: string;
-    id: number;
-}
+import { Options } from "./option.model";
 
 @Injectable()
 export class OptionsService {
@@ -16,6 +10,8 @@ export class OptionsService {
     ) { }
 
     async findAll(): Promise<Options[]> {
-        return this.optionsModel.findAll();
+        const options = await this.optionsModel.findAll();
+        if (options.length == 0) throw new NotFoundException('No hay configuraciones registradas');
+        return options
     }
 }
