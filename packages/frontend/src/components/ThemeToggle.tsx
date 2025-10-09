@@ -4,10 +4,12 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { MoonIcon, SunIcon } from './Icons'
 import useThemeState from '@/zustand/theme'
+import { useUserState } from '@/zustand/userState'
 
 export function ThemeToggle() {
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
+    const { user } = useUserState(state => state)
     const updateState = useThemeState((state) => state.updateTheme)
     useEffect(() => {
         setMounted(true)
@@ -24,18 +26,22 @@ export function ThemeToggle() {
         <button
             onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             className={`
-            fixed 
-            top-4 
-            right-4 
-            p-2 
-            rounded-md
-            ${theme == 'dark' ? 'bg-dark-background-button' : 'bg-light-background-button'}
+            rounded-full
+            ${!user ? 'max-xs:w-full' : 'w-full'}
+            flex
+            justify-center
         `}>
-            {theme === 'light' ? (
-                <MoonIcon />
-            ) : (
-                <SunIcon />
-            )}
+            <div className={`
+                ${theme == 'dark' ? 'bg-dark-background-button' : 'bg-light-background-button'}
+                p-2
+                rounded-full
+            `}>
+                {theme === 'light' ? (
+                    <MoonIcon />
+                ) : (
+                    <SunIcon />
+                )}
+            </div>
         </button>
     )
 }
