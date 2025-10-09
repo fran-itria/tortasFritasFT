@@ -23,7 +23,7 @@ export default function Login() {
         if (token) {
             (async () => {
                 try {
-                    const user = await axios.get('/api/user/loginWithToken', {
+                    const user = await axios.get('/user/loginWithToken', {
                         headers: {
                             Authorization: token
                         }

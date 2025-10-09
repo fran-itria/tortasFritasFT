@@ -7,20 +7,21 @@ interface LoginWithGoogle {
     setUser: (user: User) => void
     router?: any
 }
+export const baseUrl = 'http://localhost:3000'
 
 export const continueWithGoogle = async ({ setUser, router }: LoginWithGoogle) => {
     const result = await signInWithGoogle()
     const name = result.user.displayName?.split(' ')[0]
     const surname = result.user.displayName?.split(' ')[1] || ''
     try {
-        const user = await axios.put('/api/user/login', { id: result.user.uid })
+        const user = await axios.put(`${baseUrl}/users/login`, { email: result.user.email })
         if (user) {
             setUser(user.data.user)
             localStorage.setItem('token', user.data.token)
             router.push('/')
         }
     } catch (error: any) {
-        const createUser = await axios.post('api/user/register', {
+        const createUser = await axios.post(`${baseUrl}/users`, {
             id: result.user.uid,
             email: result.user.email,
             name,
