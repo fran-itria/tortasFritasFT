@@ -1,8 +1,28 @@
 import axios from 'axios';
 
+// Interfaces y clases de error
+interface ApiErrorResponse {
+    data: {
+        error: string
+        message: string
+        statusCode: number
+    }
+}
+
+export class ApiError extends Error {
+    public name: string = 'ApiError'
+    public response: ApiErrorResponse
+
+    constructor(message: string, response: ApiErrorResponse) {
+        super(message)
+        this.response = response
+        Object.setPrototypeOf(this, ApiError.prototype)
+    }
+}
+
 // Crear una instancia de axios con configuración base
 const apiClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001', // URL de tu backend
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
@@ -12,7 +32,6 @@ const apiClient = axios.create({
 // Interceptor para requests (opcional - para agregar tokens, etc.)
 apiClient.interceptors.request.use(
     (config) => {
-        // Agregar token de autenticación si existe
         const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -30,6 +49,18 @@ apiClient.interceptors.response.use(
         return response;
     },
     (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('token');
+        }
+
+        if (error.response) {
+            const apiError = new ApiError(
+                error.response.data?.message || 'Error en la API',
+                error.response
+            );
+            return Promise.reject(apiError);
+        }
+
         return Promise.reject(error);
     }
 );

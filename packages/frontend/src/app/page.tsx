@@ -1,6 +1,7 @@
 'use client'
 
 import Atention from "@/components/Home/Atention";
+import { ApiError } from "@/lib/axios";
 import { usersServiceApi } from "@/services/api";
 import { useUserState } from "@/zustand/userState";
 import { useEffect } from "react";
@@ -19,7 +20,11 @@ export default function Home() {
           setUser(undefined)
         }
       } catch (error) {
-        console.log({ error })
+        if (error instanceof ApiError) {
+          if (error.response.data.statusCode == 401) {
+            setUser(undefined)
+          }
+        }
       }
     })()
   }, [])
