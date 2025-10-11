@@ -12,23 +12,15 @@ export interface User {
 }
 
 interface UserState {
-    user: User;
-    setUser: (user: User) => void;
+    user: User | undefined;
+    setUser: (user: User | undefined) => void;
 }
 
 export const useUserState = create<UserState>()(
     persist(
         (set) => ({
-            user: {
-                active: false,
-                admin: false,
-                email: "",
-                id: "",
-                name: "",
-                surname: "",
-                phone: ""
-            },
-            setUser: (user: User) => set({ user }),
+            user: undefined,
+            setUser: (user: User | undefined) => set({ user }),
         }),
         {
             name: 'user-storage',

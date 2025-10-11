@@ -9,7 +9,6 @@ export default function Atention() {
     useEffect(() => {
         (async () => {
             const options = await optionsServiceApi.getAll()
-            console.log(options)
             setOpen(options.data)
         })()
     }, []);
