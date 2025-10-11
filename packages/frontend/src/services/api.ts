@@ -21,3 +21,7 @@ export const usersServiceApi = {
         active: true
     })
 }
+
+export const productsServiceApi = {
+    getAll: () => apiClient.get('/products'),
+}

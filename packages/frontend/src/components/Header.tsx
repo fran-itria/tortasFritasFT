@@ -4,7 +4,7 @@ import useThemeState from "@/zustand/theme"
 import logoDark from "../assets/logoDark.png";
 import logoLight from "../assets/logoLight.png";
 import { ThemeToggle } from "./ThemeToggle";
-import ShoppingCartIcon, { GoogleIcon, InstagramIcon, PersonIcon } from "./Icons";
+import { GoogleIcon, InstagramIcon, PersonIcon, ShoppingCartIcon } from "./Icons";
 import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
