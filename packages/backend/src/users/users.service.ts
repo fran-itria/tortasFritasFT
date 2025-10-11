@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Users, UserCreationAttributes } from './user.model';
 import jwt from "jsonwebtoken";
@@ -92,9 +92,22 @@ export class UsersService {
     }
 
     async loginWithToken(token: string): Promise<Users> {
-        const data: any = jwt.verify(token, process.env.SECRET_KEY)
-        const user = await this.usersModel.findByPk(data.id)
-        if (!user) throw new NotFoundException('Usuario no encontrado, inicie sesión nuevamente')
-        return user
+        process.loadEnvFile()
+        if (!token) {
+            throw new BadRequestException('Token es requerido');
+        }
+        try {
+            const data: any = jwt.verify(token, process.env.SECRET_KEY);
+            const user = await this.usersModel.findByPk(data.id);
+            if (!user) {
+                throw new NotFoundException('Usuario no encontrado, inicie sesión nuevamente');
+            }
+            return user;
+        } catch (error) {
+            if (error instanceof NotFoundException) {
+                throw error;
+            }
+            throw new UnauthorizedException('Token inválido o expirado');
+        }
     }
 }

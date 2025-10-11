@@ -34,13 +34,20 @@ export class UsersController {
     @Put('/login')
     async login(@Req() req: express.Request, @Res() res: express.Response) {
         const user = await this.usersService.login(req.body.email);
-        res.status(200).json({ message: 'Inicio de sesión exitoso', user });
+        res.status(200).json({ message: 'Inicio de sesión exitoso', user: user.user, token: user.token });
     }
 
     @Put('/loginWithToken')
     async loginWithToken(@Req() req: express.Request, @Res() res: express.Response) {
-        const { token } = req.headers;
-        const user = await this.usersService.loginWithToken(token as string);
+        const authHeader = req.headers.authorization;
+        let token: string | undefined;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.substring(7);
+        }
+        if (!token) {
+            return res.status(401).json({ message: 'Token no proporcionado' });
+        }
+        const user = await this.usersService.loginWithToken(token);
         res.status(200).json({ message: 'Inicio de sesión exitoso', user });
     }
 
