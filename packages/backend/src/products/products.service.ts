@@ -10,7 +10,7 @@ export class ProductsService {
     ) { }
 
     async findAll(): Promise<Products[]> {
-        return this.productModel.findAll();
+        return this.productModel.findAll({ order: [['amount', 'ASC']] });
     }
 
     async findById(id: string): Promise<Products | null> {
