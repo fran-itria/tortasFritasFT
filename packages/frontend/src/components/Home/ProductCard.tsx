@@ -1,5 +1,5 @@
 import useThemeState from "@/zustand/theme"
-import { CartIconPlus } from "../Icons"
+import { CartIconPlus, PencilIcon } from "../Icons"
 import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
 
@@ -16,7 +16,6 @@ interface Props {
 export default function ProductCard({ index, image, name, description, varity, amount }: Props) {
     const { user } = useUserState(state => state)
     const { theme } = useThemeState(state => state)
-    console.log(index)
     return (
         <div className={`
             flex flex-col justify-center items-center
@@ -83,8 +82,18 @@ export default function ProductCard({ index, image, name, description, varity, a
                         }
                     }}
                 >
-                    <CartIconPlus />
-                    <p>Agregar producto</p>
+
+                    {!user?.admin ?
+                        <div className="w-full flex justify-around">
+                            <CartIconPlus />
+                            <p>Agregar producto</p>
+                        </div>
+                        :
+                        <div className="w-full flex justify-around">
+                            <PencilIcon />
+                            <p>Editar producto</p>
+                        </div>
+                    }
                 </button>
             </div>
         </div>

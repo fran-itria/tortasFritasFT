@@ -4,7 +4,8 @@ import {
     FaGoogle,
     FaInstagram,
     FaShoppingCart,
-    FaCartPlus
+    FaCartPlus,
+    FaPencilAlt
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoPerson } from "react-icons/io5";
@@ -46,5 +47,11 @@ export function PersonIcon({ theme }: { theme: string | undefined }) {
 export function CartIconPlus() {
     return <div className='w-6 max-xs:w-5 h-auto'>
         <FaCartPlus size='auto' color='black' />
+    </div>
+}
+
+export function PencilIcon() {
+    return <div className='w-6 max-xs:w-5 h-auto'>
+        <FaPencilAlt size='auto' color='black' />
     </div>
 }
