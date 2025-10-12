@@ -5,6 +5,7 @@ import { alerts } from "@/alerts/alerts"
 
 
 interface Props {
+    index: { current: number, total: number }
     image?: string
     name: string,
     description?: string
@@ -12,14 +13,16 @@ interface Props {
     amount: number
 }
 
-export default function ProductCard({ image, name, description, varity, amount }: Props) {
+export default function ProductCard({ index, image, name, description, varity, amount }: Props) {
     const { user } = useUserState(state => state)
     const { theme } = useThemeState(state => state)
+    console.log(index)
     return (
-        <div className="
+        <div className={`
             flex flex-col justify-center items-center
             p-5
-        ">
+            ${index.current == (index.total - 1) && index.current % 2 == 0 ? 'col-span-2' : ''}
+        `}>
             <div className={`
                 ${theme == 'dark' ?
                     'bg-[#00011A] shadow-[7px_7px_7px_rgba(255,255,255,0.40)]'
