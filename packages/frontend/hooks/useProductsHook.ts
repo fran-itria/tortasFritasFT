@@ -1,7 +1,7 @@
 import { productsServiceApi } from "@/services/api";
 import { useEffect, useState } from "react";
 
-interface Products {
+export interface Products {
     id: string
     name: string
     amount: number
@@ -26,5 +26,5 @@ export default function useProductsHook() {
         })()
     }, [])
 
-    return { products }
+    return { products, setProducts }
 }
