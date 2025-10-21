@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Req, Res } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import express from "express";
 
@@ -11,6 +11,7 @@ export class ProductsController {
     @Get()
     async findAll(@Req() _req: express.Request, @Res() res: express.Response) {
         const products = await this.productsService.findAll();
+        if (products.length == 0) throw new NotFoundException('No hay productos registrados');
         res.status(200).json(products);
     }
 

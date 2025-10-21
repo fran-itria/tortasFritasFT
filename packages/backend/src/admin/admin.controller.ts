@@ -65,8 +65,17 @@ export class AdminProductsController {
 
     @Post('/bulkCreate')
     async bulkCreateProducts(@Req() req: express.Request, @Res() res: express.Response) {
-        const products = await this.adminService.bulkCreate(req.body)
-        res.status(201).json(products)
+        const products = req.body
+        console.log(products);
+        for (const element of products) {
+            if (element.varity) {
+                for (const varityElement of element.varity) {
+                    varityElement.id = crypto.randomUUID();
+                }
+            }
+        }
+        const createProducts = await this.adminService.bulkCreate(req.body)
+        res.status(201).json(createProducts)
     }
 
     @Post()
