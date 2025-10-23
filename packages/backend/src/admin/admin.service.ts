@@ -15,7 +15,7 @@ interface productCreateProps {
     name: string
     amount: number
     description?: string
-    varity?: { name: string, stock: boolean }[]
+    varity?: { id: string, name: string, stock: boolean }[]
     soldOut?: boolean
     image?: string
 }
@@ -25,7 +25,7 @@ interface updateProductProps {
     name?: string
     amount?: number
     description?: string
-    varity?: { name: string, stock: boolean }[]
+    varity?: { id: string, name: string, stock: boolean }[]
     soldOut?: boolean
     image?: string
 }
@@ -150,12 +150,13 @@ export class AdminProductsService {
 
     async soldOut(id: string): Promise<void> {
         const product = await this.productsModel.update({ soldOut: true }, { where: { id } })
-        if (!product) throw new NotFoundException("No se pudo eliminar el producto")
+        if (!product) throw new NotFoundException("No se pudo actualizar el estado del producto")
         return
     }
 
     async update(props: updateProductProps) {
         const { id, amount, description, image, name, soldOut, varity } = props
+        console.log(props)
         if (!id) throw new Error("Falta el id")
         const [product] = await this.productsModel.update(
             {
