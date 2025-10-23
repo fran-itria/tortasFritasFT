@@ -6,7 +6,7 @@ export interface Products {
     name: string
     amount: number
     description?: string
-    varity?: { name: string, soldOut: boolean }[]
+    varity?: { id: string, name: string, soldOut: boolean }[]
     soldOut: boolean
     image?: string
 }

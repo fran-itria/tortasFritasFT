@@ -1,5 +1,6 @@
 import apiClient from '@/lib/axios';
 import { OptionsResponse } from './types';
+import { Products } from 'hooks/useProductsHook';
 
 export const optionsServiceApi = {
     getAll: () => apiClient.get<OptionsResponse>('/options'),
@@ -24,4 +25,5 @@ export const usersServiceApi = {
 
 export const productsServiceApi = {
     getAll: () => apiClient.get('/products'),
+    update: (body: Products) => apiClient.put('admin/products', { ...body })
 }
