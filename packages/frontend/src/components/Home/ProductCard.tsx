@@ -1,21 +1,31 @@
 import useThemeState from "@/zustand/theme"
 import { CartIconPlus, PencilIcon } from "../Icons"
-import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
+import { Products } from "hooks/useProductsHook"
 
 
 interface Props {
+    isAdmin: boolean
+    openModal: (p?: Products | undefined) => void
     index: { current: number, total: number }
+    id: string
     image?: string
     name: string,
     description?: string
-    varity?: { name: string, soldOut: boolean }[]
+    varity?: { id: string, name: string, soldOut: boolean }[]
     amount: number
+    soldOut: boolean
 }
 
-export default function ProductCard({ index, image, name, description, varity, amount }: Props) {
-    const { user } = useUserState(state => state)
+export default function ProductCard({ isAdmin, openModal, id, soldOut, index, image, name, description, varity, amount }: Props) {
     const { theme } = useThemeState(state => state)
+    const buttonFunction = () => {
+        if (!isAdmin) {
+            alerts('error', theme, 'Debes estar logeado para hacer pedidos')
+        } else if (isAdmin) {
+            openModal({ amount, description, id, image, name, varity, soldOut })
+        }
+    }
     return (
         <div className={`
             flex flex-col justify-center items-center
@@ -50,12 +60,17 @@ export default function ProductCard({ index, image, name, description, varity, a
                 {varity && varity.length > 0 && (
                     <ul className={`${varity.length > 4 && "grid grid-cols-2"} list-disc list-inside`}>
                         {varity.map((v) => (
-                            <li className={`
-                                first-letter:uppercase 
-                               ${theme == 'dark' ? 'dark:text-dark-text' : 'text-gray-500'} 
-                               font-bold 
-                                text-center text-sm
-                            `}>{v.name}</li>
+                            <li
+                                key={v.id}
+                                className={`
+                                    first-letter:uppercase 
+                                    ${theme == 'dark' ? 'dark:text-dark-text' : 'text-gray-500'} 
+                                    font-bold 
+                                    text-center text-sm
+                                `}
+                            >
+                                {v.name}
+                            </li>
                         ))}
                     </ul>
                 )}
@@ -69,21 +84,17 @@ export default function ProductCard({ index, image, name, description, varity, a
                             'bg-dark-background-button' :
                             'bg-linear-to-r from-[#00A900] to-[#006100]'
                         }
-                        ${!user && 'opacity-50'}
+                        ${!isAdmin && 'opacity-50'}
                         rounded-b-xl 
                         text-white
                         text-xl
                         max-xs:text-sm
                         font-bold
                 `}
-                    onClick={() => {
-                        if (!user) {
-                            alerts('error', theme, 'Debes estar logeado para hacer pedidos')
-                        }
-                    }}
+                    onClick={() => buttonFunction()}
                 >
 
-                    {!user?.admin ?
+                    {!isAdmin ?
                         <div className="w-full flex justify-around">
                             <CartIconPlus />
                             <p>Agregar producto</p>
