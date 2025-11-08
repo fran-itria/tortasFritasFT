@@ -156,7 +156,6 @@ export class AdminProductsService {
 
     async update(props: updateProductProps) {
         const { id, amount, description, image, name, soldOut, varity } = props
-        console.log(props)
         if (!id) throw new Error("Falta el id")
         const [product] = await this.productsModel.update(
             {
