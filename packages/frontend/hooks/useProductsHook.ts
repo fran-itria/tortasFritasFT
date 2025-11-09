@@ -8,7 +8,7 @@ export interface Products {
     description?: string
     varity?: { id: string, name: string, soldOut: boolean }[]
     soldOut: boolean
-    image?: string
+    image?: File | string
 }
 
 export default function useProductsHook() {

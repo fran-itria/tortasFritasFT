@@ -2,14 +2,16 @@ import useThemeState from "@/zustand/theme"
 import { CartIconPlus, PencilIcon } from "../Icons"
 import { alerts } from "@/alerts/alerts"
 import { Products } from "hooks/useProductsHook"
+import { url } from "inspector"
+import Link from "next/link"
 
 
 interface Props {
     isAdmin: boolean
-    openModal: (p?: Products | undefined) => void
+    // openModal: (p?: Products | undefined) => void
     index: { current: number, total: number }
     id: string
-    image?: string
+    image: string | File | undefined
     name: string,
     description?: string
     varity?: { id: string, name: string, soldOut: boolean }[]
@@ -17,20 +19,20 @@ interface Props {
     soldOut: boolean
 }
 
-export default function ProductCard({ isAdmin, openModal, id, soldOut, index, image, name, description, varity, amount }: Props) {
+export default function ProductCard({ isAdmin, id, soldOut, index, image, name, description, varity, amount }: Props) {
     const { theme } = useThemeState(state => state)
-    const buttonFunction = () => {
-        if (!isAdmin) {
-            alerts('error', theme, 'Debes estar logeado para hacer pedidos')
-        } else if (isAdmin) {
-            openModal({ amount, description, id, image, name, varity, soldOut })
-        }
-    }
+    // const buttonFunction = () => {
+    //     if (!isAdmin) {
+    //         alerts('error', theme, 'Debes estar logeado para hacer pedidos')
+    //     } else if (isAdmin) {
+    //         openModal({ amount, description, id, image, name, varity, soldOut })
+    //     }
+    // }
     return (
         <div className={`
             flex flex-col justify-center items-center
             p-5
-            ${index.current == (index.total - 1) && index.current % 2 == 0 ? 'col-span-2' : ''}
+            ${index.current == (index.total - 1) && index.current % 2 == 0 && !isAdmin ? 'col-span-2' : ''}
         `}>
             <div className={`
                 ${theme == 'dark' ?
@@ -91,20 +93,20 @@ export default function ProductCard({ isAdmin, openModal, id, soldOut, index, im
                         max-xs:text-sm
                         font-bold
                 `}
-                    onClick={() => buttonFunction()}
                 >
-
-                    {!isAdmin ?
-                        <div className="w-full flex justify-around">
-                            <CartIconPlus />
-                            <p>Agregar producto</p>
-                        </div>
-                        :
-                        <div className="w-full flex justify-around">
-                            <PencilIcon />
-                            <p>Editar producto</p>
-                        </div>
-                    }
+                    <Link href={`/product/${id}`}>
+                        {!isAdmin ?
+                            <div className="w-full flex justify-around">
+                                <CartIconPlus />
+                                <p>Agregar producto</p>
+                            </div>
+                            :
+                            <div className="w-full flex justify-around">
+                                <PencilIcon />
+                                <p>Editar producto</p>
+                            </div>
+                        }
+                    </Link>
                 </button>
             </div>
         </div>

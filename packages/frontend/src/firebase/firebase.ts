@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -13,6 +14,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID_FIREBASE,
   appId: process.env.NEXT_PUBLIC_APP_ID_FIREBASE,
 };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -32,3 +34,5 @@ export const signInWithGoogle = async () => {
     throw error;
   }
 };
+
+export const storage = getStorage(app) 

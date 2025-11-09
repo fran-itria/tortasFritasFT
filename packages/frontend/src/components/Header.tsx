@@ -15,7 +15,7 @@ export default function Header() {
     const { user, setUser } = useUserState(state => state)
     useEffect(() => console.log(user), [user])
     return (
-        <div className="flex justify-between shadow-md shadow-black dark:shadow-gray-600">
+        <div className={`${theme == 'dark' ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
             <div className="flex items-center max-xs:w-full">
                 <img
                     src={theme === 'dark' ? logoDark.src : logoLight.src}

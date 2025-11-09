@@ -9,7 +9,7 @@ import {
     FaTrash
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { IoPerson } from "react-icons/io5";
+import { IoPerson, IoAddCircle } from "react-icons/io5";
 
 export function SunIcon() {
     return <FaSun />
@@ -60,5 +60,11 @@ export function PencilIcon() {
 export function TrashIcon() {
     return <div className='w-6 max-xs:w-4 h-auto'>
         <FaTrash size='auto' color='red' />
+    </div>
+}
+
+export function AddCircleIcon() {
+    return <div>
+        <IoAddCircle size='50' color='#00A900' />
     </div>
 }

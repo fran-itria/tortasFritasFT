@@ -1,6 +1,9 @@
 import { alerts } from "@/alerts/alerts";
+import { firebaseAuth, storage } from "@/firebase/firebase";
 import { productsServiceApi } from "@/services/api";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Products } from "hooks/useProductsHook";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react";
 
 export enum InputFieldNames {
@@ -12,7 +15,7 @@ export enum InputFieldNames {
 }
 
 interface updateProductsProps {
-    setUpdateProduct: Dispatch<SetStateAction<Products | undefined>>
+    setProduct: Dispatch<SetStateAction<Products | undefined>>
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 }
 
@@ -28,27 +31,27 @@ interface updateVarityProps {
 
 interface submitProps {
     e: FormEvent<HTMLFormElement>
-    products: Products | undefined,
+    product: Products | undefined,
     varity: {
         id: string;
         name: string;
         soldOut: boolean;
     }[]
+    image: string | File | undefined
     setLoading: Dispatch<SetStateAction<boolean>>
-    closeModal: () => void
-    setProducts: Dispatch<SetStateAction<Products[]>>
+    router: AppRouterInstance
 }
 
-export function updateProductFunction({ e, setUpdateProduct }: updateProductsProps) {
+export function updateProductFunction({ e, setProduct }: updateProductsProps) {
     const name = e.target.name;
     let value
     if (e.target.name == InputFieldNames.SOLD_OUT) {
         value = (e.target as HTMLInputElement).checked
     } else value = e.target.value;
 
-    setUpdateProduct((prevProducts) => {
-        if (!prevProducts) return undefined;
-        return { ...prevProducts, [name]: value }
+    setProduct((prevProduct) => {
+        if (!prevProduct) return undefined;
+        return { ...prevProduct, [name]: value }
     })
 }
 
@@ -61,19 +64,19 @@ export function updateVarityFunction({ e, setVarity, index }: updateVarityProps)
     })
 }
 
-export async function submit({ e, products, varity, setLoading, closeModal, setProducts }: submitProps) {
+export async function submit({ e, product, varity, image, setLoading, router }: submitProps) {
     e.preventDefault()
     setLoading(true)
-    if (products) {
-        products.varity = varity
+    if (image && product && image != product.image) {
+        const storageRef = ref(storage, (image as File).name)
+        await uploadBytes(storageRef, image as File)
+        const urlImage = await getDownloadURL(storageRef)
+        product.image = urlImage
+    } else if (product) {
+        product.varity = varity
         try {
-            await productsServiceApi.update(products)
-            const response = await productsServiceApi.getAll()
-            if (response.status == 200) {
-                setProducts(response.data)
-                setLoading(false)
-                closeModal()
-            }
+            await productsServiceApi.update(product)
+            router.back()
         } catch (error) {
             setLoading(false)
         }

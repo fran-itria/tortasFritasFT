@@ -25,5 +25,6 @@ export const usersServiceApi = {
 
 export const productsServiceApi = {
     getAll: () => apiClient.get('/products'),
-    update: (body: Products) => apiClient.put('admin/products', { ...body })
+    update: (body: Products) => apiClient.put('admin/products', { ...body }),
+    getOneProduct: (id: string) => apiClient.get(`/products/${id}`)
 }

@@ -1,25 +1,50 @@
 'use client'
 import useThemeState from "@/zustand/theme"
 import { Products } from "hooks/useProductsHook"
-import { Dispatch, SetStateAction, useState } from "react"
+import { useEffect, useState } from "react"
 import { InputFieldNames, submit, updateProductFunction, updateVarityFunction } from "./services/updateProduct"
-import { TrashIcon } from "../Icons"
-import Loading from "../loading"
+import { TrashIcon } from "../../../components/Icons"
+import Loading from "../../../components/loading"
+import { useParams, useRouter } from "next/navigation"
+import { productsServiceApi } from "@/services/api"
+import Link from "next/link"
 
-export default function EditProduct({ product, closeModal, setProducts }: {
-    product: Products | undefined,
-    closeModal: () => void
-    setProducts: Dispatch<SetStateAction<Products[]>>
-}) {
+export default function EditProduct() {
     const { theme } = useThemeState(state => state)
-    const [updateProduct, setUpdateProduct] = useState<Products | undefined>(product)
-    const [varity, setVarity] = useState<{ id: string, name: string, soldOut: boolean }[]>(product?.varity || [])
+    const [product, setProduct] = useState<Products | undefined>(undefined)
+    const [image, setImage] = useState<File | string | undefined>(undefined)
+    const [varity, setVarity] = useState<{ id: string, name: string, soldOut: boolean }[]>([])
     const [loading, setLoading] = useState(false)
+    const { id } = useParams()
+    const router = useRouter()
+
+    useEffect(() => {
+        (async () => {
+            const res = await productsServiceApi.getOneProduct(id as string)
+            setProduct(res.data)
+            setImage(res.data.image)
+            setVarity(res.data.varity || [])
+        })()
+    }, [id])
+
     return (
-        <div className="top-47 right-180 max-xs:top-30 max-xs:right-3 flex flex-col items-center">
+        <div className="pb-5 flex flex-col items-center">
             <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border`}>
-                <p className="text-xl font-bold w-full text-center mb-3">Editando producto</p>
-                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setProducts, closeModal, setLoading, e, products: updateProduct, varity })}>
+                <div className="flex justify-between h-10 items-center mb-3">
+                    <Link href={'/'} className={`
+                        ${theme == 'dark' ?
+                            'bg-dark-background-button text-dark-text'
+                            :
+                            'bg-light-background-button text-light-secondary'}
+                            px-2 rounded-lg
+                            h-fit
+                        `}
+                    >
+                        Volver
+                    </Link>
+                    <p className="text-xl font-bold w-full text-center">Editando el producto: {product?.name}</p>
+                </div>
+                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoading, e, product, varity, image, router })}>
                     <div>
                         <label className="font-bold mr-2">Producto:</label>
                         <input
@@ -30,7 +55,7 @@ export default function EditProduct({ product, closeModal, setProducts }: {
                                 font-bold
                             `}
                             type="text" defaultValue={product?.name}
-                            onChange={(e) => updateProductFunction({ e, setUpdateProduct })}
+                            onChange={(e) => updateProductFunction({ e, setProduct })}
                         />
                     </div>
                     <div className="flex items-start">
@@ -44,7 +69,7 @@ export default function EditProduct({ product, closeModal, setProducts }: {
                                 px-2
                             `}
                             defaultValue={product?.description || ''}
-                            onChange={(e) => updateProductFunction({ e, setUpdateProduct })}
+                            onChange={(e) => updateProductFunction({ e, setProduct })}
                         />
                     </div>
                     <div className="flex flex-col items-between">
@@ -99,16 +124,28 @@ export default function EditProduct({ product, closeModal, setProducts }: {
                             `}
                             type="number"
                             defaultValue={product?.amount}
-                            onChange={(e) => updateProductFunction({ e, setUpdateProduct })}
+                            onChange={(e) => updateProductFunction({ e, setProduct })}
                         />
                     </div>
-                    <div>
-                        <label className="font-bold mr-2">Imagen:</label>
+                    <div className="flex flex-col items-center justify-center">
+                        <label className="font-bold mr-2 w-full">Imagen:</label>
                         <input
                             name={InputFieldNames.IMAGE}
                             type="file"
-                            className="flex bg-dark-background-button rounded-lg px-2"
+                            onChange={(e) => setImage(e.target.files ? e.target.files[0] : undefined)}
+                            className="
+                                bg-dark-background-button 
+                                rounded-lg
+                                w-full
+                                px-2"
                         />
+                        {product?.image &&
+                            <img src={typeof image == "string" ? image : URL.createObjectURL(image as File)} className="
+                                w-20 h-auto 
+                                max-xs:w-45
+                                mt-2"
+                            />
+                        }
                     </div>
                     <div>
                         <label className="font-bold mr-2">Producto agotado:</label>
@@ -116,33 +153,14 @@ export default function EditProduct({ product, closeModal, setProducts }: {
                             name='soldOut'
                             type="checkbox"
                             defaultChecked={product?.soldOut}
-                            onChange={(e) => updateProductFunction({ e, setUpdateProduct })}
+                            onChange={(e) => updateProductFunction({ e, setProduct })}
                         />
                     </div>
-                    <div className="flex flex-col justify-around h-20">
-                        <button
-                            type="submit"
-                            className="w-full bg-dark-background-button rounded-lg px-2">
-                            Guardar cambios
-                        </button>
-                        <button
-                            type="button"
-                            className="
-                                w-full border 
-                                border-red-500 
-                                font-bold 
-                                rounded-lg
-                                px-2
-                                text-red-500
-                                hover:bg-red-500
-                                hover:text-white
-                                transition
-                            "
-                            onClick={() => closeModal()}
-                        >
-                            Cancelar
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-dark-background-button rounded-lg px-2">
+                        Guardar cambios
+                    </button>
                 </form>
             </div >
             {loading && <Loading text="Actualizando producto" />}
