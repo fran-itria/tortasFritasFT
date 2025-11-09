@@ -1,14 +1,9 @@
 import useThemeState from "@/zustand/theme"
 import { CartIconPlus, PencilIcon } from "../Icons"
-import { alerts } from "@/alerts/alerts"
-import { Products } from "hooks/useProductsHook"
-import { url } from "inspector"
 import Link from "next/link"
-
 
 interface Props {
     isAdmin: boolean
-    // openModal: (p?: Products | undefined) => void
     index: { current: number, total: number }
     id: string
     image: string | File | undefined
@@ -19,15 +14,8 @@ interface Props {
     soldOut: boolean
 }
 
-export default function ProductCard({ isAdmin, id, soldOut, index, image, name, description, varity, amount }: Props) {
+export default function ProductCard({ isAdmin, id, index, image, name, description, varity, amount }: Props) {
     const { theme } = useThemeState(state => state)
-    // const buttonFunction = () => {
-    //     if (!isAdmin) {
-    //         alerts('error', theme, 'Debes estar logeado para hacer pedidos')
-    //     } else if (isAdmin) {
-    //         openModal({ amount, description, id, image, name, varity, soldOut })
-    //     }
-    // }
     return (
         <div className={`
             flex flex-col justify-center items-center
@@ -94,7 +82,23 @@ export default function ProductCard({ isAdmin, id, soldOut, index, image, name, 
                         font-bold
                 `}
                 >
-                    <Link href={`/product/${id}`}>
+                    <Link
+                        href={`/product/${id}`}
+                        className={`
+                        flex items-center justify-around
+                        h-12
+                        w-full
+                        ${theme == 'dark' ?
+                                'bg-dark-background-button' :
+                                'bg-linear-to-r from-[#00A900] to-[#006100]'
+                            }
+                        ${!isAdmin && 'opacity-50'}
+                        rounded-b-xl 
+                        text-white
+                        text-xl
+                        max-xs:text-sm
+                        font-bold
+                    `}>
                         {!isAdmin ?
                             <div className="w-full flex justify-around">
                                 <CartIconPlus />
