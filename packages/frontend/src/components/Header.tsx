@@ -9,6 +9,7 @@ import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
 import { useEffect } from "react";
+import ButtonPerson from "./Header/ButtonPerson";
 
 export default function Header() {
     const theme = useThemeState((state: { theme: string }) => state.theme)
@@ -51,8 +52,10 @@ export default function Header() {
                     </button>
                     :
                     <div className="flex w-full justify-between">
-                        <ShoppingCartIcon theme={theme} />
-                        <PersonIcon theme={theme} />
+                        <button>
+                            <ShoppingCartIcon theme={theme} />
+                        </button>
+                        <ButtonPerson />
                     </div>
                 }
                 <ThemeToggle />
