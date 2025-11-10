@@ -23,7 +23,6 @@ export default function ButtonPerson() {
                         flex flex-col 
                         top-10 right-0 
                         w-30
-
                         bg-dark-background-button
                         rounded-lg
                     ">

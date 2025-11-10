@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="h-25">
+          <div className="h-25 max-xs:h-16">
             <Header />
           </div>
           {!user?.admin ?

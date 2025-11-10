@@ -47,12 +47,12 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 flex flex-col justify-between items-center
                 rounded-xl
                 w-60 h-90
-                max-xs:w-45
+                max-xs:w-full
                 shadow-xl/70
             `}>
                 <img src={image} alt={name} className="
                     w-60 h-40
-                    max-xs:w-45 
+                    max-xs:w-full
                     rounded-t-xl
                 "/>
                 <p className="font-bold text-xl max-xs:text-lg">{name}</p>
