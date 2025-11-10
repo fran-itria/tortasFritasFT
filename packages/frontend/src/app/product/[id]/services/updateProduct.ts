@@ -67,18 +67,20 @@ export function updateVarityFunction({ e, setVarity, index }: updateVarityProps)
 export async function submit({ e, product, varity, image, setLoading, router }: submitProps) {
     e.preventDefault()
     setLoading(true)
-    if (image && product && image != product.image) {
-        const storageRef = ref(storage, (image as File).name)
-        await uploadBytes(storageRef, image as File)
-        const urlImage = await getDownloadURL(storageRef)
-        product.image = urlImage
-    } else if (product) {
-        product.varity = varity
-        try {
+    try {
+        if (image && product && image != product.image) {
+            const storageRef = ref(storage, (image as File).name)
+            await uploadBytes(storageRef, image as File)
+            const urlImage = await getDownloadURL(storageRef)
+            product.image = urlImage
+        }
+        if (product) {
+            product.varity = varity
             await productsServiceApi.update(product)
             router.back()
-        } catch (error) {
-            setLoading(false)
         }
+    }
+    catch (error) {
+        setLoading(false)
     }
 }   

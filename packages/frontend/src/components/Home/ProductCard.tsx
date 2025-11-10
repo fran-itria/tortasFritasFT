@@ -1,6 +1,8 @@
 import useThemeState from "@/zustand/theme"
 import { CartIconPlus, PencilIcon } from "../Icons"
 import Link from "next/link"
+import { useUserState } from "@/zustand/userState"
+import { alerts } from "@/alerts/alerts"
 
 interface Props {
     isAdmin: boolean
@@ -14,20 +16,34 @@ interface Props {
     soldOut: boolean
 }
 
-export default function ProductCard({ isAdmin, id, index, image, name, description, varity, amount }: Props) {
+export default function ProductCard({ isAdmin, id, index, image, name, description, varity, amount, soldOut }: Props) {
     const { theme } = useThemeState(state => state)
+    const { user } = useUserState(state => state)
+
+    const buttonFunction = () => {
+        if (!user) {
+            alerts('error', theme, 'Debes estar logeado para agregar productos al carrito')
+        } else if (user && !user.admin) {
+            alerts('success', theme, 'Producto agregado al carrito')
+        }
+    }
     return (
         <div className={`
             flex flex-col justify-center items-center
             p-5
             ${index.current == (index.total - 1) && index.current % 2 == 0 && !isAdmin ? 'col-span-2' : ''}
         `}>
+            {soldOut && !isAdmin &&
+                <p className="z-10 absolute bg-linear-to-r from-[#A80000] to-[#3C0000] w-60 text-center">Sin stock</p>
+            }
             <div className={`
+                z-0
                 ${theme == 'dark' ?
                     'bg-[#00011A] shadow-[7px_7px_7px_rgba(255,255,255,0.40)]'
                     :
                     'bg-white shadow-[7px_7px_7px_rgba(0,0,0,0.70)]'
                 }
+                ${soldOut && !isAdmin && 'blur-[2px]'}
                 flex flex-col justify-between items-center
                 rounded-xl
                 w-60 h-90
@@ -74,7 +90,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                             'bg-dark-background-button' :
                             'bg-linear-to-r from-[#00A900] to-[#006100]'
                         }
-                        ${!isAdmin && 'opacity-50'}
+                        ${!user ? 'opacity-50' : user && !isAdmin && 'opacity-100'}
                         rounded-b-xl 
                         text-white
                         text-xl
@@ -82,35 +98,39 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                         font-bold
                 `}
                 >
-                    <Link
-                        href={`/product/${id}`}
-                        className={`
-                        flex items-center justify-around
-                        h-12
-                        w-full
-                        ${theme == 'dark' ?
-                                'bg-dark-background-button' :
-                                'bg-linear-to-r from-[#00A900] to-[#006100]'
-                            }
-                        ${!isAdmin && 'opacity-50'}
-                        rounded-b-xl 
-                        text-white
-                        text-xl
-                        max-xs:text-sm
-                        font-bold
-                    `}>
-                        {!isAdmin ?
-                            <div className="w-full flex justify-around">
-                                <CartIconPlus />
-                                <p>Agregar producto</p>
-                            </div>
-                            :
-                            <div className="w-full flex justify-around">
+                    {!isAdmin ?
+                        <button
+                            className="w-full flex justify-around"
+                            disabled={(user && soldOut)}
+                            onClick={buttonFunction}>
+                            <CartIconPlus />
+                            <p>Agregar producto</p>
+                        </button>
+                        :
+                        <div className="w-full flex justify-around">
+                            <Link
+                                href={`/product/${id}`}
+                                className={`
+                                    flex items-center justify-around
+                                    h-12
+                                    w-full
+                                    ${theme == 'dark' ?
+                                        'bg-dark-background-button' :
+                                        'bg-linear-to-r from-[#00A900] to-[#006100]'
+                                    }
+                                    ${!isAdmin && 'opacity-50'}
+                                    rounded-b-xl 
+                                    text-white
+                                    text-xl
+                                    max-xs:text-sm
+                                    font-bold
+                                `}
+                            >
                                 <PencilIcon />
                                 <p>Editar producto</p>
-                            </div>
-                        }
-                    </Link>
+                            </Link>
+                        </div>
+                    }
                 </button>
             </div>
         </div>
