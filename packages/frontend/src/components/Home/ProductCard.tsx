@@ -31,10 +31,10 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
         <div className={`
             flex flex-col justify-center items-center
             p-5
-            ${index.current == (index.total - 1) && index.current % 2 == 0 && !isAdmin ? 'col-span-2' : ''}
+            ${index.current == (index.total - 1) && index.current % 2 == 0 && !isAdmin && 'col-span-2'}
         `}>
             {soldOut && !isAdmin &&
-                <p className="z-10 absolute bg-linear-to-r from-[#A80000] to-[#3C0000] w-60 text-center">Sin stock</p>
+                <p className="z-10 text-white absolute bg-linear-to-r from-[#A80000] to-[#3C0000] w-60 max-xs:w-45 text-center">Sin stock</p>
             }
             <div className={`
                 z-0
@@ -47,7 +47,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 flex flex-col justify-between items-center
                 rounded-xl
                 w-60 h-90
-                max-xs:w-full
+                ${index.current == (index.total - 1) && index.current % 2 == 0 && (!isAdmin || !user) ? 'max-xs:w-50' : 'max-xs:w-full'}
                 shadow-xl/70
             `}>
                 <img src={image} alt={name} className="
