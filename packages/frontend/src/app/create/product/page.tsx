@@ -2,32 +2,22 @@
 import useThemeState from "@/zustand/theme"
 import { Products } from "hooks/useProductsHook"
 import { useEffect, useState } from "react"
-import { InputFieldNames, changeInputs, changeVarity } from "../../services/inputsFunctions"
+import { InputFieldNames, changeVarity, changeInputs } from "../../services/inputsFunctions"
 import { TrashIcon } from "../../../components/Icons"
 import Loading from "../../../components/loading"
-import { useParams, useRouter } from "next/navigation"
-import { productsServiceApi } from "@/services/api"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
 
-export default function EditProduct() {
+export default function CreateProduct() {
     const { theme } = useThemeState(state => state)
     const [product, setProduct] = useState<Products | undefined>(undefined)
     const [image, setImage] = useState<File | string | undefined>(undefined)
     const [varity, setVarity] = useState<{ id: string, name: string, soldOut: boolean }[]>([])
     const [loading, setLoading] = useState(false)
-    const { id } = useParams()
     const router = useRouter()
 
-    useEffect(() => {
-        (async () => {
-            const res = await productsServiceApi.getOneProduct(id as string)
-            setProduct(res.data)
-            setImage(res.data.image)
-            setVarity(res.data.varity || [])
-        })()
-    }, [id])
-
+    useEffect(() => console.log(product), [product])
     return (
         <div className="pb-5 flex flex-col items-center">
             <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border`}>
@@ -43,9 +33,9 @@ export default function EditProduct() {
                     >
                         Volver
                     </Link>
-                    <p className="text-xl font-bold w-full text-center">Editando el producto: {product?.name}</p>
+                    <p className="text-xl font-bold w-full text-center">Creando un nuevo producto</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoading, e, product, varity, image, router, submitCase: SubmitFormCases.UPDATE })}>
+                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoading, e, product, varity, image, router, submitCase: SubmitFormCases.CREATE })}>
                     <div>
                         <label className="font-bold mr-2">Producto:</label>
                         <input
@@ -55,7 +45,7 @@ export default function EditProduct() {
                                 rounded-lg px-2
                                 font-bold
                             `}
-                            type="text" defaultValue={product?.name}
+                            type="text"
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
@@ -69,7 +59,6 @@ export default function EditProduct() {
                                 font-bold
                                 px-2
                             `}
-                            defaultValue={product?.description || ''}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
@@ -124,7 +113,6 @@ export default function EditProduct() {
                                 px-2
                             `}
                             type="number"
-                            defaultValue={product?.amount}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
@@ -153,18 +141,17 @@ export default function EditProduct() {
                         <input
                             name='soldOut'
                             type="checkbox"
-                            defaultChecked={product?.soldOut}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
                     <button
                         type="submit"
                         className="w-full bg-dark-background-button rounded-lg px-2">
-                        Guardar cambios
+                        Crear Producto
                     </button>
                 </form>
             </div >
-            {loading && <Loading text="Actualizando producto" />}
+            {loading && <Loading text="Creando producto" />}
         </div >
     )
 }

@@ -5,6 +5,7 @@ import useProductsHook from "hooks/useProductsHook";
 import { useUserState } from "@/zustand/userState"
 import useThemeState from "@/zustand/theme";
 import { AddCircleIcon } from "@/components/Icons";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -31,7 +32,7 @@ export default function Home() {
           ))
         )}
         {user?.admin && (
-          <div className='flex flex-col justify-center items-center p-5'>
+          <Link href='create/product' className='flex flex-col justify-center items-center p-5'>
             <div
               className={`
                 ${theme == 'dark' ?
@@ -46,11 +47,9 @@ export default function Home() {
                 shadow-xl/70
             `}
             >
-              <button className="w-fit h-full">
-                <AddCircleIcon />
-              </button>
+              <AddCircleIcon />
             </div>
-          </div>
+          </Link>
         )}
       </div>
     </>
