@@ -8,7 +8,7 @@ import { Users } from "src/users/user.model";
 interface updateOptionsProps {
     id: string
     ordersActive?: boolean;
-    openingHours?: string[];
+    hours?: { id: string, day: string, morning: string[], afternoon: string[] }[];
     address?: string
 }
 interface productCreateProps {
@@ -51,12 +51,12 @@ export class AdminOptionsService {
     }
 
     async updateOptions(body: updateOptionsProps): Promise<void> {
-        const { id, ordersActive, openingHours, address } = body
+        const { id, ordersActive, hours, address } = body
         if (!id) throw new BadRequestException("Falta el id")
         const [affectedRows] = await Options.update(
             {
                 ordersActive,
-                open: openingHours,
+                open: hours,
                 address
             },
             {

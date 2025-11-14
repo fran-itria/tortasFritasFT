@@ -23,13 +23,18 @@ export class Options extends Model<Options, updateOptionsProps> {
     ordersActive: boolean;
 
     @Column({
-        type: DataType.ARRAY(DataType.STRING),
+        type: DataType.JSONB,
         defaultValue: [
-            'Lun - Sab: 09:00 - 13:00 / 16:45 - 22:00',
-            'Dom: 16:45 - 22:00',
+            { id: crypto.randomUUID(), day: 'Lunes', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Martes', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Miercoles', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Jueves', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Viernes', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Sabado', morning: ['09:00', '13:00'], afternoon: ['17:00', '22:00'] },
+            { id: crypto.randomUUID(), day: 'Domingo', morning: null, afternoon: ['17:00', '22:00'] },
         ]
     })
-    open: string[];
+    open: { id: string, day: string, morning: string[], afternoon: string[] }[];
 
     @Column({
         type: DataType.STRING,

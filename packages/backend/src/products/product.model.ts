@@ -41,10 +41,10 @@ export class Products extends Model<Products, ProductCreate> {
     description: string;
 
     @Column({
-        type: DataType.ARRAY(DataType.JSON),
+        type: DataType.JSONB,
         allowNull: true,
     })
-    varity: object[];
+    varity: { id: string, name: string, stock: boolean }[];
 
     @Column({
         type: DataType.BOOLEAN,
