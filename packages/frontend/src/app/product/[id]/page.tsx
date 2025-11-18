@@ -22,6 +22,7 @@ export default function EditProduct() {
     useEffect(() => {
         (async () => {
             const res = await productsServiceApi.getOneProduct(id as string)
+            console.log(res.data)
             setProduct(res.data)
             setImage(res.data.image)
             setVarity(res.data.varity || [])
@@ -153,7 +154,7 @@ export default function EditProduct() {
                         <input
                             name='soldOut'
                             type="checkbox"
-                            defaultChecked={product?.soldOut}
+                            checked={product?.soldOut ? true : false}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
