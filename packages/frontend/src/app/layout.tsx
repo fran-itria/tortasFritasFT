@@ -38,7 +38,7 @@ export default function RootLayout({
           <div className="h-25 max-xs:h-16">
             <Header />
           </div>
-          {!user?.admin ?
+          {!user || !user?.admin ?
             <Atention />
             :
             <AdminHeader />

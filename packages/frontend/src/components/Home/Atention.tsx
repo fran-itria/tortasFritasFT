@@ -9,6 +9,7 @@ export default function Atention() {
     useEffect(() => {
         (async () => {
             const options = await optionsServiceApi.getAll()
+            console.log(options.data)
             setOpen(options.data)
         })()
     }, []);
@@ -24,7 +25,7 @@ export default function Atention() {
                             key={index}
                             className="font-bold"
                         >
-                            {hour}
+                            {hour.day}: {hour.morning ? `${hour.morning[0]} - ${hour.morning[1]}` : "Cerrado"} | {hour.afternoon[0]} - {hour.afternoon[1]}
                         </li>
                     ))}
                 </ul>

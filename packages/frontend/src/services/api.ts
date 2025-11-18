@@ -4,6 +4,7 @@ import { Products } from 'hooks/useProductsHook';
 
 export const optionsServiceApi = {
     getAll: () => apiClient.get<OptionsResponse>('/options'),
+    update: (body: OptionsResponse | undefined) => apiClient.put('/admin/options', { ...body }),
 };
 
 export const usersServiceApi = {

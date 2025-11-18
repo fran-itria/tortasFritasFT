@@ -14,7 +14,6 @@ import ButtonPerson from "./Header/ButtonPerson";
 export default function Header() {
     const theme = useThemeState((state: { theme: string }) => state.theme)
     const { user, setUser } = useUserState(state => state)
-    useEffect(() => console.log(user), [user])
     return (
         <div className={`${theme == 'dark' ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
             <div className="flex items-center max-xs:w-full">

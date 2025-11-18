@@ -1,7 +1,10 @@
 import useThemeState from "@/zustand/theme"
+import { useState } from "react"
+import { EditHours } from "./EditHours"
 
 export default function AdminHeader() {
     const { theme } = useThemeState(state => state)
+    const [open, setOpen] = useState(false)
     return (
         <div className="flex justify-around p-5 max-xs:grid max-xs:grid-cols-2 max-xs:gap-2">
             <button className={`
@@ -14,7 +17,9 @@ export default function AdminHeader() {
                 px-4
                 rounded-lg
                 font-bold
-            `}>
+            `}
+                onClick={() => setOpen(!open)}
+            >
                 Editar horarios
             </button>
             <button className={`
@@ -44,6 +49,7 @@ export default function AdminHeader() {
             `}>
                 Pedidos
             </button>
+            {open && <EditHours setOpen={setOpen} />}
         </div>
     )
 }
