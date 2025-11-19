@@ -2,15 +2,17 @@ import useThemeState from "@/zustand/theme";
 import { PersonIcon } from "../Icons";
 import { useState } from "react";
 import { useUserState } from "@/zustand/userState";
-
+import { useRouter } from "next/navigation";
 
 export default function ButtonPerson() {
     const { theme } = useThemeState(state => state);
     const [openMenu, setOpenMenu] = useState(false);
     const { setUser } = useUserState(state => state);
+    const router = useRouter()
     const logout = () => {
         localStorage.removeItem('token');
         setUser(undefined)
+        router.push('/')
     }
     return (
         <div className="flex flex-col relative">
