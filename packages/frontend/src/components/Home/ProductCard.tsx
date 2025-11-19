@@ -82,6 +82,10 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 )}
                 <p className="font-bold text-xl max-xs:text-lg">${amount}</p>
                 <button
+                    disabled={(user && soldOut)}
+                    onClick={() => {
+                        if (!isAdmin) buttonFunction()
+                    }}
                     className={`
                         flex items-center justify-around
                         h-12
@@ -99,13 +103,10 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 `}
                 >
                     {!isAdmin ?
-                        <button
-                            className="w-full flex justify-around"
-                            disabled={(user && soldOut)}
-                            onClick={buttonFunction}>
+                        <>
                             <CartIconPlus />
                             <p>Agregar producto</p>
-                        </button>
+                        </>
                         :
                         <div className="w-full flex justify-around">
                             <Link
