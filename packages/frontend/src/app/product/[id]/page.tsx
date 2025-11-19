@@ -110,7 +110,7 @@ export default function EditProduct() {
                             onClick={() => setVarity((prev) => {
                                 return [...prev, { id: crypto.randomUUID(), name: '', soldOut: false }]
                             })}
-                            className=" mt-2 w-full bg-dark-background-button rounded-lg font-bold">
+                            className={`mt-2 w-full ${theme === 'dark' ? 'bg-dark-background-button text-dark-text' : 'bg-light-background-button text-light-primary'} rounded-lg font-bold`}>
                             + Variedad
                         </button>
                     </div>
@@ -135,11 +135,11 @@ export default function EditProduct() {
                             name={InputFieldNames.IMAGE}
                             type="file"
                             onChange={(e) => setImage(e.target.files ? e.target.files[0] : undefined)}
-                            className="
-                                bg-dark-background-button 
+                            className={`
+                                ${theme === 'dark' ? 'bg-dark-background-button text-dark-text' : 'bg-light-background-button text-light-primary'} 
                                 rounded-lg
                                 w-full
-                                px-2"
+                                px-2`}
                         />
                         {product?.image &&
                             <img src={typeof image == "string" ? image : URL.createObjectURL(image as File)} className="
@@ -154,6 +154,7 @@ export default function EditProduct() {
                         <input
                             name={InputFieldNames.SOLD_OUT}
                             type="checkbox"
+                            className={`${theme == "dark" ? "accent-dark-background-button" : "accent-light-background-button"}`}
                             checked={product?.soldOut ? true : false}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
@@ -163,13 +164,14 @@ export default function EditProduct() {
                         <input
                             name={InputFieldNames.ACTIVE}
                             type="checkbox"
+                            className={`${theme == "dark" ? "accent-dark-background-button" : "accent-light-background-button"}`}
                             checked={product?.active ? true : false}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-dark-background-button rounded-lg px-2">
+                        className={`w-full ${theme === 'dark' ? 'bg-dark-background-button text-dark-text' : 'bg-light-background-button text-light-primary'} rounded-lg px-2`}>
                         Guardar cambios
                     </button>
                 </form>

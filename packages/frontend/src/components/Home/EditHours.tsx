@@ -21,27 +21,33 @@ export const EditHours = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boolea
 
     useEffect(() => console.log(atention), [atention])
     return (
-        <div className={`${theme == "dark" ? "from-dark-secondary to-dark-background-button" : "from-light-secondary to-light-tertiary"} z-10 p-5 border-2 border-white absolute top-50 bg-linear-to-b w-90`}>
+        <div className={`${theme == "dark" ? "from-dark-secondary to-dark-background-button" : "from-light-secondary to-light-tertiary"} z-10 p-5 rounded-lg border-2 absolute top-50 bg-linear-to-b w-90 max-xs:w-97`}>
             {loading && <Loading text={constLoader.editAtention} />}
-            <form onSubmit={(e) => submitAtention(atention, setLoading, e, theme, setOpen)} className={`${loading && "blur-xs"}`}>
+            <form onSubmit={(e) => submitAtention(atention, setLoading, e, theme, setOpen)} className={`${loading && "blur-xs"} flex flex-col gap-3 justify-center items-center`}>
                 <div>
                     <label className="font-bold">
                         Direccion:
                     </label>
-                    <input defaultValue={atention?.address} name="address" onChange={(e) => changeInputsAtention({ e, setAtention })} className="px-2 ml-2 bg-dark-input rounded-lg text-black"></input>
+                    <input defaultValue={atention?.address} name="address" onChange={(e) => changeInputsAtention({ e, setAtention })} className={`px-2 ml-2 ${theme == "dark" ? 'bg-dark-input text-black' : 'bg-light-input text-light-primary'} rounded-lg`}></input>
                 </div >
                 {
                     atention?.open?.map((day) => (
-                        <div className="flex w-full flex flex-col mb-2" key={day.id}>
-                            <label>{day.day}:</label>
-                            <div className={`h-15 flex flex-col justify-around ${theme == "dark" ? "text-black" : "text-white"} rounded-lg p-2`}>
-                                <div className="w-50 flex flex-row justify-between">
-                                    <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.MorningStart} defaultValue={day.morning && day.morning[0]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
-                                    <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.MorningEnd} defaultValue={day.morning && day.morning[1]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                        <div className="flex w-full flex flex-col items-center" key={day.id}>
+                            <label className="font-bold">{day.day}:</label>
+                            <div className={`h-15 w-full flex flex-col justify-around ${theme == "dark" ? "text-black" : "text-white"} rounded-lg p-2`}>
+                                <div className="flex flex-row justify-center">
+                                    <label className={`font-bold ${theme == "dark" ? "text-white" : "text-black"}`}>Mañana: </label>
+                                    <div className="w-full flex flex-row justify-around items-center">
+                                        <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.MorningStart} defaultValue={day.morning && day.morning[0]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                                        <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.MorningEnd} defaultValue={day.morning && day.morning[1]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                                    </div>
                                 </div>
-                                <div className="w-50 flex flex-row justify-between items-center">
-                                    <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.AfternoonStart} defaultValue={day.afternoon && day.afternoon[0]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
-                                    <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.AfternoonEnd} defaultValue={day.afternoon && day.afternoon[1]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                                <div className="flex flex-row justify-center">
+                                    <label className={`font-bold ${theme == "dark" ? "text-white" : "text-black"}`}>Tarde: </label>
+                                    <div className="w-full ml-4 flex flex-row justify-around items-center">
+                                        <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.AfternoonStart} defaultValue={day.afternoon && day.afternoon[0]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                                        <input onChange={e => changeHours({ e, id: day.id, setAtention })} name={TimePeriod.AfternoonEnd} defaultValue={day.afternoon && day.afternoon[1]} type="time" className={`${theme == "dark" ? "bg-dark-input" : "bg-light-input"} rounded-lg px-2 h-5`}></input>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +55,7 @@ export const EditHours = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boolea
                 }
                 <div>
                     <label className="font-bold">Recibir pedidos: </label>
-                    <input type="checkbox" name="ordersActive" onChange={(e) => changeInputsAtention({ e, setAtention })} defaultChecked={atention?.ordersActive}></input>
+                    <input className={`${theme == "dark" ? "accent-dark-primary" : "accent-light-primary"}`} type="checkbox" name="ordersActive" onChange={(e) => changeInputsAtention({ e, setAtention })} defaultChecked={atention?.ordersActive}></input>
                 </div>
                 <button className={`${theme == "dark" ? "bg-dark-secondary text-dark-text" : "bg-light-background-button text-white"} rounded-lg px-2 mt-5`}>
                     Guardar

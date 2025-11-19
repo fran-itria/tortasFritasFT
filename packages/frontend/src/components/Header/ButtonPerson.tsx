@@ -20,16 +20,17 @@ export default function ButtonPerson() {
                 <PersonIcon theme={theme} />
             </button>
             {openMenu && (
-                <div className="
+                <div className={`
                         absolute 
                         flex flex-col 
                         top-10 right-0 
                         w-30
-                        bg-dark-background-button
+                        font-medium
+                        ${theme == "dark" ? "bg-dark-input text-black" : "bg-light-input text-light-primary"}
                         rounded-lg
-                    ">
-                    <button className="border-2 border-white rounded-t-lg px-2">Mi Perfil</button>
-                    <button onClick={logout} className="border-2 border-white rounded-b-lg px-2">Cerrar Sesión</button>
+                    `}>
+                    <button className={`border-b-2 rounded-t-lg px-2`}>Mi Perfil</button>
+                    <button onClick={logout} className={`rounded-b-lg px-2`}>Cerrar Sesión</button>
                 </div>
             )}
         </div>
