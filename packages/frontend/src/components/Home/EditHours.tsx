@@ -57,9 +57,20 @@ export const EditHours = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boolea
                     <label className="font-bold">Recibir pedidos: </label>
                     <input className={`${theme == "dark" ? "accent-dark-primary" : "accent-light-primary"}`} type="checkbox" name="ordersActive" onChange={(e) => changeInputsAtention({ e, setAtention })} defaultChecked={atention?.ordersActive}></input>
                 </div>
-                <button className={`${theme == "dark" ? "bg-dark-secondary text-dark-text" : "bg-light-background-button text-white"} rounded-lg px-2 mt-5`}>
-                    Guardar
-                </button>
+                <div className="w-full flex flex-row justify-around">
+                    <button
+                        className={`
+                            bg-[#FF0000] text-white
+                            rounded-lg px-2 mt-5
+                            `}
+                        onClick={() => setOpen(false)}
+                    >
+                        Cancelar
+                    </button>
+                    <button className={`${theme == "dark" ? "bg-dark-secondary text-dark-text" : "bg-light-background-button text-white"} rounded-lg px-2 mt-5`}>
+                        Guardar
+                    </button>
+                </div>
             </form >
         </div >
     )
