@@ -19,13 +19,13 @@ export class Users extends Model<Users, UserCreationAttributes> {
         type: DataType.STRING,
         allowNull: false
     })
-    name: string
+    declare name: string
 
     @Column({
         type: DataType.STRING,
         allowNull: false
     })
-    surname: string
+    declare surname: string
 
     @Column({
         type: DataType.STRING,
@@ -35,26 +35,26 @@ export class Users extends Model<Users, UserCreationAttributes> {
             isEmail: true
         }
     })
-    email: string
+    declare email: string
 
     @Column({
         type: DataType.STRING,
         allowNull: true
     })
-    phone: string
+    declare phone: string
 
     @Column({
         type: DataType.BOOLEAN,
         allowNull: false,
         defaultValue: false
     })
-    admin: boolean
+    declare admin: boolean
 
     @Column({
         type: DataType.BOOLEAN,
         defaultValue: true
     })
-    active: boolean
+    declare active: boolean
 
     @HasMany(() => Orders, { foreignKey: 'userId' })
     orders: Orders[]

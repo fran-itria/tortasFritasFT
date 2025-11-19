@@ -26,45 +26,45 @@ export class Products extends Model<Products, ProductCreate> {
         type: DataType.STRING,
         allowNull: false,
     })
-    name: string;
+    declare name: string;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    amount: number;
+    declare amount: number;
 
     @Column({
         type: DataType.STRING,
         allowNull: true
     })
-    description: string;
+    declare description: string;
 
     @Column({
         type: DataType.JSONB,
         allowNull: true,
     })
-    varity: { id: string, name: string, stock: boolean }[];
+    declare varity: { id: string, name: string, stock: boolean }[];
 
     @Column({
         type: DataType.BOOLEAN,
         allowNull: false,
         defaultValue: false,
     })
-    soldOut: boolean;
+    declare soldOut: boolean;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         defaultValue: 1,
     })
-    active: number;
+    declare active: number;
 
     @Column({
         type: DataType.STRING,
         allowNull: true,
     })
-    image: string;
+    declare image: string;
 
     @HasMany(() => OrderProduct)
     orderProducts: OrderProduct[];

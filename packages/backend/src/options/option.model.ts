@@ -20,7 +20,7 @@ export class Options extends Model<Options, updateOptionsProps> {
         type: DataType.BOOLEAN,
         defaultValue: true,
     })
-    ordersActive: boolean;
+    declare ordersActive: boolean;
 
     @Column({
         type: DataType.JSONB,
@@ -34,11 +34,11 @@ export class Options extends Model<Options, updateOptionsProps> {
             { id: crypto.randomUUID(), day: 'Domingo', morning: null, afternoon: ['17:00', '22:00'] },
         ]
     })
-    open: { id: string, day: string, morning: string[], afternoon: string[] }[];
+    declare open: { id: string, day: string, morning: string[], afternoon: string[] }[];
 
     @Column({
         type: DataType.STRING,
         defaultValue: 'Rosario del Tala 543',
     })
-    address: string;
+    declare address: string;
 }
