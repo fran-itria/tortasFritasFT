@@ -152,9 +152,18 @@ export default function EditProduct() {
                     <div>
                         <label className="font-bold mr-2">Producto agotado:</label>
                         <input
-                            name='soldOut'
+                            name={InputFieldNames.SOLD_OUT}
                             type="checkbox"
                             checked={product?.soldOut ? true : false}
+                            onChange={(e) => changeInputs({ e, setProduct })}
+                        />
+                    </div>
+                    <div>
+                        <label className="font-bold mr-2">Mostrar en el catalogo:</label>
+                        <input
+                            name={InputFieldNames.ACTIVE}
+                            type="checkbox"
+                            checked={product?.active ? true : false}
                             onChange={(e) => changeInputs({ e, setProduct })}
                         />
                     </div>

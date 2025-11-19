@@ -17,8 +17,9 @@ export default function Home() {
     <>
       <div className={`grid grid-cols-2`}>
         {products && products.length > 0 && (
-          products.map((p, i) => (
-            <ProductCard
+          products.map((p, i) => {
+            if ((!user || !user?.admin) && p.active == 0) return null
+            return <ProductCard
               key={p.id}
               isAdmin={user?.admin || false}
               index={{ current: i, total: products.length }}
@@ -28,8 +29,9 @@ export default function Home() {
               name={p.name}
               description={p.description}
               image={p.image}
-              varity={p.varity} />
-          ))
+              varity={p.varity}
+              active={p.active} />
+          })
         )}
         {user?.admin && (
           <Link href='create/product' className='flex flex-col justify-center items-center p-5'>

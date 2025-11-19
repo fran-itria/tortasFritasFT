@@ -14,9 +14,10 @@ interface Props {
     varity?: { id: string, name: string, soldOut: boolean }[]
     amount: number
     soldOut: boolean
+    active: number
 }
 
-export default function ProductCard({ isAdmin, id, index, image, name, description, varity, amount, soldOut }: Props) {
+export default function ProductCard({ isAdmin, id, index, image, name, description, varity, amount, soldOut, active }: Props) {
     const { theme } = useThemeState(state => state)
     const { user } = useUserState(state => state)
 
@@ -33,9 +34,6 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
             p-5
             ${index.current == (index.total - 1) && index.current % 2 == 0 && !isAdmin && 'col-span-2'}
         `}>
-            {soldOut && !isAdmin &&
-                <p className="z-10 text-white absolute bg-linear-to-r from-[#A80000] to-[#3C0000] w-60 max-xs:w-45 text-center">Sin stock</p>
-            }
             <div className={`
                 z-0
                 ${theme == 'dark' ?
@@ -49,7 +47,14 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 w-60 h-90
                 ${index.current == (index.total - 1) && index.current % 2 == 0 && (!isAdmin || !user) ? 'max-xs:w-50' : 'max-xs:w-full'}
                 shadow-xl/70
+                relative
             `}>
+                {soldOut && !isAdmin ?
+                    <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">Sin stock</p>
+                    :
+                    !active && isAdmin &&
+                    <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">No disponible</p>
+                }
                 <img src={image} alt={name} className="
                     w-60 h-40
                     max-xs:w-full

@@ -54,6 +54,13 @@ export class Products extends Model<Products, ProductCreate> {
     soldOut: boolean;
 
     @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+    })
+    active: number;
+
+    @Column({
         type: DataType.STRING,
         allowNull: true,
     })

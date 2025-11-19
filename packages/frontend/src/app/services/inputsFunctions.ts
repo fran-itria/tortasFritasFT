@@ -7,6 +7,7 @@ export enum InputFieldNames {
     AMOUNT = 'amount',
     IMAGE = 'image',
     SOLD_OUT = 'soldOut',
+    ACTIVE = 'active',
 }
 
 interface updateProductsProps {
@@ -27,19 +28,21 @@ interface updateVarityProps {
 export function changeInputs({ e, setProduct }: updateProductsProps) {
     const name = e.target.name;
     let value
-    if (e.target.name == InputFieldNames.SOLD_OUT) {
+    if (name == InputFieldNames.SOLD_OUT || name == InputFieldNames.ACTIVE) {
         value = (e.target as HTMLInputElement).checked
+        if (name == InputFieldNames.ACTIVE) value = value ? 1 : 0
     } else value = e.target.value;
 
     setProduct((prevProduct) => {
         const newProduct: Products = {
-            id: prevProduct?.id || '',
+            id: '',
             name: '',
             description: '',
             amount: 0,
             image: '',
             soldOut: false,
-            varity: prevProduct?.varity || [],
+            varity: [],
+            active: 1,
         };
         if (!prevProduct) return { ...newProduct, [name]: value };
         return { ...prevProduct, [name]: value }

@@ -27,6 +27,7 @@ interface updateProductProps {
     description?: string
     varity?: { id: string, name: string, stock: boolean }[]
     soldOut?: boolean
+    active?: number
     image?: string
 }
 
@@ -156,7 +157,7 @@ export class AdminProductsService {
     }
 
     async update(props: updateProductProps) {
-        const { id, amount, description, image, name, soldOut, varity } = props
+        const { id, amount, description, image, name, soldOut, varity, active } = props
         if (!id) throw new Error("Falta el id")
         const [product] = await this.productsModel.update(
             {
@@ -165,7 +166,8 @@ export class AdminProductsService {
                 image,
                 name,
                 soldOut,
-                varity
+                varity,
+                active
             },
             {
                 where: { id }
