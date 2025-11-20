@@ -51,12 +51,16 @@ export class AdminUsersController {
         const user = await this.adminService.findById(id);
         res.status(200).json(user);
     }
-    @Delete()
-    async inactiveUser(@Req() req: express.Request, @Res() res: express.Response) {
-        const { id } = req.body
-        await this.adminService.inactiveUser(id)
-        res.status(200).json({ message: "Usuario eliminado correctamente" })
+
+    @Put('/changeActiveStatus')
+    async changeActiveStatus(@Req() req: express.Request, @Res() res: express.Response) {
+        const { id, active } = req.body
+        await this.adminService.changeActiveStatus(id, active)
+        const message = active ? "Usuario habilitado correctamente" : "Usuario eliminado correctamente"
+        res.status(200).json({ message })
     }
+
+
     @Put('/changeAdminStatus')
     async changeAdminStatus(@Req() req: express.Request, @Res() res: express.Response) {
         const { id, admin } = req.body

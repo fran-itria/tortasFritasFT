@@ -91,7 +91,8 @@ export class AdminUsersService {
                     }
                 }
             ],
-            attributes: { exclude: ['createdAt', 'updatedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            order: [['admin', 'DESC']]
         })
         if (users.length > 0) return users
         else throw new NotFoundException('No hay usuarios registrados')
@@ -103,11 +104,11 @@ export class AdminUsersService {
         else throw new NotFoundException('Usuario no encontrado')
     }
 
-    async inactiveUser(id: string): Promise<void> {
+    async changeActiveStatus(id: string, active: boolean): Promise<number> {
         if (!id) throw new BadRequestException("Falta el id")
         const [affectedRows] = await this.usersModel.update(
             {
-                active: false
+                active
             },
             {
                 where: {
@@ -118,7 +119,7 @@ export class AdminUsersService {
         if (affectedRows === 0) {
             throw new NotFoundException("No se pudo eliminar el usuario")
         }
-        return
+        return affectedRows
     }
 
     async changeAdminStatus(id: string, admin: boolean): Promise<number> {
