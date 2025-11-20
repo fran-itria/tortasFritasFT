@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import useUsersHook from "./useUsersHook";
 import useThemeState from "@/zustand/theme";
 import { Theme } from "@/utils/enums";
+import "./switch.css"
 
 export default function UsersPage() {
     const { user } = useUserState(state => state);
@@ -40,12 +41,88 @@ export default function UsersPage() {
                 <tbody>
                     {users.map((user) => (
                         <tr key={user.id} className="text-center">
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.name}</td>
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.surname}</td>
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.phone || 'N/A'}</td>
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.orders ? user.orders.length : 0}</td>
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.active ? 'Sí' : 'No'}</td>
-                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.admin ? 'Sí' : 'No'}</td>
+                            <td
+                                className={`
+                                    border-2 
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                {user.name}
+                            </td>
+                            <td
+                                className={`
+                                    border-2 
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                {user.surname}
+                            </td>
+                            <td
+                                className={`
+                                    border-2 
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                {user.phone || 'N/A'}
+                            </td>
+                            <td
+                                className={`
+                                    border-2 
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                {user.orders ? user.orders.length : 0}
+                            </td>
+                            <td
+                                className={`
+                                    border-2
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                <div className="flex justify-center items-center min-h-[35px]">
+                                    <label className="switch">
+                                        <input type="checkbox" defaultChecked={user.active} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td
+                                className={`
+                                    border-2 
+                                    ${theme == Theme.DARK ?
+                                        'bg-dark-td border-dark-input'
+                                        :
+                                        'bg-light-td border-dark-input'
+                                    }
+                                `}
+                            >
+                                <div className="flex justify-center items-center min-h-[35px]">
+                                    <label className="switch">
+                                        <input type="checkbox" defaultChecked={user.admin} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
