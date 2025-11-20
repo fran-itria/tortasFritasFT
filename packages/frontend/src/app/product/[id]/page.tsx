@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation"
 import { productsServiceApi } from "@/services/api"
 import Link from "next/link"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
+import { Theme } from "@/utils/enums"
 
 export default function EditProduct() {
     const { theme } = useThemeState(state => state)
@@ -34,7 +35,7 @@ export default function EditProduct() {
             <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border`}>
                 <div className="flex justify-between h-10 items-center mb-3">
                     <Link href={'/'} className={`
-                        ${theme == 'dark' ?
+                        ${theme == Theme.DARK ?
                             'bg-dark-background-button text-dark-text'
                             :
                             'bg-light-background-button text-light-secondary'}

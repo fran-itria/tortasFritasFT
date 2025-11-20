@@ -3,6 +3,7 @@ import { CartIconPlus, PencilIcon } from "../Icons"
 import Link from "next/link"
 import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
+import { Theme } from "@/utils/enums"
 
 interface Props {
     isAdmin: boolean
@@ -36,7 +37,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
         `}>
             <div className={`
                 z-0
-                ${theme == 'dark' ?
+                ${theme == Theme.DARK ?
                     'bg-[#00011A] shadow-[7px_7px_7px_rgba(255,255,255,0.40)]'
                     :
                     'bg-white shadow-[7px_7px_7px_rgba(0,0,0,0.70)]'
@@ -62,7 +63,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 "/>
                 <p className="font-bold text-xl max-xs:text-lg">{name}</p>
                 <p className={`
-                    ${theme == 'dark' ? 'dark:text-dark-text' : 'text-gray-500'} text-center
+                    ${theme == Theme.DARK ? 'dark:text-dark-text' : 'text-gray-500'} text-center
                     px-2 
                     max-xs:text-sm
                 `}>
@@ -75,7 +76,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                                 key={v.id}
                                 className={`
                                     first-letter:uppercase 
-                                    ${theme == 'dark' ? 'dark:text-dark-text' : 'text-gray-500'} 
+                                    ${theme == Theme.DARK ? 'dark:text-dark-text' : 'text-gray-500'} 
                                     font-bold 
                                     text-center text-sm
                                 `}
@@ -95,7 +96,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                         flex items-center justify-around
                         h-12
                         w-full
-                        ${theme == 'dark' ?
+                        ${theme == Theme.DARK ?
                             'bg-dark-background-button' :
                             'bg-linear-to-r from-[#00A900] to-[#006100]'
                         }
@@ -120,7 +121,7 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                                     flex items-center justify-around
                                     h-12
                                     w-full
-                                    ${theme == 'dark' ?
+                                    ${theme == Theme.DARK ?
                                         'bg-dark-background-button' :
                                         'bg-linear-to-r from-[#00A900] to-[#006100]'
                                     }

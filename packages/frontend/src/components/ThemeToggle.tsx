@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { MoonIcon, SunIcon } from './Icons'
 import useThemeState from '@/zustand/theme'
 import { useUserState } from '@/zustand/userState'
+import { Theme } from '@/utils/enums'
 
 export function ThemeToggle() {
     const [mounted, setMounted] = useState(false)
@@ -24,7 +25,7 @@ export function ThemeToggle() {
 
     return (
         <button
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            onClick={() => setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)}
             className={`
             rounded-full
             ${!user ? 'max-xs:w-full' : 'w-full'}
@@ -32,11 +33,11 @@ export function ThemeToggle() {
             justify-center
         `}>
             <div className={`
-                ${theme == 'dark' ? 'bg-dark-background-button' : 'bg-light-background-button'}
+                ${theme == Theme.DARK ? 'bg-dark-background-button' : 'bg-light-background-button'}
                 p-2
                 rounded-full
             `}>
-                {theme === 'light' ? (
+                {theme === Theme.LIGHT ? (
                     <MoonIcon />
                 ) : (
                     <SunIcon />

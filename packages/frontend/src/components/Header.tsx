@@ -9,15 +9,16 @@ import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
 import ButtonPerson from "./Header/ButtonPerson";
+import { Theme } from "@/utils/enums";
 
 export default function Header() {
     const theme = useThemeState((state: { theme: string }) => state.theme)
     const { user, setUser } = useUserState(state => state)
     return (
-        <div className={`${theme == 'dark' ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
+        <div className={`${theme == Theme.DARK ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
             <div className="flex items-center max-xs:w-full">
                 <img
-                    src={theme === 'dark' ? logoDark.src : logoLight.src}
+                    src={theme === Theme.DARK ? logoDark.src : logoLight.src}
                     alt="Logo"
                     className='rounded-full w-23 h-auto p-2 max-xs:w-16'
                 />
@@ -42,7 +43,7 @@ export default function Header() {
                         max-xs:pb-[8px]
                         px-2
                         font-bold
-                        ${theme == 'dark' ? 'bg-dark-input text-[#333333]' : 'bg-light-input text-light-primary'}
+                        ${theme == Theme.DARK ? 'bg-dark-input text-[#333333]' : 'bg-light-input text-light-primary'}
                         `}>
                             <GoogleIcon theme={theme} />
                             <p className="ml-2 max-xs:hidden">Continuar con Google</p>

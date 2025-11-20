@@ -6,6 +6,7 @@ import { useUserState } from "@/zustand/userState"
 import useThemeState from "@/zustand/theme";
 import { AddCircleIcon } from "@/components/Icons";
 import Link from "next/link";
+import { Theme } from "@/utils/enums";
 
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
           <Link href='create/product' className='flex flex-col justify-center items-center p-5'>
             <div
               className={`
-                ${theme == 'dark' ?
+                ${theme == Theme.DARK ?
                   'bg-[#00011A] shadow-[7px_7px_7px_rgba(255,255,255,0.40)]'
                   :
                   'bg-white shadow-[7px_7px_7px_rgba(0,0,0,0.70)]'

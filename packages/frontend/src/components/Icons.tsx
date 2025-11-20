@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoPerson, IoAddCircle } from "react-icons/io5";
+import { Theme } from '@/utils/enums';
 
 export function SunIcon() {
     return <FaSun />
@@ -20,28 +21,28 @@ export function MoonIcon() {
 }
 
 export function GoogleIcon({ theme }: { theme: string | undefined }) {
-    return <FaGoogle color={`${theme == 'dark' ? '#333333' : '#E2E2E2'}`} />
+    return <FaGoogle color={`${theme == Theme.DARK ? '#333333' : '#E2E2E2'}`} />
 }
 
 export function LoadingIcon({ theme }: { theme: string | undefined }) {
-    return <AiOutlineLoading3Quarters size='50' className='animate-spin w-full' color={`${theme == 'dark' ? '#000000ff' : '#E2E2E2'}`} />
+    return <AiOutlineLoading3Quarters size='50' className='animate-spin w-full' color={`${theme == Theme.DARK ? '#000000ff' : '#E2E2E2'}`} />
 }
 
 export function InstagramIcon({ theme }: { theme: string | undefined }) {
     return <div className='w-8 max-xs:w-6 h-auto'>
-        <FaInstagram size='auto' color={`${theme == 'dark' ? '#E2E2E2' : '#333333'}`} />
+        <FaInstagram size='auto' color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
     </div>
 }
 
 export function ShoppingCartIcon({ theme }: { theme: string | undefined }) {
     return <div className='w-8 max-xs:w-6 h-auto'>
-        <FaShoppingCart size='auto' color={`${theme == 'dark' ? '#E2E2E2' : '#333333'}`} />
+        <FaShoppingCart size='auto' color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
     </div>
 }
 
 export function PersonIcon({ theme }: { theme: string | undefined }) {
     return <div className='w-8 max-xs:w-6 h-auto'>
-        <IoPerson size='auto' color={`${theme == 'dark' ? '#E2E2E2' : '#333333'}`} />
+        <IoPerson size='auto' color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
     </div>
 }
 
