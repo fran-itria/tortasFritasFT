@@ -120,6 +120,24 @@ export class AdminUsersService {
         }
         return
     }
+
+    async changeAdminStatus(id: string, admin: boolean): Promise<number> {
+        if (!id) throw new BadRequestException("Falta el id")
+        const [affectedRows] = await this.usersModel.update(
+            {
+                admin
+            },
+            {
+                where: {
+                    id
+                }
+            }
+        )
+        if (affectedRows === 0) {
+            throw new NotFoundException("No se pudo cambiar el estado de admin")
+        }
+        return affectedRows
+    }
 }
 
 @Injectable()

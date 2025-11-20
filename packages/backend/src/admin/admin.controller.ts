@@ -57,6 +57,12 @@ export class AdminUsersController {
         await this.adminService.inactiveUser(id)
         res.status(200).json({ message: "Usuario eliminado correctamente" })
     }
+    @Put('/changeAdminStatus')
+    async changeAdminStatus(@Req() req: express.Request, @Res() res: express.Response) {
+        const { id, admin } = req.body
+        await this.adminService.changeAdminStatus(id, admin)
+        res.status(200).json({ message: "Estado de administrador actualizado correctamente" })
+    }
 }
 
 @Controller('admin/orders')
