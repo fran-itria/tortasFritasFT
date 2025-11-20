@@ -4,11 +4,10 @@ import useThemeState from "@/zustand/theme"
 import logoDark from "../assets/logoDark.png";
 import logoLight from "../assets/logoLight.png";
 import { ThemeToggle } from "./ThemeToggle";
-import { GoogleIcon, InstagramIcon, PersonIcon, ShoppingCartIcon } from "./Icons";
+import { GoogleIcon, InstagramIcon, ShoppingCartIcon } from "./Icons";
 import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
-import { useEffect } from "react";
 import ButtonPerson from "./Header/ButtonPerson";
 
 export default function Header() {
