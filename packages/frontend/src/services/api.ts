@@ -22,8 +22,9 @@ export const usersServiceApi = {
         surname,
         active: true
     }),
-
     getAll: () => apiClient.get('/admin/users'),
+    changeAdminStatus: ({ id, admin }: { id: string, admin: boolean }) => apiClient.put('/admin/users/changeAdminStatus', { id, admin }),
+    changeActiveStatus: ({ id, active }: { id: string, active: boolean }) => apiClient.put('/admin/users/changeActiveStatus', { id, active }),
 }
 
 export const productsServiceApi = {

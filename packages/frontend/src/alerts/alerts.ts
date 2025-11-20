@@ -1,3 +1,4 @@
+import { Theme } from "@/utils/enums";
 import Swal from "sweetalert2";
 
 export const alerts = (icon: 'error' | 'success', theme: string, text: string) => {
@@ -9,8 +10,8 @@ export const alerts = (icon: 'error' | 'success', theme: string, text: string) =
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-        color: theme === 'dark' ? 'white' : 'black',
-        background: theme === 'dark' ? '#585BFF' : 'white',
+        color: theme === Theme.DARK ? 'white' : 'black',
+        background: theme === Theme.DARK ? '#585BFF' : 'white',
     })
     Toast.fire({
         icon: icon,

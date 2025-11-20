@@ -1,17 +1,22 @@
 'use client'
 import { useUserState } from "@/zustand/userState";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUsersHook from "./useUsersHook";
 import useThemeState from "@/zustand/theme";
 import { Theme } from "@/utils/enums";
 import "./switch.css"
+import changeAdminStatus from "./services/changeAdminStatus";
+import Loading from "@/components/loading";
+import { constLoader } from "@/utils/constLoader";
+import changeActiveStatus from "./services/changeActiveStatus";
 
 export default function UsersPage() {
     const { user } = useUserState(state => state);
     const { theme } = useThemeState(state => state)
     const router = useRouter()
     const { users } = useUsersHook()
+    const [loader, setLoader] = useState<{ state: boolean, text: string }>({ state: false, text: '' });
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !user || !user.admin) {
@@ -20,12 +25,14 @@ export default function UsersPage() {
     }, [])
     return (
         <div className="px-6">
+            {loader.state && <Loading text={constLoader.changeAdminStatus} />}
             <table className={`
             w-full 
             font-bold
             rounded-t-lg
             rounded-b-0
-            border-separate border-3 border-spacing-2 
+            border-separate border-3 border-spacing-2
+            ${loader.state && 'opacity-50 pointer-events-none'} 
             ${theme == Theme.DARK ? 'bg-dark-background-button border-dark-input' : 'bg-light-tertiary border-black'}
             `}>
                 <thead>
@@ -101,7 +108,7 @@ export default function UsersPage() {
                             >
                                 <div className="flex justify-center items-center min-h-[35px]">
                                     <label className="switch">
-                                        <input type="checkbox" defaultChecked={user.active} />
+                                        <input type="checkbox" defaultChecked={user.active} onChange={e => changeActiveStatus({ id: user.id, e, setLoader, theme })} />
                                         <span className="slider"></span>
                                     </label>
                                 </div>
@@ -118,7 +125,7 @@ export default function UsersPage() {
                             >
                                 <div className="flex justify-center items-center min-h-[35px]">
                                     <label className="switch">
-                                        <input type="checkbox" defaultChecked={user.admin} />
+                                        <input type="checkbox" defaultChecked={user.admin} onChange={e => changeAdminStatus({ id: user.id, e, setLoader, theme })} />
                                         <span className="slider"></span>
                                     </label>
                                 </div>
