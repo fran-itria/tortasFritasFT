@@ -96,6 +96,49 @@ export class AdminUsersService {
         })
         if (users.length > 0) return users
         else throw new NotFoundException('No hay usuarios registrados')
+
+        // LLAMADA QUE OBTIENE USUARIOS CON CANTIDAD DE ORDENES Y TOTAL GASTADO Y QUE INLCUYE LAS ORDENES
+        // const users = await this.usersModel.findAll({
+        //     attributes: {
+        //         exclude: ['createdAt', 'updatedAt'],
+        //         include: [
+        //             [
+        //                 literal(`(
+        //                     SELECT COUNT(*)
+        //                     FROM orders o
+        //                     WHERE o."userId" = "Users"."id"
+        //                 )`),
+        //                 'ordersCount'
+        //             ],
+        //             [
+        //                 literal(`(
+        //                     SELECT COALESCE(SUM(o.amount), 0)
+        //                     FROM orders o
+        //                     WHERE o."userId" = "Users"."id"
+        //                 )`),
+        //                 'totalGastado'
+        //             ]
+        //         ]
+        //     },
+        //     include: [
+        //         {
+        //             model: Orders,
+        //             separate: true,
+        //             required: false,
+        //             attributes: {
+        //                 exclude: ['createdAt', 'updatedAt']
+        //             },
+        //         }
+        //     ],
+        //     order: [
+        //         ['admin', 'DESC'],
+        //         literal('"ordersCount"  DESC')
+        //     ],
+        // })
+        // 
+        // LLAMADA A LA FUNCION EN SQL
+        // const users = await this.sequelize.query('SELECT * FROM get_users_with_orders()')
+        // if (users.length > 0) return users[0] as Users[]
     }
 
     async findById(id: string): Promise<Users> {
