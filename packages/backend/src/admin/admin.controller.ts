@@ -1,4 +1,4 @@
-import { Controller, Delete, NotFoundException, Post, Put, Req, Res } from "@nestjs/common";
+import { Controller, Delete, Get, NotFoundException, Post, Put, Req, Res } from "@nestjs/common";
 import express from "express";
 import {
     AdminOptionsService,
@@ -39,7 +39,18 @@ export class AdminOptionsController {
 @Controller('admin/users')
 export class AdminUsersController {
     constructor(private readonly adminService: AdminUsersService) { }
+    @Get()
+    async findAll(@Req() _req: express.Request, @Res() res: express.Response) {
+        const users = await this.adminService.findAll();
+        res.status(200).json(users);
+    }
 
+    @Get(':id')
+    async findById(@Req() req: express.Request, @Res() res: express.Response) {
+        const { id } = req.params;
+        const user = await this.adminService.findById(id);
+        res.status(200).json(user);
+    }
     @Delete()
     async inactiveUser(@Req() req: express.Request, @Res() res: express.Response) {
         const { id } = req.body

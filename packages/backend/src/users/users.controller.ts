@@ -6,19 +6,6 @@ import express from "express";
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-    @Get()
-    async findAll(@Req() req: express.Request, @Res() res: express.Response) {
-        const users = await this.usersService.findAll();
-        res.status(200).json(users);
-    }
-
-    @Get(':id')
-    async findById(@Req() req: express.Request, @Res() res: express.Response) {
-        const { id } = req.params;
-        const user = await this.usersService.findById(id);
-        res.status(200).json(user);
-    }
-
     @Post()
     async create(@Req() req: express.Request, @Res() res: express.Response) {
         const newUser = await this.usersService.create(req.body);

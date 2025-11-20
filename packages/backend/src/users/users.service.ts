@@ -21,20 +21,6 @@ export class UsersService {
         private readonly usersModel: typeof Users
     ) { }
 
-    async findAll(): Promise<Users[]> {
-        const users = await this.usersModel.findAll({
-            include: [Orders]
-        })
-        if (users.length > 0) return users
-        else throw new NotFoundException('No hay usuarios registrados')
-    }
-
-    async findById(id: string): Promise<Users> {
-        const user = await this.usersModel.findByPk(id, { include: [Orders] })
-        if (user) return user
-        else throw new NotFoundException('Usuario no encontrado')
-    }
-
     async create(params: UserCreationAttributes): Promise<{ user: Users; token: string }> {
         process.loadEnvFile()
         const { SECRET_KEY } = process.env;
