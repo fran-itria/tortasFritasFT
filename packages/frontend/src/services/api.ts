@@ -15,13 +15,15 @@ export const usersServiceApi = {
         email: string,
         name: string,
         surname: string
-    }) => apiClient.post(`/users`, {
+    }) => apiClient.post(`/admin/users`, {
         id,
         email,
         name,
         surname,
         active: true
-    })
+    }),
+
+    getAll: () => apiClient.get('/admin/users'),
 }
 
 export const productsServiceApi = {

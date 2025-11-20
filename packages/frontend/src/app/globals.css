@@ -19,6 +19,7 @@
   --color-light-primary: #E2E2E2;
   --color-light-secondary: #D9D9D9;
   --color-light-tertiary: #737373;
+  --color-light-td: oklch(70.7% 0.022 261.325);
   --color-light-text: #000000;
   --color-light-background-button: #000000;
   --color-light-input: #535353;
@@ -26,6 +27,7 @@
   --color-dark-primary: #00012B;
   --color-dark-secondary: #000247;
   --color-dark-tertiary: #00011A;
+  --color-dark-td: oklch(35.9% 0.144 278.697);
   --color-dark-background-button: #585BFF;
   --color-dark-text: #DDDDDD;
   --color-dark-input: #DDDDDD;

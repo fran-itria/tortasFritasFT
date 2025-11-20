@@ -1,0 +1,55 @@
+'use client'
+import { useUserState } from "@/zustand/userState";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import useUsersHook from "./useUsersHook";
+import useThemeState from "@/zustand/theme";
+import { Theme } from "@/utils/enums";
+
+export default function UsersPage() {
+    const { user } = useUserState(state => state);
+    const { theme } = useThemeState(state => state)
+    const router = useRouter()
+    const { users } = useUsersHook()
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token || !user || !user.admin) {
+            router.back()
+        }
+    }, [])
+    return (
+        <div className="px-6">
+            <table className={`
+            w-full 
+            font-bold
+            rounded-t-lg
+            rounded-b-0
+            border-separate border-3 border-spacing-2 
+            ${theme == Theme.DARK ? 'bg-dark-background-button border-dark-input' : 'bg-light-tertiary border-black'}
+            `}>
+                <thead>
+                    <tr>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Nombre</th>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Apellido</th>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Tel</th>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Ordenes</th>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Active</th>
+                        <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map((user) => (
+                        <tr key={user.id} className="text-center">
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.name}</td>
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.surname}</td>
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.phone || 'N/A'}</td>
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.orders ? user.orders.length : 0}</td>
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.active ? 'Sí' : 'No'}</td>
+                            <td className={`border-2 ${theme == Theme.DARK ? 'bg-dark-td border-dark-input' : 'bg-light-td border-dark-input'}`}>{user.admin ? 'Sí' : 'No'}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
