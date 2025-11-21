@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, NotFoundException, Post, Put, Req, Res } from "@nestjs/common";
+import { Controller, Get, NotFoundException, Req, Res } from "@nestjs/common";
 import { OptionsService } from "./options.service";
-import express from "express";
+import type { Request, Response } from "express";
 
 
 @Controller('options')
@@ -8,7 +8,7 @@ export class OptionsController {
     constructor(private readonly optionsService: OptionsService) { }
 
     @Get()
-    async getOptions(@Req() _req: express.Request, @Res() res: express.Response) {
+    async getOptions(@Req() _req: Request, @Res() res: Response) {
         const options = await this.optionsService.findAll();
         if (options) {
             res.status(200).json(options);

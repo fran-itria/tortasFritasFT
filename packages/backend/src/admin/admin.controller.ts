@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, NotFoundException, Post, Put, Req, Res } from "@nestjs/common";
-import express from "express";
+import type { Request, Response } from "express";
 import {
     AdminOptionsService,
     AdminOrdersService,
@@ -13,7 +13,7 @@ export class AdminOptionsController {
     constructor(private readonly adminService: AdminOptionsService) { }
 
     @Post()
-    async createOptions(@Req() _req: express.Request, @Res() res: express.Response) {
+    async createOptions(@Req() _req: Request, @Res() res: Response) {
         const newOptions = await this.adminService.createOptions()
         if (newOptions) {
             res.status(201).json(newOptions);
@@ -23,14 +23,14 @@ export class AdminOptionsController {
     }
 
     @Delete()
-    async deleteOptions(@Req() req: express.Request, @Res() res: express.Response) {
+    async deleteOptions(@Req() req: Request, @Res() res: Response) {
         const { id } = req.body
         await this.adminService.deleteOptions(id)
         res.status(200).json({ message: "Configuración eliminada correctamente" })
     }
 
     @Put()
-    async updateOptions(@Req() req: express.Request, @Res() res: express.Response) {
+    async updateOptions(@Req() req: Request, @Res() res: Response) {
         await this.adminService.updateOptions(req.body)
         res.status(200).json({ message: "Configuración actualizada correctamente" })
     }
@@ -40,20 +40,20 @@ export class AdminOptionsController {
 export class AdminUsersController {
     constructor(private readonly adminService: AdminUsersService) { }
     @Get()
-    async findAll(@Req() _req: express.Request, @Res() res: express.Response) {
+    async findAll(@Req() _req: Request, @Res() res: Response) {
         const users = await this.adminService.findAll();
         res.status(200).json(users);
     }
 
     @Get(':id')
-    async findById(@Req() req: express.Request, @Res() res: express.Response) {
+    async findById(@Req() req: Request, @Res() res: Response) {
         const { id } = req.params;
         const user = await this.adminService.findById(id);
         res.status(200).json(user);
     }
 
     @Put('/changeActiveStatus')
-    async changeActiveStatus(@Req() req: express.Request, @Res() res: express.Response) {
+    async changeActiveStatus(@Req() req: Request, @Res() res: Response) {
         const { id, active } = req.body
         await this.adminService.changeActiveStatus(id, active)
         const message = active ? "Usuario habilitado correctamente" : "Usuario eliminado correctamente"
@@ -62,7 +62,7 @@ export class AdminUsersController {
 
 
     @Put('/changeAdminStatus')
-    async changeAdminStatus(@Req() req: express.Request, @Res() res: express.Response) {
+    async changeAdminStatus(@Req() req: Request, @Res() res: Response) {
         const { id, admin } = req.body
         await this.adminService.changeAdminStatus(id, admin)
         res.status(200).json({ message: "Estado de administrador actualizado correctamente" })
@@ -74,7 +74,7 @@ export class AdminOrdersController {
     constructor(private readonly adminService: AdminOrdersService) { }
 
     @Put()
-    async updateState(@Req() req: express.Request, @Res() res: express.Response) {
+    async updateState(@Req() req: Request, @Res() res: Response) {
         const order = await this.adminService.updateState(req.body.id, req.body.state)
         res.status(200).json(order)
     }
@@ -85,7 +85,7 @@ export class AdminProductsController {
     constructor(private readonly adminService: AdminProductsService) { }
 
     @Post('/bulkCreate')
-    async bulkCreateProducts(@Req() req: express.Request, @Res() res: express.Response) {
+    async bulkCreateProducts(@Req() req: Request, @Res() res: Response) {
         const products = req.body
         console.log(products);
         for (const element of products) {
@@ -100,20 +100,20 @@ export class AdminProductsController {
     }
 
     @Post()
-    async createProduct(@Req() req: express.Request, @Res() res: express.Response) {
+    async createProduct(@Req() req: Request, @Res() res: Response) {
         const product = await this.adminService.create(req.body)
         res.status(201).json(product)
     }
 
     @Put('/soldOut')
-    async soldOutProduct(@Req() req: express.Request, @Res() res: express.Response) {
+    async soldOutProduct(@Req() req: Request, @Res() res: Response) {
         const { id } = req.body
         await this.adminService.soldOut(id)
         res.status(200).json({ message: "Producto marcado como agotado" })
     }
 
     @Put()
-    async updateProduct(@Req() req: express.Request, @Res() res: express.Response) {
+    async updateProduct(@Req() req: Request, @Res() res: Response) {
         const product = await this.adminService.update(req.body)
         res.status(200).json(product)
     }
