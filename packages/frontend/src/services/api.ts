@@ -15,7 +15,7 @@ export const usersServiceApi = {
         email: string,
         name: string,
         surname: string
-    }) => apiClient.post(`/admin/users`, {
+    }) => apiClient.post(`/users`, {
         id,
         email,
         name,
