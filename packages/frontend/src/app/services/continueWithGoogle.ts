@@ -22,6 +22,7 @@ export const continueWithGoogle = async ({ theme, setUser }: LoginWithGoogle) =>
             localStorage.setItem('token', user.data.token)
         }
     } catch (error) {
+        console.log(error)
         if (error instanceof ApiError) {
             if (error.response.data.statusCode == 403) {
                 alerts('error', theme, error.message)

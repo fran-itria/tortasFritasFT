@@ -22,7 +22,9 @@ export class UsersService {
     ) { }
 
     async create(params: UserCreationAttributes): Promise<{ user: Users; token: string }> {
-        process.loadEnvFile()
+        try {
+            process.loadEnvFile()
+        } catch (error) { }
         const { SECRET_KEY } = process.env;
         const { id, name, surname, email } = params
         if (!id || !name || !surname || !email) {
@@ -65,7 +67,9 @@ export class UsersService {
     }
 
     async login(email: string): Promise<{ user: Users; token: string }> {
-        process.loadEnvFile()
+        try {
+            process.loadEnvFile()
+        } catch (error) { }
         const { SECRET_KEY } = process.env;
         const user: any = await this.usersModel.findOne({ where: { email } });
         if (!user) throw new NotFoundException('Usuario no encontrado');
@@ -78,7 +82,9 @@ export class UsersService {
     }
 
     async loginWithToken(token: string): Promise<Users> {
-        process.loadEnvFile()
+        try {
+            process.loadEnvFile()
+        } catch (error) { }
         if (!token) {
             throw new BadRequestException('Token es requerido');
         }

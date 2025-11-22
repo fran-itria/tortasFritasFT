@@ -5,7 +5,9 @@ import jwt from "jsonwebtoken";
 @Injectable()
 export class AdminMiddleware implements NestMiddleware {
     use(req: Request, _res: Response, next: NextFunction) {
-        process.loadEnvFile()
+        try {
+            process.loadEnvFile()
+        } catch (error) { }
         const authHeader = req.headers.authorization?.split(' ')[1];
         if (!authHeader) throw new UnauthorizedException('No autorizado, se requiere token')
         const decoded = jwt.verify(authHeader, process.env.SECRET_KEY)
