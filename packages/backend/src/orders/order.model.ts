@@ -25,37 +25,37 @@ export class Orders extends Model<Orders, OrderCreationAttributes> {
         allowNull: false,
         defaultValue: 'pending'
     })
-    state: 'pending' | 'cancel' | 'accept' | 'completed' | 'delivered'
+    declare state: 'pending' | 'cancel' | 'accept' | 'completed' | 'delivered'
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    amount: number
+    declare amount: number
 
     @Column({
         type: DataType.ENUM,
         values: ['cash', 'transfer'],
         allowNull: false
     })
-    paymentMethod: 'cash' | 'transfer'
+    declare paymentMethod: 'cash' | 'transfer'
 
     @Column({
         type: DataType.INTEGER,
         allowNull: true
     })
-    cash: number | undefined
+    declare cash: number | undefined
 
     @ForeignKey(() => Users)
     @Column({
         type: DataType.STRING,
         allowNull: false
     })
-    userId: string
+    declare userId: string
 
     @BelongsTo(() => Users)
-    user: Users
+    declare user: Users
 
     @HasMany(() => OrderProduct)
-    orderProducts: OrderProduct[]
+    declare orderProducts: OrderProduct[]
 }
