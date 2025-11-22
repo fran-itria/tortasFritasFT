@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 
-process.loadEnvFile()
+try {
+  process.loadEnvFile()
+} catch (error) { }
 @Module({
   imports: [
     SequelizeModule.forRoot({
