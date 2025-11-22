@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation"
 import { productsServiceApi } from "@/services/api"
 import Link from "next/link"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
-import { Theme } from "@/utils/enums"
+import { Theme } from "@/utils/constTheme"
 
 export default function EditProduct() {
     const { theme } = useThemeState(state => state)

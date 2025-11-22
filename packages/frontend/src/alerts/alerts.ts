@@ -1,4 +1,4 @@
-import { Theme } from "@/utils/enums";
+import { Theme } from "@/utils/constTheme";
 import Swal from "sweetalert2";
 
 export const alerts = (icon: 'error' | 'success', theme: string, text: string) => {

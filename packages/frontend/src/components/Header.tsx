@@ -9,7 +9,7 @@ import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
 import ButtonPerson from "./Header/ButtonPerson";
-import { Theme } from "@/utils/enums";
+import { Theme } from "@/utils/constTheme";
 
 export default function Header() {
     const theme = useThemeState((state: { theme: string }) => state.theme)

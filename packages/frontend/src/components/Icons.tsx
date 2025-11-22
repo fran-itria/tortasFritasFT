@@ -10,7 +10,7 @@ import {
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoPerson, IoAddCircle } from "react-icons/io5";
-import { Theme } from '@/utils/enums';
+import { Theme } from '@/utils/constTheme';
 
 export function SunIcon() {
     return <FaSun />

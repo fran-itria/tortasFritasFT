@@ -1,6 +1,6 @@
 'use client'
 
-import { Theme } from '@/utils/enums'
+import { Theme } from '@/utils/constTheme'
 import { ThemeProvider } from 'next-themes'
 
 export function Providers({ children }: { children: React.ReactNode }) {

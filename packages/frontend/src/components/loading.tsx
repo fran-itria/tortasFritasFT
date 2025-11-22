@@ -1,4 +1,4 @@
-import { Theme } from "@/utils/enums";
+import { Theme } from "@/utils/constTheme";
 import { LoadingIcon } from "./Icons";
 import useThemeState from "@/zustand/theme";
 

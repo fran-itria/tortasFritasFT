@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { MoonIcon, SunIcon } from './Icons'
 import useThemeState from '@/zustand/theme'
 import { useUserState } from '@/zustand/userState'
-import { Theme } from '@/utils/enums'
+import { Theme } from '@/utils/constTheme'
 
 export function ThemeToggle() {
     const [mounted, setMounted] = useState(false)

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUsersHook from "./useUsersHook";
 import useThemeState from "@/zustand/theme";
-import { Theme } from "@/utils/enums";
+import { Theme } from "@/utils/constTheme";
 import "./switch.css"
 import changeAdminStatus from "./services/changeAdminStatus";
 import Loading from "@/components/loading";

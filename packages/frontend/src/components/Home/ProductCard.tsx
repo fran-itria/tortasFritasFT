@@ -3,7 +3,7 @@ import { CartIconPlus, PencilIcon } from "../Icons"
 import Link from "next/link"
 import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
-import { Theme } from "@/utils/enums"
+import { Theme } from "@/utils/constTheme"
 
 interface Props {
     isAdmin: boolean

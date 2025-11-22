@@ -8,7 +8,7 @@ import Loading from "../../../components/loading"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
-import { Theme } from "@/utils/enums"
+import { Theme } from "@/utils/constTheme"
 
 export default function CreateProduct() {
     const { theme } = useThemeState(state => state)

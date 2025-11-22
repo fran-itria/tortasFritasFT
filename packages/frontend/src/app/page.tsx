@@ -6,7 +6,7 @@ import { useUserState } from "@/zustand/userState"
 import useThemeState from "@/zustand/theme";
 import { AddCircleIcon } from "@/components/Icons";
 import Link from "next/link";
-import { Theme } from "@/utils/enums";
+import { Theme } from "@/utils/constTheme";
 
 
 export default function Home() {
