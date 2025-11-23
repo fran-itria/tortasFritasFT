@@ -14,7 +14,7 @@ export default function Home() {
   useLoginHook()
   const { theme } = useThemeState(state => state)
   const { user } = useUserState(state => state)
-  const { products, loader, setLoader } = useProductsHook()
+  const { products, loader } = useProductsHook()
   return (
     <>
       <div className={`grid grid-cols-2`}>

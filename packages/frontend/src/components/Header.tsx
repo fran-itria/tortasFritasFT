@@ -10,6 +10,7 @@ import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
 import ButtonPerson from "./Header/ButtonPerson";
 import { Theme } from "@/utils/constTheme";
+import Image from "next/image";
 
 export default function Header() {
     const theme = useThemeState((state: { theme: string }) => state.theme)
@@ -17,7 +18,9 @@ export default function Header() {
     return (
         <div className={`${theme == Theme.DARK ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
             <div className="flex items-center max-xs:w-full">
-                <img
+                <Image
+                    height={92}
+                    width={23}
                     src={theme === Theme.DARK ? logoDark.src : logoLight.src}
                     alt="Logo"
                     className='rounded-full w-23 h-auto p-2 max-xs:w-16'

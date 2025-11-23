@@ -16,13 +16,12 @@ export const continueWithGoogle = async ({ theme, setUser }: LoginWithGoogle) =>
     const surname = result.user.displayName?.split(' ')[1] || ''
     try {
         const user = await usersServiceApi.login(result.user.email as string)
-        if (!user.data.user.active) throw new ApiError(Errors.USER_INACTIVE, { data: { statusCode: 403 } } as any)
+        if (!user.data.user.active) throw new ApiError(Errors.USER_INACTIVE, { data: { error: '', message: Errors.USER_INACTIVE, statusCode: 403 } })
         if (user) {
             setUser(user.data.user)
             localStorage.setItem('token', user.data.token)
         }
     } catch (error) {
-        console.log(error)
         if (error instanceof ApiError) {
             if (error.response.data.statusCode == 403) {
                 alerts('error', theme, error.message)

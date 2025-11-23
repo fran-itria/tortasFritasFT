@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Interfaces y clases de error
-interface ApiErrorResponse {
+export interface ApiErrorResponse {
     data: {
         error: string
         message: string

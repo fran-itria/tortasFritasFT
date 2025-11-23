@@ -1,4 +1,3 @@
-import { alerts } from "@/alerts/alerts";
 import { storage } from "@/firebase/firebase";
 import { productsServiceApi } from "@/services/api";
 import { constLoader } from "@/utils/constLoader";
@@ -55,7 +54,7 @@ export async function submit({ e, product, varity, image, setLoader, router, sub
             }
         }
     }
-    catch (error) {
+    catch (_error) {
         setLoader('')
     }
 } 

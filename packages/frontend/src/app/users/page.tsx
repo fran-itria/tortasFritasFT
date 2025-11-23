@@ -20,7 +20,7 @@ export default function UsersPage() {
         if (!token || !user || !user.admin) {
             router.back()
         }
-    }, [])
+    }, [router, user])
     return (
         <div className="px-6">
             {loader && <Loading text={loader} />}

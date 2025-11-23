@@ -12,13 +12,13 @@ export default function OrdersPage() {
     const { user } = useUserState(state => state);
     const { theme } = useThemeState(state => state)
     const router = useRouter()
-    const { orders, loader, setLoader } = useOrdersHook()
+    const { orders, loader } = useOrdersHook()
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !user || !user.admin) {
             router.back()
         }
-    }, [])
+    }, [router, user])
     return (
         <div className="px-6">
             {loader && <Loading text={loader} />}
@@ -91,7 +91,7 @@ export default function OrdersPage() {
                                 `}
                             >
                                 {order.orderProducts.map(product => (
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col" key={product.id}>
                                         {product.quantity} {product.product.name} {product.varity}
                                     </div>
                                 ))}

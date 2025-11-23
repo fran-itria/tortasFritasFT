@@ -15,8 +15,11 @@ export default async function changeAdminStatus({ id, e, setLoader, theme }: Pro
     try {
         const response = await usersServiceApi.changeAdminStatus({ id, admin: e.target.checked })
         alerts("success", theme, response?.data?.message)
-    } catch (error: any) {
-        alerts("error", theme, error?.response?.data?.message)
+    } catch (error) {
+        if (error instanceof Object && 'response' in error) {
+            const apiError = error as { response: { data: { message: string } } }
+            alerts("error", theme, apiError.response.data.message)
+        }
     } finally {
         setLoader('')
     }

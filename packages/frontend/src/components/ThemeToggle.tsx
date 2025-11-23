@@ -14,7 +14,7 @@ export function ThemeToggle() {
     const updateState = useThemeState((state) => state.updateTheme)
     useEffect(() => {
         setMounted(true)
-    }, [])
+    }, [updateState])
     useEffect(() => {
         updateState(theme as string)
     }, [theme])

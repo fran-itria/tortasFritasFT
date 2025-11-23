@@ -1,4 +1,4 @@
-import { OrdersServiceApi, usersServiceApi } from "@/services/api";
+import { OrdersServiceApi } from "@/services/api";
 import { constLoader } from "@/utils/constLoader";
 import { useEffect, useState } from "react";
 

@@ -16,8 +16,11 @@ export default async function submitAtention(
     try {
         setLoader(constLoader.editAtention)
         await optionsServiceApi.update(atentionData)
-    } catch (error: any) {
-        alerts("error", theme, error.response?.data?.message || "Error al guardar cambios")
+    } catch (error) {
+        if (error instanceof Object && 'response' in error) {
+            const apiError = error as { response: { data: { message: string } } }
+            alerts("error", theme, apiError.response.data.message)
+        }
     } finally {
         setLoader('')
         setOpen(false)

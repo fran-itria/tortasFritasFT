@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
 import { Theme } from "@/utils/constTheme"
+import Image from "next/image"
 
 interface Props {
     isAdmin: boolean
@@ -56,10 +57,16 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                     !active && isAdmin &&
                     <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">No disponible</p>
                 }
-                <img src={image} alt={name} className="
-                    w-60 h-40
-                    max-xs:w-full
-                    rounded-t-xl
+                <Image
+                    width={1}
+                    height={1}
+                    src={typeof image === "string" ? image : URL.createObjectURL(image as Blob)}
+                    alt={name}
+                    unoptimized={true}
+                    className="
+                        w-60 h-40
+                        max-xs:w-full
+                        rounded-t-xl
                 "/>
                 <p className="font-bold text-xl max-xs:text-lg">{name}</p>
                 <p className={`

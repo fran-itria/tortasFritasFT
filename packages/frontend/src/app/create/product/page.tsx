@@ -9,18 +9,19 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
 import { Theme } from "@/utils/constTheme"
+import Image from "next/image"
 
 export default function CreateProduct() {
     const { theme } = useThemeState(state => state)
     const [product, setProduct] = useState<Products | undefined>(undefined)
     const [image, setImage] = useState<File | string | undefined>(undefined)
     const [varity, setVarity] = useState<{ id: string, name: string, soldOut: boolean }[]>([])
-    const [loading, setLoading] = useState(false)
+    const [loader, setLoader] = useState<string>('')
     const router = useRouter()
 
-    useEffect(() => console.log(product), [product])
     return (
         <div className="pb-5 flex flex-col items-center">
+            {loader && <Loading text={loader} />}
             <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border`}>
                 <div className="flex justify-between h-10 items-center mb-3">
                     <Link href={'/'} className={`
@@ -36,7 +37,7 @@ export default function CreateProduct() {
                     </Link>
                     <p className="text-xl font-bold w-full text-center">Creando un nuevo producto</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoading, e, product, varity, image, router, submitCase: SubmitFormCases.CREATE })}>
+                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoader, e, product, varity, image, router, submitCase: SubmitFormCases.CREATE })}>
                     <div>
                         <label className="font-bold mr-2">Producto:</label>
                         <input
@@ -130,10 +131,13 @@ export default function CreateProduct() {
                                 px-2"
                         />
                         {product?.image &&
-                            <img src={typeof image == "string" ? image : URL.createObjectURL(image as File)} className="
-                                w-20 h-auto 
-                                max-xs:w-45
-                                mt-2"
+                            <Image
+                                src={typeof image == "string" ? image : URL.createObjectURL(image as File)}
+                                alt={product.name}
+                                className="
+                                    w-20 h-auto 
+                                    max-xs:w-45
+                                    mt-2"
                             />
                         }
                     </div>
@@ -152,7 +156,6 @@ export default function CreateProduct() {
                     </button>
                 </form>
             </div >
-            {loading && <Loading text="Creando producto" />}
         </div >
     )
 }

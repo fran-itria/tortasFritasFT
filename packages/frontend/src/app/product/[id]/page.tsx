@@ -11,6 +11,7 @@ import Link from "next/link"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
 import { Theme } from "@/utils/constTheme"
 import { constLoader } from "@/utils/constLoader"
+import Image from "next/image"
 
 export default function EditProduct() {
     const { theme } = useThemeState(state => state)
@@ -146,10 +147,16 @@ export default function EditProduct() {
                                 px-2`}
                         />
                         {product?.image &&
-                            <img src={typeof image == "string" ? image : URL.createObjectURL(image as File)} className="
-                                w-20 h-auto 
-                                max-xs:w-45
-                                mt-2"
+                            <Image
+                                width={1}
+                                height={1}
+                                unoptimized={true}
+                                src={typeof image == "string" ? image : URL.createObjectURL(image as File)}
+                                alt={product.name}
+                                className="
+                                    w-20 h-auto 
+                                    max-xs:w-45
+                                    mt-2"
                             />
                         }
                     </div>
