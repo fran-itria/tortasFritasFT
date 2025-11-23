@@ -33,3 +33,7 @@ export const productsServiceApi = {
     create: (body: Products) => apiClient.post('admin/products', { ...body }),
     update: (body: Products) => apiClient.put('admin/products', { ...body }),
 }
+
+export const OrdersServiceApi = {
+    getAll: () => apiClient.get('/admin/orders'),
+}

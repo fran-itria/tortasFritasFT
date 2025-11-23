@@ -53,20 +53,22 @@ export default function AdminHeader() {
             `}>
                 Lista de usuarios
             </Link>
-            <button className={`
-                ${theme === "dark" ?
-                    "bg-dark-background-button text-dark-text"
-                    :
-                    "bg-light-background-button text-light-secondary"
-                }
-                max-xs:col-span-2
-                p-2
-                px-4
-                rounded-lg
-                font-bold
-            `}>
+            <Link
+                href={'/orders'}
+                className={`
+                    ${theme === "dark" ?
+                        "bg-dark-background-button text-dark-text"
+                        :
+                        "bg-light-background-button text-light-secondary"
+                    }
+                    max-xs:col-span-2
+                    p-2
+                    px-4
+                    rounded-lg
+                    font-bold
+                `}>
                 Pedidos
-            </button>
+            </Link>
             {open && <EditHours setOpen={setOpen} />}
         </div>
     )

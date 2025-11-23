@@ -9,4 +9,7 @@ export enum constLoader {
     getOneProduct = "Cargando producto",
     createProduct = "Creando producto",
     updateProduct = "Actualizando producto",
+    getOrders = "Cargando ordenes",
+    getOneOrder = "Cargando orden",
+    updateOrder = "Actualizando orden",
 }
