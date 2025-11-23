@@ -27,28 +27,6 @@ export class OrdersService {
         private readonly orderProductModel: typeof OrderProduct
     ) { }
 
-    async findAll(): Promise<Orders[]> {
-        const orders = await this.ordersModel.findAll({
-            include: [
-                {
-                    model: Users,
-                    attributes: ['name', 'surname', 'phone']
-                },
-                {
-                    model: OrderProduct,
-                    include: [
-                        {
-                            model: Products,
-                            attributes: ['name']
-                        }
-                    ],
-                }
-            ]
-        });
-        if (orders.length == 0) throw new NotFoundException('No hay ordenes registradas');
-        return orders
-    }
-
     async findById(id: string): Promise<Orders> {
         const order = await this.ordersModel.findByPk(id,
             {

@@ -73,6 +73,12 @@ export class AdminUsersController {
 export class AdminOrdersController {
     constructor(private readonly adminService: AdminOrdersService) { }
 
+    @Get()
+    async findAll(@Req() _req: Request, @Res() res: Response) {
+        const orders = await this.adminService.findAll();
+        res.status(200).json(orders);
+    }
+
     @Put()
     async updateState(@Req() req: Request, @Res() res: Response) {
         const order = await this.adminService.updateState(req.body.id, req.body.state)

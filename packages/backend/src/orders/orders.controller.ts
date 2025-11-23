@@ -8,12 +8,6 @@ export class OrdersController {
         private readonly ordersService: OrdersService
     ) { }
 
-    @Get()
-    async findAll(@Req() _req: Request, @Res() res: Response) {
-        const orders = await this.ordersService.findAll();
-        res.status(200).json(orders);
-    }
-
     @Get('/:id')
     async findById(@Req() req: Request, @Res() res: Response) {
         const { id } = req.params

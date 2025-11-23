@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Options } from "src/options/option.model";
+import { OrderProduct } from "src/order_product/order_product.model";
 import { Orders } from "src/orders/order.model";
 import { Products } from "src/products/product.model";
 import { Users } from "src/users/user.model";
@@ -190,6 +191,29 @@ export class AdminOrdersService {
         @InjectModel(Orders)
         private readonly ordersModel: typeof Orders
     ) { }
+
+    async findAll(): Promise<Orders[]> {
+        const orders = await this.ordersModel.findAll({
+            include: [
+                {
+                    model: Users,
+                    attributes: ['name', 'surname', 'phone']
+                },
+                {
+                    model: OrderProduct,
+                    include: [
+                        {
+                            model: Products,
+                            attributes: ['name']
+                        }
+                    ],
+                }
+            ]
+        });
+        if (orders.length == 0) throw new NotFoundException('No hay ordenes registradas');
+        return orders
+    }
+
     async updateState(
         id: number,
         state: "pending" | "cancel" | "accept" | "completed" | "delivered"
