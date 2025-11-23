@@ -3,4 +3,5 @@ export enum constLoader {
     changeAdminStatus = "Guardando cambios",
     deleteUser = "Eliminando usuario",
     activeUser = "Habilitando usuario",
+    getUsers = "Cargando usuarios",
 }

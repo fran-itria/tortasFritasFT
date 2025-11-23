@@ -1,22 +1,20 @@
 'use client'
 import { useUserState } from "@/zustand/userState";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useUsersHook from "./useUsersHook";
 import useThemeState from "@/zustand/theme";
 import { Theme } from "@/utils/constTheme";
 import "./switch.css"
 import changeAdminStatus from "./services/changeAdminStatus";
 import Loading from "@/components/loading";
-import { constLoader } from "@/utils/constLoader";
 import changeActiveStatus from "./services/changeActiveStatus";
 
 export default function UsersPage() {
     const { user } = useUserState(state => state);
     const { theme } = useThemeState(state => state)
     const router = useRouter()
-    const { users } = useUsersHook()
-    const [loader, setLoader] = useState<{ state: boolean, text: string }>({ state: false, text: '' });
+    const { users, loader, setLoader } = useUsersHook()
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !user || !user.admin) {
@@ -25,7 +23,7 @@ export default function UsersPage() {
     }, [])
     return (
         <div className="px-6">
-            {loader.state && <Loading text={constLoader.changeAdminStatus} />}
+            {loader.state && <Loading text={loader.text} />}
             <table className={`
             w-full 
             font-bold

@@ -20,7 +20,7 @@ export default function Atention() {
             <div>
                 <p className="font-bold text-xl">Horario de atención: </p>
                 <ul className="list-disc list-inside">
-                    {open?.open.map((hour, index) => (
+                    {open?.open?.map((hour, index) => (
                         <li
                             key={index}
                             className="font-bold"

@@ -8,6 +8,21 @@ export default function AdminHeader() {
     const [open, setOpen] = useState(false)
     return (
         <div className="flex justify-around p-5 max-xs:grid max-xs:grid-cols-2 max-xs:gap-2">
+            <Link
+                href={"/"}
+                className={`
+                ${theme === "dark" ?
+                        "bg-dark-background-button text-dark-text"
+                        :
+                        "bg-light-background-button text-light-secondary"
+                    }
+                p-2
+                px-4
+                rounded-lg
+                font-bold
+            `}>
+                Inicio
+            </Link>
             <button className={`
                 ${theme === "dark" ?
                     "bg-dark-background-button text-dark-text"

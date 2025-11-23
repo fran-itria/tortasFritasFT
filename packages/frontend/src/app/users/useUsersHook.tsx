@@ -1,4 +1,5 @@
 import { usersServiceApi } from "@/services/api";
+import { constLoader } from "@/utils/constLoader";
 import { useEffect, useState } from "react";
 
 
@@ -22,13 +23,16 @@ export default function useUsersHook() {
         }[]
     }[]>([])
 
+    const [loader, setLoader] = useState<{ state: boolean, text: string }>({ state: false, text: '' });
+
     useEffect(() => {
         (async () => {
+            setLoader({ state: true, text: constLoader.getUsers })
             const response = await usersServiceApi.getAll()
-            console.log(response.data);
             setUsers(response.data)
+            setLoader({ state: false, text: '' })
         })()
     }, [])
 
-    return { users, setUsers }
+    return { users, setUsers, loader, setLoader }
 }
