@@ -54,7 +54,7 @@ export async function submit({ e, product, varity, image, setLoader, router, sub
             }
         }
     }
-    catch (_error) {
+    catch {
         setLoader('')
     }
 } 

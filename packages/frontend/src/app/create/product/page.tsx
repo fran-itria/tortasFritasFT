@@ -1,7 +1,7 @@
 'use client'
 import useThemeState from "@/zustand/theme"
 import { Products } from "hooks/useProductsHook"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { InputFieldNames, changeVarity, changeInputs } from "../../services/inputsFunctions"
 import { TrashIcon } from "../../../components/Icons"
 import Loading from "../../../components/loading"

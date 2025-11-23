@@ -29,11 +29,11 @@ export const changeHours = ({ setAtention, id, e }: Props) => {
     setAtention((prev) => {
         if (prev) {
             const days = prev.open
-            const findHour = days.findIndex(day => day.id == id)
-            if (days[findHour][period] == undefined) {
+            const findHour = days?.findIndex(day => day.id == id)
+            if (days && findHour && days[findHour][period] == undefined) {
                 days[findHour][period] = ["", ""];
             }
-            days[findHour][period][position] = value
+            days && findHour && (days[findHour][period][position] = value)
             return {
                 ...prev,
                 open: days
