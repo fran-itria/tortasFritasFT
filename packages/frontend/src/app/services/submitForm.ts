@@ -1,6 +1,7 @@
 import { alerts } from "@/alerts/alerts";
 import { storage } from "@/firebase/firebase";
 import { productsServiceApi } from "@/services/api";
+import { constLoader } from "@/utils/constLoader";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Products } from "hooks/useProductsHook";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -20,15 +21,14 @@ interface submitProps {
         soldOut: boolean;
     }[]
     image: string | File | undefined
-    setLoading: Dispatch<SetStateAction<boolean>>
+    setLoader: Dispatch<SetStateAction<string>>
     router: AppRouterInstance
     submitCase: SubmitFormCases.CREATE | SubmitFormCases.UPDATE
 }
 
-export async function submit({ e, product, varity, image, setLoading, router, submitCase }: submitProps) {
+export async function submit({ e, product, varity, image, setLoader, router, submitCase }: submitProps) {
     e.preventDefault()
-    console.log({ product, varity, image, submitCase });
-    // setLoading(true)
+    setLoader(submitCase === SubmitFormCases.CREATE ? constLoader.createProduct : constLoader.updateProduct)
     try {
         if (image && product && image != product.image) {
             const storageRef = ref(storage, (image as File).name)
@@ -56,7 +56,6 @@ export async function submit({ e, product, varity, image, setLoading, router, su
         }
     }
     catch (error) {
-        console.log(error);
-        setLoading(false)
+        setLoader('')
     }
 } 

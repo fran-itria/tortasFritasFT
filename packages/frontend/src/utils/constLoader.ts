@@ -1,7 +1,12 @@
 export enum constLoader {
     editAtention = "Guardando configuración",
+    getAtention = "Cargando configuración",
     changeAdminStatus = "Guardando cambios",
     deleteUser = "Eliminando usuario",
     activeUser = "Habilitando usuario",
     getUsers = "Cargando usuarios",
+    getProducts = "Cargando productos",
+    getOneProduct = "Cargando producto",
+    createProduct = "Creando producto",
+    updateProduct = "Actualizando producto",
 }

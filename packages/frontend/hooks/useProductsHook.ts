@@ -1,4 +1,5 @@
 import { productsServiceApi } from "@/services/api";
+import { constLoader } from "@/utils/constLoader";
 import { useEffect, useState } from "react";
 
 export interface Products {
@@ -14,18 +15,22 @@ export interface Products {
 
 export default function useProductsHook() {
     const [products, setProducts] = useState<Products[]>([])
+    const [loader, setLoader] = useState<string>('');
     useEffect(() => {
         (async () => {
+            setLoader(constLoader.getProducts)
             const response = await productsServiceApi.getAll()
             try {
                 if (response.status == 200) {
                     setProducts(response.data)
+                    setLoader('')
                 }
             } catch (error) {
+                setLoader('')
                 console.error("Error fetching products:", error)
             }
         })()
     }, [])
 
-    return { products, setProducts }
+    return { products, setProducts, loader, setLoader }
 }

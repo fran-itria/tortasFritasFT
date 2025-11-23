@@ -10,30 +10,33 @@ import { productsServiceApi } from "@/services/api"
 import Link from "next/link"
 import { submit, SubmitFormCases } from "@/app/services/submitForm"
 import { Theme } from "@/utils/constTheme"
+import { constLoader } from "@/utils/constLoader"
 
 export default function EditProduct() {
     const { theme } = useThemeState(state => state)
     const [product, setProduct] = useState<Products | undefined>(undefined)
     const [image, setImage] = useState<File | string | undefined>(undefined)
     const [varity, setVarity] = useState<{ id: string, name: string, soldOut: boolean }[]>([])
-    const [loading, setLoading] = useState(false)
+    const [loader, setLoader] = useState<string>('');
     const { id } = useParams()
     const router = useRouter()
 
     useEffect(() => {
         (async () => {
+            setLoader(constLoader.getOneProduct)
             const res = await productsServiceApi.getOneProduct(id as string)
-            console.log(res.data)
             setProduct(res.data)
             setImage(res.data.image)
             setVarity(res.data.varity || [])
+            setLoader('')
         })()
     }, [id])
 
     return (
         <div className="pb-5 flex flex-col items-center">
-            <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border`}>
-                <div className="flex justify-between h-10 items-center mb-3">
+            {loader && <Loading text={loader} />}
+            <div className={`${theme === 'dark' ? 'bg-dark-tertiary' : 'bg-light-secondary'} p-4 rounded-lg border opacitiy-50`}>
+                <div className={`flex justify-between h-10 items-center mb-3 ${loader && 'opacity-50 pointer-events-none'}`}>
                     <Link href={'/'} className={`
                         ${theme == Theme.DARK ?
                             'bg-dark-background-button text-dark-text'
@@ -47,7 +50,7 @@ export default function EditProduct() {
                     </Link>
                     <p className="text-xl font-bold w-full text-center">Editando el producto: {product?.name}</p>
                 </div>
-                <form className="flex flex-col gap-5" onSubmit={(e) => submit({ setLoading, e, product, varity, image, router, submitCase: SubmitFormCases.UPDATE })}>
+                <form className={`flex flex-col gap-5 ${loader && 'opacity-50 pointer-events-none'}`} onSubmit={(e) => submit({ setLoader, e, product, varity, image, router, submitCase: SubmitFormCases.UPDATE })}>
                     <div>
                         <label className="font-bold mr-2">Producto:</label>
                         <input
@@ -177,7 +180,6 @@ export default function EditProduct() {
                     </button>
                 </form>
             </div >
-            {loading && <Loading text="Actualizando producto" />}
         </div >
     )
 }

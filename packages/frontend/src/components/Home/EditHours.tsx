@@ -10,20 +10,22 @@ import submitAtention from "./services/submitAtention"
 export const EditHours = ({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) => {
     const [atention, setAtention] = useState<OptionsResponse | undefined>(undefined)
     const { theme } = useThemeState(state => state)
-    const [loading, setLoading] = useState(false)
+    const [loader, setLoader] = useState<string>('');
 
     useEffect(() => {
         (async () => {
+            setLoader(constLoader.getAtention)
             const response = await optionsServiceApi.getAll()
             setAtention(response.data)
+            setLoader('')
         })()
     }, [])
 
     useEffect(() => console.log(atention), [atention])
     return (
         <div className={`${theme == "dark" ? "from-dark-secondary to-dark-background-button" : "from-light-secondary to-light-tertiary"} z-10 p-5 rounded-lg border-2 absolute top-50 bg-linear-to-b w-90 max-xs:w-97`}>
-            {loading && <Loading text={constLoader.editAtention} />}
-            <form onSubmit={(e) => submitAtention(atention, setLoading, e, theme, setOpen)} className={`${loading && "blur-xs"} flex flex-col gap-3 justify-center items-center`}>
+            {loader && <Loading text={loader} />}
+            <form onSubmit={(e) => submitAtention(atention, setLoader, e, theme, setOpen)} className={`${loader && "opacity-50"} flex flex-col gap-3 justify-center items-center`}>
                 <div>
                     <label className="font-bold">
                         Direccion:

@@ -7,16 +7,18 @@ import useThemeState from "@/zustand/theme";
 import { AddCircleIcon } from "@/components/Icons";
 import Link from "next/link";
 import { Theme } from "@/utils/constTheme";
+import Loading from "@/components/loading";
 
 
 export default function Home() {
   useLoginHook()
   const { theme } = useThemeState(state => state)
   const { user } = useUserState(state => state)
-  const { products } = useProductsHook()
+  const { products, loader, setLoader } = useProductsHook()
   return (
     <>
       <div className={`grid grid-cols-2`}>
+        {loader && <Loading text={loader} />}
         {products && products.length > 0 && (
           products.map((p, i) => {
             if ((!user || !user?.admin) && p.active == 0) return null
@@ -34,7 +36,7 @@ export default function Home() {
               active={p.active} />
           })
         )}
-        {user?.admin && (
+        {user?.admin && !loader && (
           <Link href='create/product' className='flex flex-col justify-center items-center p-5'>
             <div
               className={`

@@ -23,14 +23,14 @@ export default function useUsersHook() {
         }[]
     }[]>([])
 
-    const [loader, setLoader] = useState<{ state: boolean, text: string }>({ state: false, text: '' });
+    const [loader, setLoader] = useState<string>('');
 
     useEffect(() => {
         (async () => {
-            setLoader({ state: true, text: constLoader.getUsers })
+            setLoader(constLoader.getUsers)
             const response = await usersServiceApi.getAll()
             setUsers(response.data)
-            setLoader({ state: false, text: '' })
+            setLoader('')
         })()
     }, [])
 
