@@ -23,14 +23,14 @@ export default function UsersPage() {
     }, [])
     return (
         <div className="px-6">
-            {loader.state && <Loading text={loader.text} />}
+            {loader && <Loading text={loader} />}
             <table className={`
             w-full 
             font-bold
             rounded-t-lg
             rounded-b-0
             border-separate border-3 border-spacing-2
-            ${loader.state && 'opacity-50 pointer-events-none'} 
+            ${loader && 'opacity-50 pointer-events-none'} 
             ${theme == Theme.DARK ? 'bg-dark-background-button border-dark-input' : 'bg-light-tertiary border-black'}
             `}>
                 <thead>
