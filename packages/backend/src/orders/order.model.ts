@@ -21,11 +21,11 @@ export class Orders extends Model<Orders, OrderCreationAttributes> {
 
     @Column({
         type: DataType.ENUM,
-        values: ['pending', 'cancel', 'accept', 'completed', 'delivered'],
+        values: ['pending', 'cancel', 'accept', 'completed', 'delivered', 'rejected'],
         allowNull: false,
         defaultValue: 'pending'
     })
-    declare state: 'pending' | 'cancel' | 'accept' | 'completed' | 'delivered'
+    declare state: 'pending' | 'cancel' | 'accept' | 'completed' | 'delivered' | 'rejected'
 
     @Column({
         type: DataType.INTEGER,

@@ -36,4 +36,5 @@ export const productsServiceApi = {
 
 export const OrdersServiceApi = {
     getAll: () => apiClient.get('/admin/orders'),
+    updateStatus: ({ orderId, state }: { orderId: string, state: string }) => apiClient.put('/admin/orders', { id: orderId, state }),
 }

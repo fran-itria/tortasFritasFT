@@ -1,24 +1,22 @@
 'use client'
-import { useUserState } from "@/zustand/userState";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import useThemeState from "@/zustand/theme";
 import { Theme } from "@/utils/constTheme";
 import Loading from "@/components/loading";
 import useOrdersHook from "./useOrdersHook";
 import { constOrders, constOrdersCompare } from "@/utils/constOrders";
+import updateStateOrder from "./services/updateStateOrder";
 
 export default function OrdersPage() {
-    const { user } = useUserState(state => state);
-    const { theme } = useThemeState(state => state)
-    const router = useRouter()
-    const { orders, loader } = useOrdersHook()
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token || !user || !user.admin) {
-            router.back()
-        }
-    }, [router, user])
+    const {
+        orders,
+        loader,
+        setLoader,
+        setUpdateOrder,
+        orderId,
+        setOrderId,
+        setShowModal,
+        showModal,
+        theme
+    } = useOrdersHook()
     return (
         <div className="px-6">
             {loader && <Loading text={loader} />}
@@ -28,7 +26,7 @@ export default function OrdersPage() {
             rounded-t-lg
             rounded-b-0
             border-separate border-3 border-spacing-2
-            ${loader && 'opacity-50 pointer-events-none'} 
+            ${loader || showModal && 'opacity-50 pointer-events-none'} 
             ${theme == Theme.DARK ? 'bg-dark-background-button border-dark-input' : 'bg-light-tertiary border-black'}
             `}>
                 <caption className="caption-top mb-2">Lista de Pedidos</caption>
@@ -106,21 +104,82 @@ export default function OrdersPage() {
                                     }
                                 `}
                             >
-                                {order.state == constOrdersCompare.pending ? constOrders.pending
-                                    :
-                                    order.state == constOrdersCompare.accept ? constOrders.accept
+                                <button onClick={() => {
+                                    setShowModal(true)
+                                    setOrderId(order.id)
+                                }}>
+                                    {order.state == constOrdersCompare.pending ? constOrders.pending
                                         :
-                                        order.state == constOrdersCompare.completed ? constOrders.completed
+                                        order.state == constOrdersCompare.accept ? constOrders.accept
                                             :
-                                            order.state == constOrdersCompare.delivered ? constOrders.delivered
+                                            order.state == constOrdersCompare.completed ? constOrders.completed
                                                 :
-                                                constOrders.cancel
-                                }
+                                                order.state == constOrdersCompare.delivered ? constOrders.delivered
+                                                    :
+                                                    order.state == constOrdersCompare.cancel ? constOrders.cancel
+                                                        :
+                                                        constOrders.rejected
+                                    }
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {showModal &&
+                <div className={`
+                            opacity-100
+                            absolute
+                            top-0
+                            left-0
+                            w-full
+                            h-full
+                            z-10
+                            flex
+                            justify-center
+                            items-center
+                    `}>
+                    <div
+                        className={`
+                            flex 
+                            flex-col
+                            rounded-lg 
+                            bg-linear-to-b
+                            w-40
+                            font-bold
+                            ${theme == Theme.DARK ? 'from-dark-background-button to-dark-tertiary' : 'from-light-background-button to-light-tertiary'}
+                        `}>
+                        <button
+                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.accept, theme, setLoader, setUpdateOrder, setShowModal })}
+                            className="p-2 text-green-400 rounded-t-lg border-b-2 border-white"
+                        >
+                            Aceptar
+                        </button>
+                        <button
+                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.rejected, theme, setLoader, setUpdateOrder, setShowModal })}
+                            className="p-2 text-red-400 rounded-none border-b-2 border-t-2 border-white"
+                        >
+                            Rechazar
+                        </button>
+                        <button
+                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.completed, theme, setLoader, setUpdateOrder, setShowModal })}
+                            className="p-2 text-yellow-400 rounded-none border-b-2 border-t-2 border-white"
+                        >
+                            Listo para retirar
+                        </button>
+                        <button
+                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.delivered, theme, setLoader, setUpdateOrder, setShowModal })}
+                            className="p-2 text-sky-400 rounded-none border-b-2 border-t-2 border-white"
+                        >
+                            Entregado
+                        </button>
+                        <button onClick={() => setShowModal(false)} className="p-2 border-t-2 rounded-b-lg text-white"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

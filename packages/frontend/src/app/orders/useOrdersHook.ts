@@ -1,5 +1,8 @@
 import { OrdersServiceApi } from "@/services/api";
 import { constLoader } from "@/utils/constLoader";
+import useThemeState from "@/zustand/theme";
+import { useUserState } from "@/zustand/userState";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Order {
@@ -33,16 +36,40 @@ interface Order {
 export default function useOrdersHook() {
     const [orders, setOrders] = useState<Order[]>([])
     const [loader, setLoader] = useState<string>('');
+    const [updateOrder, setUpdateOrder] = useState<boolean>(false);
+    const [orderId, setOrderId] = useState<string>('');
+    const [showModal, setShowModal] = useState(false);
+
+    const { user } = useUserState(state => state);
+    const { theme } = useThemeState(state => state)
+    const router = useRouter()
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token || !user || !user.admin) {
+            router.push('/')
+        }
+    }, [router, user])
 
     useEffect(() => {
         (async () => {
             setLoader(constLoader.getOrders)
             const response = await OrdersServiceApi.getAll()
-            console.log(response.data);
             setOrders(response.data)
             setLoader('')
         })()
-    }, [])
+    }, [updateOrder])
 
-    return { orders, setOrders, loader, setLoader }
+    return {
+        orders,
+        setOrders,
+        loader,
+        setLoader,
+        theme,
+        showModal,
+        setShowModal,
+        setUpdateOrder,
+        orderId,
+        setOrderId
+    }
 }
