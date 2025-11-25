@@ -19,6 +19,7 @@ export default function Header() {
         <div className={`${theme == Theme.DARK ? 'bg-dark-primary shadow-gray-600' : 'bg-light-primary shadow-black'} w-full flex justify-between shadow-md`}>
             <div className="flex items-center max-xs:w-full">
                 <Image
+                    priority
                     height={92}
                     width={23}
                     src={theme === Theme.DARK ? logoDark.src : logoLight.src}
@@ -28,11 +29,12 @@ export default function Header() {
                 <p className="font-bold text-2xl max-xs:text-lg">Tortas Fritas FT</p>
             </div>
             <div className="flex items-center w-90 justify-around max-xs:w-full max-xs:justify-between">
-                <Link className={`${!user ? 'max-xs:w-full' : 'w-full'} flex justify-center`} href={'https://www.instagram.com/tortasfritas.ft/'} target="_blank">
+                <Link className={`${!user ? 'max-xs:w-full' : 'w-full'} flex justify-center`} href={'https://www.instagram.com/tortasfritas.ft/'} target="_blank" aria-label="Instagram">
                     <InstagramIcon theme={theme} />
                 </Link>
                 {!user ?
                     <button
+                        aria-label="google icon"
                         onClick={async () => await continueWithGoogle({ theme, setUser })}
                     >
                         <div className={`
@@ -54,7 +56,7 @@ export default function Header() {
                     </button>
                     :
                     <div className="flex w-full justify-between">
-                        <button>
+                        <button aria-label="Cart shop">
                             <ShoppingCartIcon theme={theme} />
                         </button>
                         <ButtonPerson />

@@ -148,6 +148,7 @@ export default function EditProduct() {
                         />
                         {product?.image &&
                             <Image
+                                priority
                                 width={1}
                                 height={1}
                                 unoptimized={true}

@@ -27,7 +27,6 @@ export default function useProductsHook() {
                 }
             } catch (error) {
                 setLoader('')
-                console.error("Error fetching products:", error)
             }
         })()
     }, [])

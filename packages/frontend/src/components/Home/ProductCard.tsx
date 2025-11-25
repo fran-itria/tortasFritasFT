@@ -57,17 +57,16 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                     !active && isAdmin &&
                     <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">No disponible</p>
                 }
-                <Image
-                    width={1}
-                    height={1}
-                    src={typeof image === "string" ? image : URL.createObjectURL(image as Blob)}
-                    alt={name}
-                    unoptimized={true}
-                    className="
-                        w-60 h-40
-                        max-xs:w-full
-                        rounded-t-xl
-                "/>
+                <div className=" relative w-60 h-40 max-xs:w-full">
+                    <Image
+                        priority
+                        fill
+                        src={image as string}
+                        alt={name}
+                        sizes="240px"
+                        className="rounded-t-xl object-cover"
+                    />
+                </div>
                 <p className="font-bold text-xl max-xs:text-lg">{name}</p>
                 <p className={`
                     ${theme == Theme.DARK ? 'dark:text-dark-text' : 'text-gray-500'} text-center

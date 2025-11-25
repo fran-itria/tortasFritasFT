@@ -30,7 +30,6 @@ export const signInWithGoogle = async () => {
     const user = result.user;
     return { user, token };
   } catch (error) {
-    console.error("Error en signInWithGoogle:", error);
     throw error;
   }
 };

@@ -132,6 +132,7 @@ export default function CreateProduct() {
                         />
                         {product?.image &&
                             <Image
+                                priority
                                 src={typeof image == "string" ? image : URL.createObjectURL(image as File)}
                                 alt={product.name}
                                 className="

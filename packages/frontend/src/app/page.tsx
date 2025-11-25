@@ -37,7 +37,7 @@ export default function Home() {
           })
         )}
         {user?.admin && !loader && (
-          <Link href='create/product' className='flex flex-col justify-center items-center p-5'>
+          <Link href='create/product' aria-label="Create Product" className='flex flex-col justify-center items-center p-5'>
             <div
               className={`
                 ${theme == Theme.DARK ?

@@ -16,7 +16,7 @@ export default function ButtonPerson() {
     }
     return (
         <div className="flex flex-col relative">
-            <button onClick={() => setOpenMenu(!openMenu)}>
+            <button onClick={() => setOpenMenu(!openMenu)} aria-label="person">
                 <PersonIcon theme={theme} />
             </button>
             {openMenu && (
@@ -29,8 +29,8 @@ export default function ButtonPerson() {
                         ${theme == "dark" ? "bg-dark-input text-black" : "bg-light-input text-light-primary"}
                         rounded-lg
                     `}>
-                    <button className={`border-b-2 rounded-t-lg px-2`}>Mi Perfil</button>
-                    <button onClick={logout} className={`rounded-b-lg px-2`}>Cerrar Sesión</button>
+                    <button className={`border-b-2 rounded-t-lg px-2`} aria-label="perfil">Mi Perfil</button>
+                    <button onClick={logout} className={`rounded-b-lg px-2`} aria-label="ñgout session">Cerrar Sesión</button>
                 </div>
             )}
         </div>

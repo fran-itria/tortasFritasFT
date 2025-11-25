@@ -93,7 +93,6 @@ export class AdminProductsController {
     @Post('/bulkCreate')
     async bulkCreateProducts(@Req() req: Request, @Res() res: Response) {
         const products = req.body
-        console.log(products);
         for (const element of products) {
             if (element.varity) {
                 for (const varityElement of element.varity) {

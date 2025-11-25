@@ -25,6 +25,7 @@ export function ThemeToggle() {
 
     return (
         <button
+            aria-label="toggle theme"
             onClick={() => setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)}
             className={`
             rounded-full

@@ -19,7 +19,6 @@ export default async function updateStateOrder({ orderId, state, theme, setLoade
     setLoader(constLoader.updateOrder);
     setShowModal(false);
     try {
-        console.log({ orderId, state });
         await OrdersServiceApi.updateStatus({ orderId, state });
         setUpdateOrder(prev => !prev);
         setLoader('');
