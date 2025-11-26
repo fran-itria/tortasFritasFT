@@ -49,7 +49,7 @@ export default function EditProduct() {
                     >
                         Volver
                     </Link>
-                    <p className="text-xl font-bold w-full text-center">Editando el producto: {product?.name}</p>
+                    <p className="text-xl font-bold w-full text-center">Editando {product?.name}</p>
                 </div>
                 <form className={`flex flex-col gap-5 ${loader && 'opacity-50 pointer-events-none'}`} onSubmit={(e) => submit({ setLoader, e, product, varity, image, router, submitCase: SubmitFormCases.UPDATE })}>
                     <div>

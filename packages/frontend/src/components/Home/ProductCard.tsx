@@ -5,6 +5,7 @@ import { useUserState } from "@/zustand/userState"
 import { alerts } from "@/alerts/alerts"
 import { Theme } from "@/utils/constTheme"
 import Image from "next/image"
+import { constAlerts } from "@/utils/constAlerts"
 
 interface Props {
     isAdmin: boolean
@@ -25,9 +26,9 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
 
     const buttonFunction = () => {
         if (!user) {
-            alerts('error', theme, 'Debes estar logeado para agregar productos al carrito')
+            alerts('error', theme, constAlerts.MUST_BE_LOGGED_IN)
         } else if (user && !user.admin) {
-            alerts('success', theme, 'Producto agregado al carrito')
+            alerts('success', theme, constAlerts.PRODUCT_ADDED_TO_CART)
         }
     }
     return (

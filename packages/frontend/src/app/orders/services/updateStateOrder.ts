@@ -1,7 +1,7 @@
 import { alerts } from "@/alerts/alerts";
 import { ApiError } from "@/lib/axios";
 import { OrdersServiceApi } from "@/services/api";
-import { AlertsSuccess } from "@/utils/constAlerts";
+import { constAlerts } from "@/utils/constAlerts";
 import { constLoader } from "@/utils/constLoader";
 import { constOrdersCompare } from "@/utils/constOrders";
 import { Dispatch, SetStateAction } from "react";
@@ -22,7 +22,7 @@ export default async function updateStateOrder({ orderId, state, theme, setLoade
         await OrdersServiceApi.updateStatus({ orderId, state });
         setUpdateOrder(prev => !prev);
         setLoader('');
-        alerts('success', theme, AlertsSuccess.ORDER_STATUS_UPDATED);
+        alerts('success', theme, constAlerts.ORDER_STATUS_UPDATED);
     } catch (error) {
         setLoader('');
         if (error instanceof ApiError)
