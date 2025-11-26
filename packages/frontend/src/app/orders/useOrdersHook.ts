@@ -38,6 +38,7 @@ export default function useOrdersHook() {
     const [loader, setLoader] = useState<string>('');
     const [updateOrder, setUpdateOrder] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>('');
+    const [userPhone, setUserPhone] = useState<string | null>(null);
     const [showModal, setShowModal] = useState(false);
 
     const { user } = useUserState(state => state);
@@ -70,6 +71,9 @@ export default function useOrdersHook() {
         setShowModal,
         setUpdateOrder,
         orderId,
-        setOrderId
+        setOrderId,
+        router,
+        userPhone,
+        setUserPhone
     }
 }

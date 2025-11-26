@@ -22,7 +22,7 @@ export class ApiError extends Error {
 
 // Crear una instancia de axios con configuración base
 const apiClient = axios.create({
-    baseURL: false || 'http://localhost:3001',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

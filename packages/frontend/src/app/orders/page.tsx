@@ -4,6 +4,7 @@ import Loading from "@/components/loading";
 import useOrdersHook from "./useOrdersHook";
 import { constOrders, constOrdersCompare } from "@/utils/constOrders";
 import updateStateOrder from "./services/updateStateOrder";
+import whatssapLink from "./services/whatssapMessage";
 
 export default function OrdersPage() {
     const {
@@ -15,8 +16,17 @@ export default function OrdersPage() {
         setOrderId,
         setShowModal,
         showModal,
-        theme
+        theme,
+        router,
+        setUserPhone,
+        userPhone
     } = useOrdersHook()
+
+    const sendMessage = (state: constOrdersCompare) => {
+        updateStateOrder({ orderId, state, theme, setLoader, setUpdateOrder, setShowModal })
+        const link = whatssapLink(userPhone as string, state)
+        router.push(link)
+    }
     return (
         <div className="px-6">
             {loader && <Loading text={loader} />}
@@ -107,6 +117,7 @@ export default function OrdersPage() {
                                 <button onClick={() => {
                                     setShowModal(true)
                                     setOrderId(order.id)
+                                    setUserPhone(String(order.user.phone))
                                 }}>
                                     {order.state == constOrdersCompare.pending ? constOrders.pending
                                         :
@@ -150,19 +161,22 @@ export default function OrdersPage() {
                             ${theme == Theme.DARK ? 'from-dark-background-button to-dark-tertiary' : 'from-light-background-button to-light-tertiary'}
                         `}>
                         <button
-                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.accept, theme, setLoader, setUpdateOrder, setShowModal })}
+                            name={constOrdersCompare.accept}
+                            onClick={() => sendMessage(constOrdersCompare.accept)}
                             className="p-2 text-green-400 rounded-t-lg border-b-2 border-white"
                         >
                             Aceptar
                         </button>
                         <button
-                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.rejected, theme, setLoader, setUpdateOrder, setShowModal })}
+                            name={constOrdersCompare.rejected}
+                            onClick={() => sendMessage(constOrdersCompare.rejected)}
                             className="p-2 text-red-400 rounded-none border-b-2 border-t-2 border-white"
                         >
                             Rechazar
                         </button>
                         <button
-                            onClick={() => updateStateOrder({ orderId, state: constOrdersCompare.completed, theme, setLoader, setUpdateOrder, setShowModal })}
+                            name={constOrdersCompare.completed}
+                            onClick={() => sendMessage(constOrdersCompare.completed)}
                             className="p-2 text-yellow-400 rounded-none border-b-2 border-t-2 border-white"
                         >
                             Listo para retirar
