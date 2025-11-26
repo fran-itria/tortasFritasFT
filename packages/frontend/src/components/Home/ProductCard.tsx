@@ -51,12 +51,13 @@ export default function ProductCard({ isAdmin, id, index, image, name, descripti
                 ${index.current == (index.total - 1) && index.current % 2 == 0 && (!isAdmin || !user) ? 'max-xs:w-50' : 'max-xs:w-full'}
                 shadow-xl/70
                 relative
+                ${!active && isAdmin && 'opacity-70'}
             `}>
                 {soldOut && !isAdmin ?
                     <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">Sin stock</p>
                     :
                     !active && isAdmin &&
-                    <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">No disponible</p>
+                    <p className="z-10 text-white absolute top-42 bg-linear-to-r from-[#A80000] to-[#3C0000] w-full text-center">No se muestra en catalogo</p>
                 }
                 <div className=" relative w-60 h-40 max-xs:w-full">
                     <Image

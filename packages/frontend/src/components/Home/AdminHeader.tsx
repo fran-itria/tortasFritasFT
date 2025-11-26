@@ -7,7 +7,7 @@ export default function AdminHeader() {
     const { theme } = useThemeState(state => state)
     const [open, setOpen] = useState(false)
     return (
-        <div className="flex justify-around p-5 max-xs:grid max-xs:grid-cols-2 max-xs:gap-2">
+        <div className="flex justify-around p-5 max-xs:grid max-xs:grid-cols-2 max-xs:gap-2 text-center">
             <Link
                 href={"/"}
                 className={`
@@ -61,7 +61,6 @@ export default function AdminHeader() {
                         :
                         "bg-light-background-button text-light-secondary"
                     }
-                    max-xs:col-span-2
                     p-2
                     px-4
                     rounded-lg
