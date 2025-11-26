@@ -85,6 +85,7 @@ export default function EditProduct() {
                             {varity?.map((current, index) => (
                                 <div className="flex" key={current.id}>
                                     <button
+                                        aria-label="delete varity"
                                         type="button"
                                         onClick={() => {
                                             const newVarity = varity?.filter((element) => element.id !== current.id)

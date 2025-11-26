@@ -27,12 +27,8 @@ export function ThemeToggle() {
         <button
             aria-label="toggle theme"
             onClick={() => setTheme(theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT)}
-            className={`
-            rounded-full
-            ${!user ? 'max-xs:w-full' : 'w-full'}
-            flex
-            justify-center
-        `}>
+            className='w-full flex justify-center'
+        >
             <div className={`
                 ${theme == Theme.DARK ? 'bg-dark-background-button' : 'bg-light-background-button'}
                 p-2

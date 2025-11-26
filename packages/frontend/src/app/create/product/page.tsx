@@ -71,6 +71,7 @@ export default function CreateProduct() {
                                 <div className="flex" key={current.id}>
                                     <button
                                         type="button"
+                                        aria-label="delete varity"
                                         onClick={() => {
                                             const newVarity = varity?.filter((element) => element.id !== current.id)
                                             setVarity(newVarity)

@@ -6,7 +6,8 @@ import {
     FaShoppingCart,
     FaCartPlus,
     FaPencilAlt,
-    FaTrash
+    FaTrash,
+    FaWhatsapp
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoPerson, IoAddCircle } from "react-icons/io5";
@@ -28,28 +29,24 @@ export function LoadingIcon({ theme }: { theme: string | undefined }) {
     return <AiOutlineLoading3Quarters size='50' className='animate-spin w-full' color={`${theme == Theme.DARK ? '#000000ff' : '#E2E2E2'}`} />
 }
 
+export function WhatsappIcon({ theme }: { theme: string | undefined }) {
+    return <FaWhatsapp size={28} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
+}
+
 export function InstagramIcon({ theme }: { theme: string | undefined }) {
-    return <div className='w-8 max-xs:w-6 h-auto'>
-        <FaInstagram size={30} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
-    </div>
+    return <FaInstagram size={28} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
 }
 
 export function ShoppingCartIcon({ theme }: { theme: string | undefined }) {
-    return <div className='w-8 max-xs:w-6 h-auto'>
-        <FaShoppingCart size={30} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
-    </div>
+    return <FaShoppingCart size={28} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
 }
 
 export function PersonIcon({ theme }: { theme: string | undefined }) {
-    return <div className='w-8 max-xs:w-6 h-auto'>
-        <IoPerson size={30} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
-    </div>
+    return <IoPerson size={28} color={`${theme == Theme.DARK ? '#E2E2E2' : '#333333'}`} />
 }
 
 export function CartIconPlus() {
-    return <div className='w-6 max-xs:w-5 h-auto'>
-        <FaCartPlus size={28} color='black' />
-    </div>
+    return <FaCartPlus size={28} color='black' />
 }
 
 export function PencilIcon() {
@@ -60,7 +57,7 @@ export function PencilIcon() {
 
 export function TrashIcon() {
     return <div className='w-6 max-xs:w-4 h-auto'>
-        <FaTrash size={28} color='red' />
+        <FaTrash size={20} color='red' />
     </div>
 }
 

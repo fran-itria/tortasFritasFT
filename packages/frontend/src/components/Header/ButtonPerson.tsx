@@ -15,8 +15,8 @@ export default function ButtonPerson() {
         router.push('/')
     }
     return (
-        <div className="flex flex-col relative">
-            <button onClick={() => setOpenMenu(!openMenu)} aria-label="person">
+        <div className="flex flex-col relative w-full flex justify-center">
+            <button onClick={() => setOpenMenu(!openMenu)} aria-label="person" className="w-full flex justify-center">
                 <PersonIcon theme={theme} />
             </button>
             {openMenu && (
