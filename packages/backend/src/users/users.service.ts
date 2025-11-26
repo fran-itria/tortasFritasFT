@@ -66,12 +66,12 @@ export class UsersService {
         }
     }
 
-    async login(email: string): Promise<{ user: Users; token: string }> {
+    async login(id: string): Promise<{ user: Users; token: string }> {
         try {
             process.loadEnvFile()
         } catch (error) { }
         const { SECRET_KEY } = process.env;
-        const user: any = await this.usersModel.findOne({ where: { email } });
+        const user: any = await this.usersModel.findByPk(id);
         if (!user) throw new NotFoundException('Usuario no encontrado');
         if (!SECRET_KEY) {
             throw new Error('No se puede iniciar sesión en este momento, intente más tarde');

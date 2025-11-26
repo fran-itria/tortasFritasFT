@@ -20,7 +20,7 @@ export class UsersController {
 
     @Put('/login')
     async login(@Req() req: Request, @Res() res: Response) {
-        const user = await this.usersService.login(req.body.email);
+        const user = await this.usersService.login(req.body.id);
         res.status(200).json({ message: 'Inicio de sesión exitoso', user: user.user, token: user.token });
     }
 
