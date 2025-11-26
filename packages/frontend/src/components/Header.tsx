@@ -4,7 +4,7 @@ import useThemeState from "@/zustand/theme"
 import logoDark from "../assets/logoDark.png";
 import logoLight from "../assets/logoLight.png";
 import { ThemeToggle } from "./ThemeToggle";
-import { GoogleIcon, InstagramIcon, ShoppingCartIcon, WhatsappIcon } from "./Icons";
+import { GoogleIcon, InstagramIcon, WhatsappIcon } from "./Icons";
 import Link from "next/link";
 import { continueWithGoogle } from "@/app/services/continueWithGoogle";
 import { useUserState } from "@/zustand/userState";
@@ -60,11 +60,6 @@ export default function Header() {
                     </button>
                     :
                     <ButtonPerson />
-                    // <div className="flex w-full justify-around items-center">
-                    // {/* <button aria-label="Cart shop" className='w-full'>
-                    //     <ShoppingCartIcon theme={theme} />
-                    // </button> */}
-                    // </div>
                 }
                 <ThemeToggle />
             </div>

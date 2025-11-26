@@ -8,7 +8,7 @@ export const optionsServiceApi = {
 };
 
 export const usersServiceApi = {
-    login: (email: string) => apiClient.put(`/users/login`, { email }),
+    login: (id: string) => apiClient.put(`/users/login`, { id }),
     loginWithToken: () => apiClient.put('/users/loginWithToken'),
     createUser: ({ id, email, name, surname }: {
         id: string,

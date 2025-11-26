@@ -15,7 +15,7 @@ export const continueWithGoogle = async ({ theme, setUser }: LoginWithGoogle) =>
     const name = result.user.displayName?.split(' ')[0]
     const surname = result.user.displayName?.split(' ')[1] || ''
     try {
-        const user = await usersServiceApi.login(result.user.email as string)
+        const user = await usersServiceApi.login(result.user.uid)
         if (!user.data.user.active) throw new ApiError(Errors.USER_INACTIVE, { data: { error: '', message: Errors.USER_INACTIVE, statusCode: 403 } })
         if (user) {
             setUser(user.data.user)
@@ -25,17 +25,17 @@ export const continueWithGoogle = async ({ theme, setUser }: LoginWithGoogle) =>
         if (error instanceof ApiError) {
             if (error.response.data.statusCode == 403) {
                 alerts('error', theme, error.message)
-            }
-        } else {
-            const createUser = await usersServiceApi.createUser({
-                id: result.user.uid,
-                email: result.user.email as string,
-                name: name as string,
-                surname
-            })
-            if (createUser) {
-                localStorage.setItem('token', createUser.data.token)
-                setUser(createUser.data)
+            } else if (error.response.data.statusCode == 404) {
+                const createUser = await usersServiceApi.createUser({
+                    id: result.user.uid,
+                    email: result.user.email as string,
+                    name: name as string,
+                    surname: surname as string
+                })
+                if (createUser) {
+                    localStorage.setItem('token', createUser.data.token)
+                    setUser(createUser.data)
+                }
             }
         }
     }
