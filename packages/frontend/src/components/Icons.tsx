@@ -51,21 +51,15 @@ export function CartIconPlus() {
 }
 
 export function PencilIcon() {
-    return <div className='w-6 max-xs:w-5 h-auto'>
-        <FaPencilAlt size={28} color='black' />
-    </div>
+    return <FaPencilAlt size={25} color='black' />
 }
 
 export function TrashIcon() {
-    return <div className='w-6 max-xs:w-4 h-auto'>
-        <FaTrash size={20} color='red' />
-    </div>
+    return <FaTrash size={20} color='red' />
 }
 
 export function AddCircleIcon() {
-    return <div>
-        <IoAddCircle size='50' color='#00A900' />
-    </div>
+    return <IoAddCircle size={50} color='#00A900' />
 }
 
 export function SearchIcon({ theme }: { theme: string | undefined }) {
