@@ -1,25 +1,13 @@
 'use client'
-import { useUserState } from "@/zustand/userState";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import useUsersHook from "./useUsersHook";
-import useThemeState from "@/zustand/theme";
 import { Theme } from "@/utils/constTheme";
 import changeAdminStatus from "./services/changeAdminStatus";
 import Loading from "@/components/loading";
 import changeActiveStatus from "./services/changeActiveStatus";
+import { SearchIcon } from "@/components/Icons";
 
 export default function UsersPage() {
-    const { user } = useUserState(state => state);
-    const { theme } = useThemeState(state => state)
-    const router = useRouter()
-    const { users, loader, setLoader } = useUsersHook()
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token || !user || !user.admin) {
-            router.back()
-        }
-    }, [router, user])
+    const { users, loader, setLoader, setSearchUser, theme } = useUsersHook()
     return (
         <div className="px-6">
             {loader && <Loading text={loader} />}
@@ -32,6 +20,25 @@ export default function UsersPage() {
             ${loader && 'opacity-50 pointer-events-none'} 
             ${theme == Theme.DARK ? 'bg-dark-background-button border-dark-input' : 'bg-light-tertiary border-black'}
             `}>
+                <caption className="mt-4 mb-3 text-left">
+                    Lista de usuarios
+                    <div className="relative float-center flex items-center justify-center w-fit">
+                        <div className="absolute left-2 z-10">
+                            <SearchIcon theme={theme} />
+                        </div>
+                        <input className={`
+                        ${theme == Theme.DARK ? 'bg-dark-input text-black' : 'bg-light-input text-white'}
+                        rounded-lg
+                        text-sm
+                        w-40
+                        px-8
+                        `}
+                            type="search"
+                            onChange={(e) => setSearchUser(e.target.value)}
+                        >
+                        </input>
+                    </div>
+                </caption>
                 <thead>
                     <tr>
                         <th className={`border-2 ${theme == Theme.DARK ? 'bg-dark-primary border-dark-input' : 'bg-light-secondary border-black'}`}>Nombre</th>

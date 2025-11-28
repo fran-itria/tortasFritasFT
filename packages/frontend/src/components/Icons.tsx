@@ -7,7 +7,8 @@ import {
     FaCartPlus,
     FaPencilAlt,
     FaTrash,
-    FaWhatsapp
+    FaWhatsapp,
+    FaSearch
 } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoPerson, IoAddCircle } from "react-icons/io5";
@@ -65,4 +66,8 @@ export function AddCircleIcon() {
     return <div>
         <IoAddCircle size='50' color='#00A900' />
     </div>
+}
+
+export function SearchIcon({ theme }: { theme: string | undefined }) {
+    return <FaSearch size={15} color={`${theme == Theme.DARK ? '#000247' : '#E2E2E2'}`} />
 }
